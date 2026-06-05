@@ -139,6 +139,14 @@
     /* ファネル右バッジ列 */
     .funnel-right-badge { display: none !important; }
 
+
+    /* ファネル矢印行の高さ固定を解除 */
+    .fai,
+    .funnel-arrow-row { height: auto !important; min-height: 36px; padding: 4px 0; }
+    /* ファネル各行を縦に積む */
+    .funnel-step-row { align-items: flex-start !important; }
+    /* ファネルバーのテキストが短い場合も崩れないよう */
+    .fai > div { align-items: flex-start !important; flex-wrap: wrap; gap: 4px; }
     /* ファネル矢印ボックスのwrap */
     .fai > div { flex-wrap: wrap; gap: 4px; }
 
