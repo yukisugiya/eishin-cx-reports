@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社栄進製薬｜Indeed求人原稿診断レポート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #AE1C3B;
+    --red-deep: #9C0B2D;
+    --red-pale: #FBEBEE;
+    --orange: #E65100;
+    --orange-lt: #FFA726;
+    --orange-pale: #FFFDE7;
+    --green: #2E7D32;
+    --green-lt: #66BB6A;
+    --green-pale: #F1F8E9;
+    --gray-dark: #434343;
+    --gray-mid: #666666;
+    --gray-light: #F4F4F4;
+    --border: #E0E0E0;
+    --white: #FFFFFF;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #F0F0F0;
+    color: var(--gray-dark);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .site-header {
+    background: var(--red);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .site-header .logo { color: white; font-size: 15px; font-weight: 700; }
+  .site-header .logo span { opacity: 0.65; font-weight: 400; font-size: 12px; margin-left: 10px; }
+  .site-header .eishin { color: rgba(255,255,255,0.75); font-size: 11px; }
+
+  .meta-bar {
+    background: var(--red-pale);
+    border-bottom: 2px solid var(--red);
+    padding: 8px 28px;
+    font-size: 11px;
+    color: var(--gray-mid);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-bar span b { color: var(--gray-dark); }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 24px auto 48px;
+    padding: 0 16px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .card-head {
+    background: var(--red);
+    color: white;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-head .cn {
+    background: rgba(255,255,255,0.22);
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .card-body { padding: 20px 22px; }
+
+  .score-overview {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .ring-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+  .ring-wrap .ring-label { font-size: 11px; font-weight: 700; color: var(--gray-mid); margin-bottom: 8px; letter-spacing: 0.04em; }
+  .ring-svg { width: 110px; height: 110px; }
+  .ring-wrap .ring-judge {
+    margin-top: 10px;
+    background: var(--red-pale);
+    color: var(--red-deep);
+    font-size: 11px; font-weight: 700;
+    padding: 3px 14px; border-radius: 10px;
+  }
+
+  .axes-wrap { flex: 1; min-width: 260px; }
+  .axes-wrap h4 { font-size: 11px; font-weight: 700; color: var(--gray-mid); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px; }
+  .axis-row { margin-bottom: 12px; }
+  .axis-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .axis-name { font-size: 12px; font-weight: 700; color: var(--gray-dark); }
+  .axis-right { display: flex; align-items: center; gap: 8px; }
+  .axis-score { font-size: 12px; font-weight: 700; }
+  .grade-badge {
+    font-size: 10px; font-weight: 700; color: white;
+    padding: 2px 8px; border-radius: 8px;
+  }
+  .axis-bar { height: 8px; background: #EEEEEE; border-radius: 4px; overflow: hidden; }
+  .axis-bar-fill { height: 100%; border-radius: 4px; }
+
+  .c-red    { color: var(--red); }
+  .c-orange { color: var(--orange); }
+  .c-green  { color: var(--green); }
+  .bg-red    { background: var(--red); }
+  .bg-orange { background: var(--orange-lt); }
+  .bg-green  { background: var(--green-lt); }
+  .fill-red    { background: var(--red); }
+  .fill-orange { background: var(--orange-lt); }
+  .fill-green  { background: var(--green-lt); }
+
+  .summary-box {
+    margin-top: 18px;
+    background: var(--gray-light);
+    border-radius: 7px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--gray-dark);
+    line-height: 1.8;
+    border-left: 3px solid var(--red);
+  }
+  .summary-box strong { font-weight: 700; }
+
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .comp-table th {
+    background: var(--red); color: white; font-weight: 700;
+    padding: 8px 12px; text-align: left;
+  }
+  .comp-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .comp-table tr:nth-child(even) td { background: var(--gray-light); }
+  .comp-table tr:hover td { background: var(--red-pale); }
+  .mark-ok { color: var(--green); font-weight: 700; }
+  .mark-warn { color: var(--orange); font-weight: 700; }
+  .mark-ng  { color: var(--red); font-weight: 700; }
+
+  .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .sw-box { border-radius: 8px; padding: 14px 16px; }
+  .sw-box.strength { background: var(--green-pale); border: 1px solid #C5E1A5; }
+  .sw-box.weakness { background: var(--red-pale);   border: 1px solid #F5C6D0; }
+  .sw-box h4 { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+  .sw-box.strength h4 { color: var(--green); }
+  .sw-box.weakness h4 { color: var(--red-deep); }
+  .sw-box ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .sw-box li { font-size: 12px; color: var(--gray-dark); line-height: 1.55; padding-left: 16px; position: relative; }
+  .sw-box.strength li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .sw-box.weakness li::before { content: '✕'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+  .axis-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .axis-card:last-child { margin-bottom: 0; }
+
+  .ac-head {
+    display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+  }
+  .ac-head.grade-b { background: var(--orange-pale); border-bottom: 1px solid #FFE082; }
+  .ac-head.grade-c { background: var(--red-pale);    border-bottom: 1px solid #F5C6D0; }
+  .ac-head.grade-a { background: var(--green-pale);  border-bottom: 1px solid #C5E1A5; }
+
+  .ac-score-badge {
+    width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .ac-score-badge .s { font-size: 20px; font-weight: 900; color: white; line-height: 1; }
+  .ac-score-badge .sl { font-size: 9px; color: rgba(255,255,255,0.75); }
+
+  .ac-meta { flex: 1; }
+  .ac-title { font-size: 14px; font-weight: 700; color: var(--gray-dark); }
+  .ac-sub { font-size: 11px; color: var(--gray-mid); margin-top: 3px; }
+
+  .ac-grade {
+    font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 12px;
+    color: white; flex-shrink: 0;
+  }
+
+  .ac-body { background: white; }
+
+  .ac-section {
+    padding: 13px 16px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .ac-section:last-child { border-bottom: none; }
+
+  .ac-section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 7px;
+  }
+  .ac-section-text { font-size: 12px; color: var(--gray-dark); line-height: 1.75; }
+  .ac-section-text.bg { background: var(--gray-light); border-radius: 6px; padding: 10px 12px; }
+
+  .check-list { display: flex; flex-direction: column; gap: 6px; }
+  .check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; line-height: 1.5; }
+  .check-item .ci { flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+  .check-item .ct { color: var(--gray-dark); }
+  .check-item.fail .ct { color: var(--red-deep); }
+  .check-item.act  .ct { color: #1a5c2a; }
+
+  .top3-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px; border-radius: 8px; border: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .top3-item:last-child { margin-bottom: 0; }
+  .top3-item.r1 { background: var(--red-pale);    border-color: #F5C6D0; }
+  .top3-item.r2 { background: var(--orange-pale); border-color: #FFE082; }
+  .top3-item.r3 { background: var(--green-pale);  border-color: #C5E1A5; }
+  .top3-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: white; flex-shrink: 0; margin-top: 2px;
+  }
+  .r1 .top3-num { background: var(--red); }
+  .r2 .top3-num { background: var(--orange-lt); }
+  .r3 .top3-num { background: var(--green-lt); }
+  .top3-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .r1 .top3-content h4 { color: var(--red-deep); }
+  .r2 .top3-content h4 { color: var(--orange); }
+  .r3 .top3-content h4 { color: var(--green); }
+  .top3-content p { font-size: 12px; color: var(--gray-dark); line-height: 1.7; }
+
+  .site-footer {
+    background: var(--red); color: rgba(255,255,255,0.65);
+    font-size: 11px; text-align: center; padding: 10px;
+    margin-top: 32px;
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .profile-item {
+    background: var(--gray-light);
+    border-radius: 7px;
+    padding: 10px 14px;
+  }
+  .profile-item .pi-label {
+    font-size: 10px; font-weight: 700; color: var(--gray-mid);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .profile-item .pi-value {
+    font-size: 13px; font-weight: 700; color: var(--gray-dark); line-height: 1.4;
+  }
+  .profile-item .pi-sub {
+    font-size: 10px; color: var(--gray-mid); margin-top: 2px;
+  }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .tag-chip {
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px;
+    background: white; border: 1px solid var(--border); color: var(--gray-dark);
+  }
+  .tag-chip.alert { background: var(--red-pale); border-color: #F5C6D0; color: var(--red-deep); }
+  .tag-chip.good  { background: var(--green-pale); border-color: #C5E1A5; color: var(--green); }
+
+  .profile-alert {
+    background: var(--orange-pale); border: 1px solid #FFE082; border-radius: 7px;
+    padding: 8px 14px; font-size: 11px; color: var(--orange); font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .quant-block { margin-top: 10px; }
+  .quant-block .qb-title {
+    font-size: 10px; font-weight: 700; color: var(--gray-mid);
+    letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .quant-row { margin-bottom: 8px; }
+  .quant-row-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 4px; font-size: 11px;
+  }
+  .quant-row-head .qr-name { color: var(--gray-dark); font-weight: 500; }
+  .quant-row-head .qr-vals { color: var(--gray-mid); }
+  .quant-row-head .qr-vals b { font-weight: 700; }
+  .quant-bar-wrap { display: flex; gap: 6px; align-items: center; }
+  .quant-bar { flex: 1; height: 6px; background: #EEEEEE; border-radius: 3px; overflow: hidden; position: relative; }
+  .quant-bar-fill { height: 100%; border-radius: 3px; }
+  .quant-bar-comp { position: absolute; top: 0; height: 100%; width: 2px; background: var(--gray-mid); opacity: 0.5; }
+  .quant-legend { display: flex; gap: 12px; margin-top: 6px; font-size: 10px; color: var(--gray-mid); }
+  .quant-legend span { display: flex; align-items: center; gap: 4px; }
+  .quant-legend .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .must-count {
+    display: flex; align-items: center; gap: 12px; margin-top: 8px;
+  }
+  .must-badge {
+    font-size: 22px; font-weight: 900; color: var(--red); line-height: 1;
+  }
+  .must-badge span { font-size: 12px; font-weight: 400; color: var(--gray-mid); }
+  .must-list { font-size: 11px; color: var(--gray-dark); line-height: 1.7; }
+
+  @media (max-width: 600px) {
+    .score-overview { flex-direction: column; }
+    .sw-grid { grid-template-columns: 1fr; }
+    .page-wrap { padding: 0 10px; }
+    .profile-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">採用CXクラウド <span>Indeed求人原稿診断</span></div>
+  <div class="eishin">株式会社EISHIN</div>
+</header>
+
+<div class="meta-bar">
+  <span><b>企業名：</b>株式会社栄進製薬</span>
+  <span><b>対象職種：</b>OTC医薬品、化粧品の営業職</span>
+  <span><b>診断日：</b>2026年6月5日</span>
+  <span><b>比較競合：</b>3社（全薬グループ-プロモーション / 医用工学研究所 / 全薬グループ-マーケティング）</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ══════════════════════════════════════
+       SECTION 0: 求人票プロフィール
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">―</div>診断対象 求人票プロフィール</div>
+    <div class="card-body">
+
+      <div class="profile-grid">
+        <div class="profile-item" style="grid-column: span 3;">
+          <div class="pi-label">求人タイトル</div>
+          <div class="pi-value" style="font-size:15px;">OTC医薬品、化粧品の営業職</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">給与</div>
+          <div class="pi-value">年俸 360〜500万円</div>
+          <div class="pi-sub">固定残業代（20h・月4〜6万円）含む</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">雇用形態 / 勤務地</div>
+          <div class="pi-value">正社員</div>
+          <div class="pi-sub">東京都 中央区 銀座（東銀座駅3分）</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">掲載経過 / 選考</div>
+          <div class="pi-value" style="color: var(--orange);">30日以上前</div>
+          <div class="pi-sub">面接 2回 → 合否通知</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">写真</div>
+          <div class="pi-value" style="color: var(--green);">5枚あり ✓</div>
+          <div class="pi-sub">職場・商品写真を掲載</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">Indeedタグ（3個）</div>
+          <div class="tag-list">
+            <span class="tag-chip">交通費支給</span>
+            <span class="tag-chip">駅近5分以内</span>
+            <span class="tag-chip alert">急募</span>
+          </div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">必須条件</div>
+          <div class="pi-value" style="color: var(--red);">4件（多め）</div>
+          <div class="pi-sub">中国語・業界経験3年・短大卒・銀座通勤</div>
+        </div>
+      </div>
+
+      <div class="profile-alert">
+        ⚠️　掲載から30日以上経過しています。求人の内容に変更・追記できる情報がないか確認し、原稿をブラッシュアップするタイミングです。
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1: スコアサマリー
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">1</div>診断スコアサマリー</div>
+    <div class="card-body">
+      <div class="score-overview">
+
+        <div class="ring-wrap">
+          <div class="ring-label">総合スコア</div>
+          <svg class="ring-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#EEEEEE" stroke-width="9"/>
+            <!-- 54% → dashoffset = 251.2 * (1 - 0.54) = 115.6 -->
+            <circle cx="50" cy="50" r="40" fill="none"
+                    stroke="#AE1C3B" stroke-width="9" stroke-linecap="round"
+                    stroke-dasharray="251.2" stroke-dashoffset="116"
+                    transform="rotate(-90 50 50)"/>
+            <text x="50" y="46" text-anchor="middle" font-size="22" font-weight="900" fill="#AE1C3B" font-family="sans-serif">54</text>
+            <text x="50" y="59" text-anchor="middle" font-size="10" fill="#666" font-family="sans-serif">/ 100</text>
+          </svg>
+          <div class="ring-judge">要改善</div>
+        </div>
+
+        <div class="axes-wrap">
+          <h4>5軸スコア</h4>
+
+          <div class="axis-row">
+            <div class="axis-row-head">
+              <span class="axis-name">① タイトル最適化</span>
+              <div class="axis-right">
+                <span class="axis-score c-orange">12/20</span>
+                <span class="grade-badge bg-orange">B</span>
+              </div>
+            </div>
+            <div class="axis-bar"><div class="axis-bar-fill fill-orange" style="width:60%"></div></div>
+          </div>
+
+          <div class="axis-row">
+            <div class="axis-row-head">
+              <span class="axis-name">② 給与・条件の透明性</span>
+              <div class="axis-right">
+                <span class="axis-score c-orange">11/20</span>
+                <span class="grade-badge bg-orange">B</span>
+              </div>
+            </div>
+            <div class="axis-bar"><div class="axis-bar-fill fill-orange" style="width:55%"></div></div>
+          </div>
+
+          <div class="axis-row">
+            <div class="axis-row-head">
+              <span class="axis-name">③ 求職者目線の訴求</span>
+              <div class="axis-right">
+                <span class="axis-score c-red">9/20</span>
+                <span class="grade-badge bg-red">C</span>
+              </div>
+            </div>
+            <div class="axis-bar"><div class="axis-bar-fill fill-red" style="width:45%"></div></div>
+          </div>
+
+          <div class="axis-row">
+            <div class="axis-row-head">
+              <span class="axis-name">④ 情報の充足度</span>
+              <div class="axis-right">
+                <span class="axis-score c-orange">12/20</span>
+                <span class="grade-badge bg-orange">B</span>
+              </div>
+            </div>
+            <div class="axis-bar"><div class="axis-bar-fill fill-orange" style="width:60%"></div></div>
+          </div>
+
+          <div class="axis-row">
+            <div class="axis-row-head">
+              <span class="axis-name">⑤ 差別化・独自性</span>
+              <div class="axis-right">
+                <span class="axis-score c-red">10/20</span>
+                <span class="grade-badge bg-red">C</span>
+              </div>
+            </div>
+            <div class="axis-bar"><div class="axis-bar-fill fill-red" style="width:50%"></div></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="summary-box">
+        基本情報（給与・勤務地・勤務時間）はひと通り記載されており、情報の抜けは少ない。一方で、<strong>「なぜこの会社の営業職が面白いのか」という求職者が最も知りたい部分の訴求が弱く</strong>、スペック羅列にとどまっている。競合はすべて月給表示を採用しており、年俸表示の栄進製薬は給与の見栄えでも不利な状態。候補者がクリック・応募する動機をつくる訴求力と表示上の改善が必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2: 競合比較サマリー
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">2</div>競合比較サマリー</div>
+    <div class="card-body">
+
+      <p style="font-size:11px; color:var(--gray-mid); margin-bottom:12px; line-height:1.6;">
+        比較対象：全薬グループ（OTC医薬品プロモーション / マーケティング）・株式会社医用工学研究所（製薬企業向けコンサル）の3社。※医用工学研究所は給与帯・業種が異なるため定性比較のみ参照。
+      </p>
+
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th style="width:22%">比較項目</th>
+            <th style="width:39%">栄進製薬</th>
+            <th style="width:39%">競合平均（3社）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>給与の表示方式</b></td>
+            <td><span class="mark-ng">✕</span> 年俸表示（固定残業込み）</td>
+            <td><span class="mark-ok">○</span> 全3社が月給表示で明快</td>
+          </tr>
+          <tr>
+            <td><b>タイトルの具体性</b></td>
+            <td><span class="mark-warn">△</span> 職種カテゴリのみ</td>
+            <td><span class="mark-ok">○</span> 業務内容・ポジション名まで記載</td>
+          </tr>
+          <tr>
+            <td><b>本文の文字数</b></td>
+            <td>約 <b>568文字</b></td>
+            <td>約 <b>1,482文字</b>（栄進の約2.6倍）</td>
+          </tr>
+          <tr>
+            <td><b>Indeedタグ数</b></td>
+            <td><span class="mark-ng">✕</span> <b>3個</b></td>
+            <td><span class="mark-ok">○</span> 全3社が<b>7個</b></td>
+          </tr>
+          <tr>
+            <td><b>求職者目線の訴求</b></td>
+            <td><span class="mark-warn">△</span> 箇条書き止まり</td>
+            <td><span class="mark-warn">△</span>〜<span class="mark-ok">○</span> キャリアパス・成長記述あり</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sw-grid">
+        <div class="sw-box strength">
+          <h4>競合と比べての強み</h4>
+          <ul>
+            <li>「創業32年」「30SKU展開」「医療法人との連携体制」など具体的な実績素材がある</li>
+            <li>越境EC・中国語対応という競合が持っていない明確なニッチ差別化素材がある</li>
+            <li>写真5枚掲載済み。銀座・東銀座3分という立地の優位性もある</li>
+          </ul>
+        </div>
+        <div class="sw-box weakness">
+          <h4>競合と比べての弱み</h4>
+          <ul>
+            <li>年俸表示のため月給換算での見栄えが競合（月給26〜42万明示）より小さく映る</li>
+            <li>全薬グループはブランド認知があるが、栄進製薬は原稿量・表現力ともに劣っている（文字数38%）</li>
+            <li>タグが3個 vs 競合7個で、絞り込み検索でのヒット機会が半分以下</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3: Indeedアルゴリズム観点チェック
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">3</div>Indeedアルゴリズム観点チェック</div>
+    <div class="card-body">
+      <p style="font-size:12px; color:var(--gray-mid); margin-bottom:14px; line-height:1.7;">
+        Indeedの検索順位・表示回数・CTRに影響する項目を診断。求人票の「中身の良さ」とは別に、<b>アルゴリズム上の最適化</b>が応募数を左右する。
+      </p>
+
+      <table style="width:100%; border-collapse:collapse; font-size:12px;">
+        <thead>
+          <tr style="background:var(--gray-dark); color:white;">
+            <th style="padding:8px 12px; text-align:left; font-weight:700; border:1px solid #555;">チェック項目</th>
+            <th style="padding:8px 12px; text-align:center; font-weight:700; border:1px solid #555; width:70px;">評価</th>
+            <th style="padding:8px 12px; text-align:left; font-weight:700; border:1px solid #555;">現状と影響</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">給与の明示</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--orange-pale); color:var(--orange); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">△</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              年俸は明示しているが固定残業代込みのため実態が分かりにくい。給与非公開より有利だが、月給明示に比べてCTRが下がる傾向あり
+            </td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">給与の表示形式</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--red-pale); color:var(--red-deep); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">✕</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              <b>年俸表示</b>。競合3社はすべて<b>月給表示</b>を採用。Indeed検索結果での給与表示が小さく見え、候補者の第一印象で不利になる
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">掲載鮮度</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--red-pale); color:var(--red-deep); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">✕</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              <b>30日以上前に掲載</b>。Indeedは新着求人を優先表示するため、掲載が古いほど検索順位が下がり表示回数が減少する。原稿内容の追記・更新が有効な対処
+            </td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">写真の有無</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--green-pale); color:var(--green); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">○</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              職場・商品写真が<b>5枚</b>掲載済み。写真あり求人はCTRが平均+35%向上するとIndeedが公表しており、この点は適切に対応できている
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">タグの活用数</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--orange-pale); color:var(--orange); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">△</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              現在<b>3個</b>（交通費支給・駅近・急募）。競合3社はすべて<b>7個</b>。タグは絞り込み検索でのヒット数に直結するため、待遇情報の整備で増やせる
+            </td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">選考フロー記載</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--green-pale); color:var(--green); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">○</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              「Indeed応募 → 面接2回 → 合否通知」と明記。選考プロセスが見えることで候補者の不安が軽減し、応募転換率が向上する
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px; border:1px solid var(--border); font-weight:700;">必須条件の数</td>
+            <td style="padding:8px 12px; border:1px solid var(--border); text-align:center;">
+              <span style="background:var(--orange-pale); color:var(--orange); font-weight:700; padding:2px 8px; border-radius:8px; font-size:11px;">△</span>
+            </td>
+            <td style="padding:8px 12px; border:1px solid var(--border); color:var(--gray-dark); line-height:1.6;">
+              必須（MUST）条件が<b>4件</b>。競合平均は2件程度。MUSTが多いと候補者が「自分には無理」と判断して応募を見送るリスクが高まる
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:140px; background:var(--green-pale); border:1px solid #C5E1A5; border-radius:7px; padding:10px 14px; text-align:center;">
+          <div style="font-size:22px; font-weight:900; color:var(--green);">2</div>
+          <div style="font-size:11px; color:var(--green); font-weight:700;">○ 適切</div>
+        </div>
+        <div style="flex:1; min-width:140px; background:var(--orange-pale); border:1px solid #FFE082; border-radius:7px; padding:10px 14px; text-align:center;">
+          <div style="font-size:22px; font-weight:900; color:var(--orange);">3</div>
+          <div style="font-size:11px; color:var(--orange); font-weight:700;">△ 改善余地あり</div>
+        </div>
+        <div style="flex:1; min-width:140px; background:var(--red-pale); border:1px solid #F5C6D0; border-radius:7px; padding:10px 14px; text-align:center;">
+          <div style="font-size:22px; font-weight:900; color:var(--red);">2</div>
+          <div style="font-size:11px; color:var(--red-deep); font-weight:700;">✕ 要対応</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4: キーワードギャップ分析
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">4</div>キーワードギャップ分析</div>
+    <div class="card-body">
+      <p style="font-size:12px; color:var(--gray-mid); margin-bottom:14px; line-height:1.7;">
+        競合3社が使用しているキーワードのうち、栄進製薬の求人票に含まれていないものを抽出。検索ヒット率の向上と、候補者が求人を読んだときの「刺さり方」の改善に直結する。
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:12px;">
+
+        <!-- 待遇訴求 -->
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="background:var(--red); color:white; padding:8px 14px; font-size:12px; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+            <span>待遇訴求キーワード</span>
+            <span style="background:rgba(255,255,255,0.2); font-size:10px; padding:2px 8px; border-radius:8px;">競合3社すべてが使用　影響度：高</span>
+          </div>
+          <div style="padding:12px 14px; background:white;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+              <span style="background:var(--red-pale); border:1px solid #F5C6D0; color:var(--red-deep); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">昇給</span>
+              <span style="background:var(--red-pale); border:1px solid #F5C6D0; color:var(--red-deep); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">賞与あり</span>
+              <span style="background:var(--orange-pale); border:1px solid #FFE082; color:var(--orange); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">住宅手当</span>
+            </div>
+            <p style="font-size:12px; color:var(--gray-dark); line-height:1.7;">
+              求人票内に「昇給：年1回」「賞与：年2回（7月・12月）」の記載はあるが、<b>タグとして認識される形式</b>になっていない。待遇セクションの記述を整えることでIndeedが自動的に「賞与あり」「昇給あり」タグを付与し、絞り込み検索にヒットするようになる。住宅手当は現状なし。
+            </p>
+          </div>
+        </div>
+
+        <!-- 成長訴求 -->
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="background:var(--orange); color:white; padding:8px 14px; font-size:12px; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+            <span>成長訴求キーワード</span>
+            <span style="background:rgba(255,255,255,0.2); font-size:10px; padding:2px 8px; border-radius:8px;">競合3社すべてが使用　影響度：中</span>
+          </div>
+          <div style="padding:12px 14px; background:white;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+              <span style="background:var(--red-pale); border:1px solid #F5C6D0; color:var(--red-deep); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">キャリア</span>
+              <span style="background:var(--orange-pale); border:1px solid #FFE082; color:var(--orange); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">スキルアップ</span>
+            </div>
+            <p style="font-size:12px; color:var(--gray-dark); line-height:1.7;">
+              「入社後のキャリアパス」「スキルが身につく」など、候補者が自分の将来像を描けるワードが皆無。競合3社はすべてキャリア関連の記述を含んでいる。少数精鋭・裁量あり・内製体制という素材を<b>候補者のキャリア形成の観点に翻訳</b>する余地がある。
+            </p>
+          </div>
+        </div>
+
+        <!-- 職種定義 -->
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div style="background:var(--gray-dark); color:white; padding:8px 14px; font-size:12px; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+            <span>職種定義キーワード</span>
+            <span style="background:rgba(255,255,255,0.2); font-size:10px; padding:2px 8px; border-radius:8px;">競合1〜2社が使用　影響度：中</span>
+          </div>
+          <div style="padding:12px 14px; background:white;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+              <span style="background:var(--gray-light); border:1px solid var(--border); color:var(--gray-dark); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">月給</span>
+              <span style="background:var(--gray-light); border:1px solid var(--border); color:var(--gray-dark); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">プロモーション</span>
+              <span style="background:var(--gray-light); border:1px solid var(--border); color:var(--gray-dark); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">コンサルティング</span>
+            </div>
+            <p style="font-size:12px; color:var(--gray-dark); line-height:1.7;">
+              「月給」は競合3社すべてが表記を採用しており、Indeed上での表示単位と一致するため視認性が高い。栄進製薬は年俸表示のため月換算で小さく見える。また競合は職種タイトルに「プロモーション」「コンサルティング」等の業務を具体化したキーワードを入れており、検索ヒット範囲が広い。
+            </p>
+          </div>
+        </div>
+
+        <!-- 独自キーワード -->
+        <div style="border:1px solid #C5E1A5; border-radius:8px; overflow:hidden;">
+          <div style="background:var(--green); color:white; padding:8px 14px; font-size:12px; font-weight:700; display:flex; justify-content:space-between; align-items:center;">
+            <span>栄進製薬だけが持つ独自キーワード（活かせていない）</span>
+            <span style="background:rgba(255,255,255,0.2); font-size:10px; padding:2px 8px; border-radius:8px;">差別化に転用可能</span>
+          </div>
+          <div style="padding:12px 14px; background:white;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+              <span style="background:var(--green-pale); border:1px solid #C5E1A5; color:var(--green); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">越境EC</span>
+              <span style="background:var(--green-pale); border:1px solid #C5E1A5; color:var(--green); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">中国語</span>
+              <span style="background:var(--green-pale); border:1px solid #C5E1A5; color:var(--green); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">医療法人連携</span>
+              <span style="background:var(--green-pale); border:1px solid #C5E1A5; color:var(--green); font-weight:700; font-size:12px; padding:4px 12px; border-radius:10px;">創業32年</span>
+            </div>
+            <p style="font-size:12px; color:var(--gray-dark); line-height:1.7;">
+              これらは競合が持っていない栄進製薬固有のキーワード。現状は本文の中間に埋もれており、タイトルやファーストビューに配置することで「中国語を活かしたい」「グローバルな営業がしたい」という特定層へのピンポイント訴求が可能になる。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5: 軸別診断
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">5</div>軸別診断</div>
+    <div class="card-body" style="padding: 16px;">
+
+      <!-- ① タイトル最適化 -->
+      <div class="axis-card">
+        <div class="ac-head grade-b">
+          <div class="ac-score-badge bg-orange">
+            <div class="s">12</div><div class="sl">/ 20</div>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-title">① タイトル最適化</div>
+            <div class="ac-sub">検索意図とのマッチング・職種の具体性</div>
+          </div>
+          <div class="ac-grade bg-orange">B　改善余地あり</div>
+        </div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-section-label">現状</div>
+            <div class="ac-section-text bg">現タイトル：「OTC医薬品、化粧品の営業職」</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">課題</div>
+            <div class="check-list">
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「営業職」だけでは職務の性質（新規開拓かルートか）が伝わらず、ミスマッチ応募を招きやすい</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">競合の全薬グループは「〈全薬工業株式会社〉OTC医薬品プロモーション担当」とポジション名まで明記しており、候補者の解像度が高い</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">越境EC・中国語・新規開拓という差別化要素がタイトルに一切反映されていない</span></div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">改善の方向性</div>
+            <div class="check-list">
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「新規開拓営業」「ドラッグストア向け提案営業」など業務内容の具体性をタイトルに含める</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">中国語・越境ECという差別化要素をタイトルに盛り込み、検索意図とのマッチング精度を高める</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">Indeed推奨の文字数（概ね30文字以内）に収めながら職務内容・対象市場を1ワード追加する</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② 給与・条件の透明性 -->
+      <div class="axis-card">
+        <div class="ac-head grade-b">
+          <div class="ac-score-badge bg-orange">
+            <div class="s">11</div><div class="sl">/ 20</div>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-title">② 給与・条件の透明性</div>
+            <div class="ac-sub">給与幅・勤務形態・待遇の明確さ</div>
+          </div>
+          <div class="ac-grade bg-orange">B　改善余地あり</div>
+        </div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-section-label">現状</div>
+            <div class="ac-section-text bg">年俸360万〜500万円と幅を明示しているが、固定残業代（月4〜6万円、20時間相当）込みの記載。基本給は24〜33万円と別記されており、詳細を読み込まないと実態が把握しにくい構造。</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">課題</div>
+            <div class="check-list">
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct"><b>年俸表示</b>。競合3社はすべて月給表示（全薬グループ：月給26〜42万、月給30〜42万）を採用しており、Indeed検索結果での給与表示で劣位になっている</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">ファーストビューでは「360万〜500万円」と見えるが、固定残業込みであることが後半まで読まないと分からない</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「賞与年2回」の記載はあるが、Indeed上の「賞与あり」タグとして認識されていないため、絞り込み検索でヒットしない</span></div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">改善の方向性</div>
+            <div class="check-list">
+              <div class="check-item act"><span class="ci">→</span><span class="ct">月給ベースの表記に変更することで、Indeed検索結果での給与表示を競合と同条件にする</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「昇給年1回」「賞与年2回（7月・12月）」をIndeedがタグ認識できる形式で記載し、フィルター検索のヒット機会を増やす</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「応相談」止まりの働き方の記述を、実際に認められている柔軟性の実例に変える</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ 求職者目線の訴求 -->
+      <div class="axis-card">
+        <div class="ac-head grade-c">
+          <div class="ac-score-badge bg-red">
+            <div class="s">9</div><div class="sl">/ 20</div>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-title">③ 求職者目線の訴求</div>
+            <div class="ac-sub">「あなたが得られること」が伝わっているか</div>
+          </div>
+          <div class="ac-grade bg-red">C　要改善</div>
+        </div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-section-label">現状</div>
+            <div class="ac-section-text bg">「アピールポイント」セクションに「従業員20名・事業拡大中」「経営者との距離が近い」「内製体制でスピード感あり」「少数精鋭で裁量あり」と記載。</div>
+
+            <div class="quant-block">
+              <div class="qb-title">定量データ｜アピールポイントの文字数比較</div>
+              <div class="quant-row">
+                <div class="quant-row-head">
+                  <span class="qr-name">アピールポイント</span>
+                  <span class="qr-vals">栄進製薬 <b>189文字</b>　／　競合平均 <b style="color:var(--gray-dark);">約480文字</b></span>
+                </div>
+                <div class="quant-bar-wrap">
+                  <div class="quant-bar" style="height:8px;">
+                    <div class="quant-bar-fill" style="width:39%; background:var(--red);"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="quant-legend">
+                <span><span class="dot" style="background:var(--red);"></span>栄進製薬</span>
+                <span><span class="dot" style="background:var(--gray-mid); opacity:.5;"></span>競合平均</span>
+              </div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">課題</div>
+            <div class="check-list">
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">記載内容はすべて会社の状態・体制の説明であり、「候補者が何を得られるか」の視点がない</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「少数精鋭」「裁量あり」「風通し良い」は多くの中小企業が使う表現で差別化にならない</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">越境EC・中国語・医療法人連携という希少経験が積める要素があるのに、候補者キャリアへの有益さが伝わっていない</span></div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">改善の方向性</div>
+            <div class="check-list">
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「入社するとどんなキャリアが積めるか」「どんなスキルが身につくか」という候補者の未来像を記述する</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">越境EC・国内外出張・医療法人連携の業務ユニークさを「ここでしか経験できないこと」として前面に出す</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「30SKU展開中」という事実を、候補者にとっての提案の幅広さ・実績のつくりやすさとして翻訳する</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ 情報の充足度 -->
+      <div class="axis-card">
+        <div class="ac-head grade-b">
+          <div class="ac-score-badge bg-orange">
+            <div class="s">12</div><div class="sl">/ 20</div>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-title">④ 情報の充足度</div>
+            <div class="ac-sub">応募判断に必要な情報が揃っているか</div>
+          </div>
+          <div class="ac-grade bg-orange">B　改善余地あり</div>
+        </div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-section-label">現状</div>
+            <div class="ac-section-text bg">仕事内容・求める人材・アピールポイント・勤務条件・選考フローの各セクションは一通り揃っている。選考ステップ（Indeed応募→面接2回→合否通知）が明記されているのは良い点。</div>
+
+            <div class="quant-block">
+              <div class="qb-title">定量データ｜セクション別文字数（競合平均との比較）</div>
+
+              <div class="quant-row">
+                <div class="quant-row-head">
+                  <span class="qr-name">仕事内容</span>
+                  <span class="qr-vals">栄進製薬 <b>164文字</b>　／　競合平均 <b style="color:var(--gray-dark);">約500文字</b></span>
+                </div>
+                <div class="quant-bar" style="height:8px; margin-bottom:2px;">
+                  <div class="quant-bar-fill" style="width:33%; background:var(--red);"></div>
+                </div>
+              </div>
+
+              <div class="quant-row">
+                <div class="quant-row-head">
+                  <span class="qr-name">求める人材</span>
+                  <span class="qr-vals">栄進製薬 <b>215文字</b>　／　競合平均 <b style="color:var(--gray-dark);">約420文字</b></span>
+                </div>
+                <div class="quant-bar" style="height:8px; margin-bottom:2px;">
+                  <div class="quant-bar-fill" style="width:51%; background:var(--orange-lt);"></div>
+                </div>
+              </div>
+
+              <div class="quant-row">
+                <div class="quant-row-head">
+                  <span class="qr-name">アピールポイント</span>
+                  <span class="qr-vals">栄進製薬 <b>189文字</b>　／　競合平均 <b style="color:var(--gray-dark);">約480文字</b></span>
+                </div>
+                <div class="quant-bar" style="height:8px; margin-bottom:6px;">
+                  <div class="quant-bar-fill" style="width:39%; background:var(--red);"></div>
+                </div>
+              </div>
+
+              <div style="font-size:11px; font-weight:700; color:var(--red); background:var(--red-pale); border-radius:6px; padding:8px 12px; margin-top:4px;">
+                合計 568文字　←　競合平均 1,482文字の <b>38%</b>
+              </div>
+            </div>
+
+            <div class="quant-block" style="margin-top:14px;">
+              <div class="qb-title">定量データ｜必須条件（MUST）の数</div>
+              <div class="must-count">
+                <div>
+                  <div class="must-badge">4<span>件</span></div>
+                  <div style="font-size:10px; color:var(--orange); font-weight:700; margin-top:2px;">競合平均 2件</div>
+                </div>
+                <div class="must-list">
+                  ① 短期大学卒業以上<br>
+                  ② 一般医薬・サプリメント業界の営業経験 3年<br>
+                  ③ 中国語（ビジネスレベル）<br>
+                  ④ 東京都中央区銀座への通勤
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">課題</div>
+            <div class="check-list">
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「求めるスキル」と「期待するミッション」が混在しており、必須条件と歓迎条件の区別が不明確</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「中国語必須」「健康食品業界経験必須」の理由説明がなく、ハードルを上げている割に納得感がない</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">本文の総文字数が競合平均の38%しかなく、職場環境・チーム構成・1日の流れ等の情報が不足している</span></div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">改善の方向性</div>
+            <div class="check-list">
+              <div class="check-item act"><span class="ci">→</span><span class="ct">必須条件（MUST）と歓迎条件（WANT）を明確に分けて記載する</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">中国語・業界経験が必須な背景（越境EC対応、中国向け販売ルート等）を1〜2文で補足し納得感を高める</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">チームの簡単な紹介（何名体制か、どんな人が働いているか）を加えて入社後のイメージを具体化する</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑤ 差別化・独自性 -->
+      <div class="axis-card">
+        <div class="ac-head grade-c">
+          <div class="ac-score-badge bg-red">
+            <div class="s">10</div><div class="sl">/ 20</div>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-title">⑤ 差別化・独自性</div>
+            <div class="ac-sub">100件並んだ中でクリックされる要素があるか</div>
+          </div>
+          <div class="ac-grade bg-red">C　要改善</div>
+        </div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-section-label">現状</div>
+            <div class="ac-section-text bg">「創業32年」「ドラッグストア・越境ECにて30SKU展開中」「医療法人との連携体制」という独自性のある素材はあるが、それぞれが箇条書きの1行として埋もれており差別化として機能していない。</div>
+
+            <div class="quant-block">
+              <div class="qb-title">定量データ｜タグ保有状況（競合比較）</div>
+              <div class="quant-row">
+                <div class="quant-row-head">
+                  <span class="qr-name">Indeedタグ数</span>
+                  <span class="qr-vals">栄進製薬 <b>3個</b>　／　競合平均 <b style="color:var(--gray-dark);">7個</b></span>
+                </div>
+                <div class="quant-bar" style="height:8px; margin-bottom:8px;">
+                  <div class="quant-bar-fill" style="width:43%; background:var(--red);"></div>
+                </div>
+              </div>
+
+              <div style="font-size:11px; margin-bottom:6px; color:var(--gray-mid); font-weight:700; letter-spacing:.04em;">タグ保有状況（○あり　―なし）</div>
+              <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                <thead>
+                  <tr style="background:var(--gray-light);">
+                    <th style="padding:5px 8px; text-align:left; font-weight:700; border:1px solid var(--border);">タグ</th>
+                    <th style="padding:5px 8px; text-align:center; font-weight:700; border:1px solid var(--border);">栄進製薬</th>
+                    <th style="padding:5px 8px; text-align:center; font-weight:700; border:1px solid var(--border);">全薬G-プロモ</th>
+                    <th style="padding:5px 8px; text-align:center; font-weight:700; border:1px solid var(--border);">医用工学研</th>
+                    <th style="padding:5px 8px; text-align:center; font-weight:700; border:1px solid var(--border);">全薬G-マーケ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="padding:5px 8px; border:1px solid var(--border);">交通費支給</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                  </tr>
+                  <tr style="background:var(--gray-light);">
+                    <td style="padding:5px 8px; border:1px solid var(--border);">賞与あり</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:5px 8px; border:1px solid var(--border);">昇給あり</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                  </tr>
+                  <tr style="background:var(--gray-light);">
+                    <td style="padding:5px 8px; border:1px solid var(--border);">駅近5分以内</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:5px 8px; border:1px solid var(--border);">在宅OK</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                  </tr>
+                  <tr style="background:var(--gray-light);">
+                    <td style="padding:5px 8px; border:1px solid var(--border);">住宅手当あり</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--gray-mid);">―</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green); font-weight:700;">○</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr style="background:var(--red-pale); font-weight:700;">
+                    <td style="padding:5px 8px; border:1px solid var(--border);">合計タグ数</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--red);">3個</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green);">7個</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green);">7個</td>
+                    <td style="padding:5px 8px; text-align:center; border:1px solid var(--border); color:var(--green);">7個</td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div style="font-size:11px; color:var(--gray-mid); margin-top:6px; line-height:1.6;">
+                「賞与あり」「昇給あり」はIndeedの絞り込みフィルタで使われるタグ。記述形式を整えるだけで自動付与される。
+              </div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">課題</div>
+            <div class="check-list">
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">認知度で劣る栄進製薬は原稿の訴求力で補う必要があるのに、情報量・表現力ともに競合（全薬グループ）に劣っている</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「越境EC」「中国語対応」というニッチかつ希少な経験が積める点は強力な差別化材料だが原稿内で目立っていない</span></div>
+              <div class="check-item fail"><span class="ci">✕</span><span class="ct">「事業拡大中」という成長感の訴求があるが、具体的な成長規模・スピードの裏付けがない</span></div>
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-section-label">改善の方向性</div>
+            <div class="check-list">
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「越境EC・中国向け市場での営業経験が積める」ポイントを、中国語スキルを持つターゲット候補者へのメッセージとして前面に構成し直す</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">「創業32年・30SKU」「医療法人連携」を事実の列挙ではなく「なぜここを選ぶか」の文脈で説明する形に書き換える</span></div>
+              <div class="check-item act"><span class="ci">→</span><span class="ct">競合が訴求していない「銀座オフィス・少人数での高裁量」を具体的な業務シーンと紐付けて記述する</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 6: 優先改善テーマ TOP3
+  ══════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head"><div class="cn">6</div>優先改善テーマ TOP3</div>
+    <div class="card-body">
+
+      <div class="top3-item r1">
+        <div class="top3-num">1</div>
+        <div class="top3-content">
+          <h4>給与表示の月給化 ＋ 賞与・昇給タグの付与</h4>
+          <p>競合3社すべてが月給表示を採用しており、年俸表示の栄進製薬はIndeed検索結果での給与表示で構造的に不利。月給換算への変更と「賞与年2回」「昇給年1回」の記述整備でタグが3→5個に増え、絞り込み検索のヒット機会が拡大する。最もコストの低い改善で最大のリーチ改善が見込める。</p>
+        </div>
+      </div>
+
+      <div class="top3-item r2">
+        <div class="top3-num">2</div>
+        <div class="top3-content">
+          <h4>求職者目線の訴求強化（「得られること」への視点転換）</h4>
+          <p>スコアが最低（9/20）かつ応募転換率に直結する軸。「会社の説明」から「候補者が得られること」への視点転換が必要。越境EC・中国語・医療法人連携という希少経験素材が眠っており、これをキャリア形成の文脈で書き直すだけで訴求力が大幅に向上する。</p>
+        </div>
+      </div>
+
+      <div class="top3-item r3">
+        <div class="top3-num">3</div>
+        <div class="top3-content">
+          <h4>タイトルへの差別化要素追加 ＋ 本文の情報量補強</h4>
+          <p>現状の文字数は競合平均の38%（568文字 vs 1,482文字）で、検索ヒット時の情報量が圧倒的に少ない。中国語・越境ECの独自要素をタイトルに盛り込みながら、仕事内容・アピールポイントを各200〜300文字追記することで、ターゲットCTRの改善と応募判断材料の充実を同時に図れる。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<footer class="site-footer">Copyright &copy; EISHIN Co.,LTD. All Rights Reserved.</footer>
+
+</body>
+</html>
