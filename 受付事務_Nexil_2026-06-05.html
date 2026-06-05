@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>受付事務（株式会社Capitan）｜Indeed運用診断レポート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #AE1C3B; --red-deep: #9C0B2D; --red-pale: #FBEBEE;
+    --orange: #E65100; --orange-lt: #FFA726; --orange-pale: #FFFDE7;
+    --green: #2E7D32; --green-lt: #66BB6A; --green-pale: #F1F8E9;
+    --gray-dark: #434343; --gray-mid: #666666; --gray-light: #F4F4F4;
+    --border: #E0E0E0; --white: #FFFFFF;
+  }
+  body { font-family: 'Noto Sans JP', sans-serif; background: #F0F0F0; color: var(--gray-dark); font-size: 14px; line-height: 1.6; }
+  .site-header { background: var(--red); height: 52px; display: flex; align-items: center; padding: 0 28px; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .site-header .logo { color: white; font-size: 15px; font-weight: 700; }
+  .site-header .logo span { opacity: 0.65; font-weight: 400; font-size: 12px; margin-left: 10px; }
+  .site-header .eishin { color: rgba(255,255,255,0.75); font-size: 11px; }
+  .meta-bar { background: var(--red-pale); border-bottom: 2px solid var(--red); padding: 8px 28px; font-size: 11px; color: var(--gray-mid); display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-bar span b { color: var(--gray-dark); }
+  .page-wrap { max-width: 860px; margin: 24px auto 48px; padding: 0 16px; }
+  .card { background: white; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 18px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .card-head { background: var(--red); color: white; padding: 11px 18px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .card-head .cn { background: rgba(255,255,255,0.22); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .card-body { padding: 20px 22px; }
+  .profile-item { background: var(--gray-light); border-radius: 7px; padding: 10px 14px; }
+  .profile-item .pi-label { font-size: 10px; font-weight: 700; color: var(--gray-mid); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .profile-item .pi-value { font-size: 13px; font-weight: 700; color: var(--gray-dark); line-height: 1.4; }
+  .profile-item .pi-sub { font-size: 10px; color: var(--gray-mid); margin-top: 2px; }
+  .profile-item.highlight { background: var(--red-pale); border: 1px solid #F5C6D0; }
+  .profile-item.highlight .pi-value { color: var(--red-deep); }
+  .target-box { background: var(--gray-light); border-radius: 7px; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .target-chip { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 700; color: var(--gray-dark); }
+  .target-chip .tc-label { color: var(--gray-mid); font-weight: 400; margin-right: 4px; }
+  .judge-badge { font-size: 10px; font-weight: 700; color: white; padding: 2px 10px; border-radius: 8px; white-space: nowrap; }
+  .bg-red { background: var(--red); } .bg-orange { background: var(--orange-lt); } .bg-green { background: var(--green-lt); } .bg-green2 { background: var(--green); }
+  .c-red { color: var(--red); } .c-orange { color: var(--orange); } .c-green { color: var(--green); }
+  .mark-ok { color: var(--green); font-weight: 700; } .mark-warn { color: var(--orange); font-weight: 700; } .mark-ng { color: var(--red); font-weight: 700; }
+  .summary-box { background: var(--gray-light); border-radius: 7px; padding: 14px 16px; font-size: 12px; color: var(--gray-dark); line-height: 1.8; border-left: 3px solid var(--red); }
+  .summary-box strong { font-weight: 700; }
+  .align-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .align-card { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
+  .align-card.ok { background: var(--green-pale); border-color: #C5E1A5; }
+  .align-card.warn { background: var(--orange-pale); border-color: #FFE082; }
+  .align-card.ng { background: var(--red-pale); border-color: #F5C6D0; }
+  .align-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .align-mark { font-size: 18px; font-weight: 900; line-height: 1; }
+  .align-card.ok .align-mark { color: var(--green); } .align-card.warn .align-mark { color: var(--orange); } .align-card.ng .align-mark { color: var(--red-deep); }
+  .align-title { font-size: 12px; font-weight: 700; color: var(--gray-dark); }
+  .align-body { font-size: 11px; color: var(--gray-dark); line-height: 1.7; }
+  .issue-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 8px; border: 1px solid; margin-bottom: 10px; }
+  .issue-item:last-child { margin-bottom: 0; }
+  .issue-item.p1 { background: var(--red-pale); border-color: #F5C6D0; }
+  .issue-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: white; flex-shrink: 0; margin-top: 2px; }
+  .p1 .issue-num { background: var(--red); }
+  .issue-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .p1 .issue-content h4 { color: var(--red-deep); }
+  .issue-content p { font-size: 12px; color: var(--gray-dark); line-height: 1.7; }
+  .issue-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; }
+  .issue-tag.funnel { background: #E3F2FD; color: #1565C0; }
+  .action-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+  .action-card:last-child { margin-bottom: 0; }
+  .action-head { display: flex; align-items: center; gap: 12px; padding: 11px 16px; background: var(--gray-light); border-bottom: 1px solid var(--border); }
+  .action-num { width: 24px; height: 24px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+  .action-title { font-size: 13px; font-weight: 700; color: var(--gray-dark); flex: 1; }
+  .action-body { padding: 14px 16px; }
+  .action-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: flex-start; }
+  .action-row:last-child { margin-bottom: 0; }
+  .ar-label { font-size: 10px; font-weight: 700; color: white; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 2px; white-space: nowrap; }
+  .ar-label.action { background: var(--red); } .ar-label.effect { background: var(--green); }
+  .ar-text { font-size: 12px; color: var(--gray-dark); line-height: 1.7; }
+  .pred-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .pred-table th { background: var(--red); color: white; font-weight: 700; padding: 9px 12px; text-align: center; }
+  .pred-table th:first-child { text-align: left; }
+  .pred-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; }
+  .pred-table td:first-child { text-align: left; font-weight: 700; }
+  .pred-table tr:last-child td { border-bottom: none; }
+  .pred-table tr:nth-child(even) td { background: var(--gray-light); }
+  .pred-val { font-size: 15px; font-weight: 900; }
+  .pred-val.current { color: var(--gray-mid); } .pred-val.conservative { color: var(--orange); } .pred-val.optimistic { color: var(--green); }
+  .pred-change { font-size: 11px; font-weight: 700; }
+  .pred-change.up { color: var(--green); } .pred-change.down { color: var(--red); }
+  .bench-note { font-size: 11px; color: var(--gray-mid); display: flex; align-items: center; gap: 4px; }
+  .bench-note b { color: var(--gray-dark); }
+  .site-footer { background: var(--red); color: rgba(255,255,255,0.65); font-size: 11px; text-align: center; padding: 10px; margin-top: 32px; }
+  @media (max-width: 600px) { .align-grid { grid-template-columns: 1fr; } .page-wrap { padding: 0 10px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Indeed 運用診断レポート <span>紹介会社向け</span></div>
+  <div class="eishin">Powered by EISHIN</div>
+</header>
+
+<div class="meta-bar">
+  <span><b>求人企業：</b>株式会社Capitan（紹介：株式会社Nexil）</span>
+  <span><b>診断日：</b>2026年6月5日</span>
+  <span><b>対象原稿：</b>受付事務</span>
+  <span><b>掲載エリア：</b>大阪市北区梅田</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ― プロフィール -->
+  <div class="card">
+    <div class="card-head"><div class="cn">―</div>診断対象プロフィール</div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
+        <div class="profile-item">
+          <div class="pi-label">原稿タイトル</div>
+          <div class="pi-value">受付事務</div>
+          <div class="pi-sub">髪色・ネイル自由♪オフィスの顔として働く受付事務</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">求人企業 / 紹介事業者</div>
+          <div class="pi-value">株式会社Capitan</div>
+          <div class="pi-sub">紹介：株式会社Nexil（許可番号：13-ユ-315541）</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">勤務地 / 雇用形態</div>
+          <div class="pi-value">大阪市北区梅田1-2-2</div>
+          <div class="pi-sub">正社員 ／ 〒530-0001</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">掲載給与</div>
+          <div class="pi-value">月給 26万〜33万円</div>
+          <div class="pi-sub">残業なし・土日祝休み・年休120日以上</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+        <div class="profile-item highlight">
+          <div class="pi-label">総費用（逆算）</div>
+          <div class="pi-value">¥30,030</div>
+          <div class="pi-sub">応募単価×応募数</div>
+        </div>
+        <div class="profile-item highlight">
+          <div class="pi-label">応募数（実績）</div>
+          <div class="pi-value">10件</div>
+          <div class="pi-sub">表示回数 5,109 imp</div>
+        </div>
+        <div class="profile-item highlight">
+          <div class="pi-label">応募単価（CPA）</div>
+          <div class="pi-value">¥3,003</div>
+          <div class="pi-sub">クリック単価 ¥75</div>
+        </div>
+      </div>
+      <div style="margin-bottom:6px;font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:0.05em;">ターゲット定義</div>
+      <div class="target-box">
+        <span class="target-chip"><span class="tc-label">職種</span>受付事務</span>
+        <span class="target-chip"><span class="tc-label">雇用形態</span>正社員</span>
+        <span class="target-chip"><span class="tc-label">エリア</span>大阪市内</span>
+        <span class="target-chip"><span class="tc-label">給与</span>月26〜33万</span>
+        <span class="target-chip"><span class="tc-label">ターゲット</span>35歳以下・日本人男女・未経験OK</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 ファネル診断 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">1</div>ファネル診断</div>
+    <div class="card-body">
+
+      <!-- ファネル図 -->
+      <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
+
+        <!-- 表示回数 -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">表示回数（インプレッション）</div>
+            <div style="font-size:20px;font-weight:900;color:var(--gray-dark);">5,109<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> imp</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--red);width:100%;">表示回数</div>
+          </div>
+          <div style="width:200px;flex-shrink:0;"></div>
+        </div>
+
+        <!-- CTR矢印 -->
+        <div style="display:flex;align-items:center;height:36px;padding-left:180px;">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div style="background:var(--green-pale);border:1px solid #C5E1A5;border-radius:6px;padding:4px 12px;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:10px;color:var(--gray-mid);">クリック率（CTR）</span>
+            <span style="font-size:14px;font-weight:900;color:var(--green);">7.81%</span>
+            <span class="judge-badge bg-green2">良好</span>
+            <span class="bench-note">基準 <b>0.5〜1.5%</b></span>
+          </div>
+        </div>
+
+        <!-- PV数 -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">PV数（クリック数）</div>
+            <div style="font-size:20px;font-weight:900;color:var(--green);">399<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> PV</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:82%;">PV数</div>
+          </div>
+          <div style="width:200px;flex-shrink:0;"></div>
+        </div>
+
+        <!-- 応募開始率矢印 -->
+        <div style="display:flex;align-items:center;height:36px;padding-left:180px;">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:6px;padding:4px 12px;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:10px;color:var(--gray-mid);">応募開始率</span>
+            <span style="font-size:14px;font-weight:900;color:var(--red);">4.26%</span>
+            <span class="judge-badge bg-red">要改善</span>
+            <span class="bench-note">基準 <b>15〜30%</b></span>
+          </div>
+        </div>
+
+        <!-- 応募開始数（詰まりポイント） -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募開始数</div>
+            <div style="font-size:20px;font-weight:900;color:var(--red);">17<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--red);width:28%;outline:3px solid var(--red-deep);outline-offset:2px;">応募開始 ← 詰まりポイント</div>
+          </div>
+          <div style="width:200px;flex-shrink:0;padding-left:14px;">
+            <span class="judge-badge bg-red" style="font-size:11px;padding:4px 12px;">⚠ PVの95%がここで離脱</span>
+          </div>
+        </div>
+
+        <!-- 応募率矢印 -->
+        <div style="display:flex;align-items:center;height:36px;padding-left:180px;">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div style="background:var(--gray-light);border:1px solid var(--border);border-radius:6px;padding:4px 12px;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:10px;color:var(--gray-mid);">応募完了率</span>
+            <span style="font-size:14px;font-weight:900;color:var(--orange);">58.82%</span>
+            <span class="judge-badge bg-orange">標準</span>
+            <span class="bench-note">基準 <b>40〜65%</b></span>
+          </div>
+        </div>
+
+        <!-- 応募完了 -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募完了数</div>
+            <div style="font-size:20px;font-weight:900;color:var(--gray-dark);">10<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:18%;">応募完了</div>
+          </div>
+          <div style="width:200px;flex-shrink:0;"></div>
+        </div>
+      </div>
+
+      <!-- 指標テーブル -->
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;">
+        <thead><tr>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">指標</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">実績値</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">ベンチマーク</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">判定</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">クリック率（CTR）</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">7.81%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">0.5〜1.5%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span></td></tr>
+          <tr style="background:var(--gray-light);"><td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">応募開始率</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--red);">4.26%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">15〜30%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-red">要改善</span></td></tr>
+          <tr><td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">応募完了率</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--orange);">58.82%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">40〜65%</td><td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-orange">標準</span></td></tr>
+          <tr style="background:var(--gray-light);"><td style="padding:9px 12px;font-weight:700;">応募単価（CPA）</td><td style="padding:9px 12px;text-align:center;font-weight:900;color:var(--green);">¥3,003</td><td style="padding:9px 12px;text-align:center;color:var(--gray-mid);">5,000〜20,000円</td><td style="padding:9px 12px;text-align:center;"><span class="judge-badge bg-green2">良好</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="summary-box" style="margin-top:16px;">
+        <strong>ファネル診断まとめ：</strong>CTR 7.81%はベンチマークの<strong>5倍以上</strong>で、検索結果での訴求力は極めて高い。しかし求人詳細ページを開いた399人のうち<strong>382人（95.7%）が応募フォームに進まずに離脱</strong>しており、応募開始率4.26%が唯一にして最大の課題。応募完了率・CPAは標準〜良好のため、応募開始率を改善するだけで成果が大幅に伸びる構造。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 ターゲット×原稿 整合性チェック -->
+  <div class="card">
+    <div class="card-head"><div class="cn">2</div>ターゲット × 原稿　整合性チェック</div>
+    <div class="card-body">
+      <div class="align-grid">
+        <div class="align-card warn">
+          <div class="align-card-head"><div class="align-mark">△</div><div class="align-title">タイトル訴求</div></div>
+          <div class="align-body">「受付事務」というタイトルは職種名のみでターゲット訴求要素がない。ただしキャッチコピー「髪色・ネイル自由♪」が女性層に響く差別化要素になっており、CTR 7.81%という高い数値がそれを証明している。タイトル自体にもう一要素加えられるとさらに改善余地あり。</div>
+        </div>
+        <div class="align-card ok">
+          <div class="align-card-head"><div class="align-mark">○</div><div class="align-title">給与の整合</div></div>
+          <div class="align-body">月給26〜33万円は35歳以下・未経験層のターゲットに対して十分に競争力のある水準。残業なし・賞与ありの条件も加味すると実質的な給与訴求は良好。年収例（1年目280万〜）の記載もあり透明性が高い。</div>
+        </div>
+        <div class="align-card ng">
+          <div class="align-card-head"><div class="align-mark">✕</div><div class="align-title">訴求の一致</div></div>
+          <div class="align-body">
+            タイトル・アピールポイントは「未経験OK・フリーター歓迎」と訴求しているが、必須条件に<strong>「日本企業での就業経験がある方」</strong>と記載があり、未経験訴求と矛盾している。この矛盾が詳細ページ閲覧後の離脱（応募開始率4.26%）の主因と考えられる。
+            <div style="background:white;border-radius:4px;padding:6px 8px;margin-top:6px;font-size:10px;">
+              <span style="color:var(--red-deep);font-weight:700;">訴求：「未経験大歓迎」「フリーター歓迎」</span><br>
+              <span style="color:var(--red-deep);font-weight:700;">必須条件：「日本企業での就業経験がある方」← 矛盾</span>
+            </div>
+          </div>
+        </div>
+        <div class="align-card ok">
+          <div class="align-card-head"><div class="align-mark">○</div><div class="align-title">エリアの整合</div></div>
+          <div class="align-body">梅田エリアは大阪市内最大のターミナルで、6路線の最寄り駅・徒歩分数が明記されている。35歳以下の大阪在住者のほぼ全員が通勤圏内に入るため、エリア面での離脱要因はない。</div>
+        </div>
+      </div>
+      <div class="summary-box" style="margin-top:16px;">
+        <strong>整合性チェックまとめ：</strong>給与・エリアはターゲットと合致しており問題なし。<strong>最大のミスマッチは「未経験OK」訴求と「就業経験必須」という必須条件の矛盾</strong>で、これが詳細ページでの大量離脱を招いている。求職者は「未経験OK」でクリックし、詳細を読んで「あ、経験必要なんだ」と離脱するという典型的なパターン。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 紹介会社用ルールチェック -->
+  <div class="card">
+    <div class="card-head">
+      <div class="cn">3</div>
+      紹介会社用ルールチェック
+      <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:0.8;">アカウントBan防止・Indeed掲載ポリシー準拠</span>
+    </div>
+    <div class="card-body">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+        <thead><tr>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;width:36px;">#</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">チェック項目</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;width:60px;">判定</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">確認内容・対応</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">①</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">勤務地は郵便番号〜番地まで記載されているか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">「〒530-0001 大阪府大阪市北区梅田1-2-2 大阪駅前第2ビル12-12」と郵便番号・番地・建物名まで記載されており問題なし。</td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">②</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">経験要件と年齢制限の整合性（未経験OKなら年齢制限なし）</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-warn">△</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">「未経験大歓迎」と記載しながら「20代～30代が活躍中！」と年齢層を示唆する表現がある。明示的な年齢制限ではないが、35歳以下ターゲットで未経験OKであれば<strong>年齢を連想させる表現も削除することを推奨</strong>。<br><span style="color:var(--orange);font-weight:700;">→「20代・30代活躍中」の文言を「幅広い年代が活躍中」等に変更検討</span></td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">③</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アウトソース系企業の場合、「プロジェクト先勤務」の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">勤務地備考に「大阪本社」と自社勤務であることが明示されており、プロジェクト先常駐型ではないため記載は不要。問題なし。</td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">④</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アクセス欄に最寄り駅・路線・徒歩分数の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">JR大阪駅・メトロ西梅田・阪神大阪梅田・メトロ御堂筋線梅田・メトロ谷町線東梅田・阪急大阪梅田の6路線について、それぞれ徒歩分数まで記載されており十分。</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;font-weight:700;color:var(--gray-mid);">⑤</td>
+            <td style="padding:10px 12px;font-weight:700;">その他欄に紹介会社の旨・職業紹介許可番号の記載があるか</td>
+            <td style="padding:10px 12px;text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;">「本求人は株式会社NexilがCapitanの依頼により行う職業紹介の求人です」および「有料職業紹介許可番号：13-ユ-315541」の両方が記載されており問題なし。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;gap:12px;margin-bottom:14px;">
+        <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--red);">0</div>
+          <div style="font-size:10px;color:var(--red-deep);font-weight:700;">要対応（✕）</div>
+        </div>
+        <div style="background:var(--orange-pale);border:1px solid #FFE082;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--orange);">1</div>
+          <div style="font-size:10px;color:var(--orange);font-weight:700;">要確認（△）</div>
+        </div>
+        <div style="background:var(--green-pale);border:1px solid #C5E1A5;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--green);">4</div>
+          <div style="font-size:10px;color:var(--green);font-weight:700;">問題なし（○）</div>
+        </div>
+        <div class="summary-box" style="margin-top:0;flex:1;">
+          住所・アクセス・許可番号の記載はすべて適切で、Ban リスクとなる重大な違反はなし。②の「20代・30代活躍中」という年齢示唆表現のみ、未経験OKとの整合性観点から変更を推奨。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 課題特定 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">4</div>課題特定</div>
+    <div class="card-body">
+      <div class="issue-item p1">
+        <div class="issue-num">1</div>
+        <div class="issue-content">
+          <span class="issue-tag funnel">ファネル最優先</span>
+          <h4>「未経験OK」訴求と「就業経験必須」条件の矛盾が応募開始率を極限まで下げている</h4>
+          <p>CTR 7.81%という高水準で399件のPVを獲得しているにもかかわらず、応募開始率は4.26%（17件）と極めて低い。<strong>必須条件の「日本企業での就業経験がある方」という記載が、未経験OKで訪れた求職者を条件確認後に一斉に離脱させている</strong>のが主因と考えられる。399人のうち382人が詳細ページで離脱しており、応募開始率をベンチマーク標準値（20%）まで改善できれば応募数は現状の<strong>約5倍（10件→47件）</strong>になる計算。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 改善施策 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">5</div>改善施策</div>
+    <div class="card-body">
+
+      <div class="action-card">
+        <div class="action-head">
+          <div class="action-num">1</div>
+          <div class="action-title">必須条件の「就業経験あり」を整理し、未経験訴求との矛盾を解消する</div>
+          <span style="font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;background:#FDE7F3;color:#880E4F;">最優先｜応募開始率改善</span>
+        </div>
+        <div class="action-body">
+          <div class="action-row">
+            <span class="ar-label" style="background:var(--gray-mid);">背景</span>
+            <span class="ar-text">「未経験大歓迎」「フリーター歓迎」と訴求しておきながら、必須条件に「日本企業での就業経験がある方」と記載されている。この矛盾を見た求職者が「自分は対象外か」と判断して離脱している可能性が非常に高い。</span>
+          </div>
+
+          <!-- Before/After 必須条件 -->
+          <div style="margin:12px 0 8px;font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:0.05em;">▶ 必須条件の変更案</div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:start;margin-bottom:12px;">
+            <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--red-deep);margin-bottom:6px;">現状（必須条件）</div>
+              <div style="font-size:11px;color:var(--gray-dark);line-height:1.8;">
+                ・日本企業での就業経験がある方<br>
+                ・ビジネスレベル以上の日本語能力<br>
+                　┗ネイティブレベルの日本語力が求められます
+              </div>
+            </div>
+            <div style="font-size:18px;color:var(--gray-mid);padding-top:20px;">→</div>
+            <div style="background:var(--green-pale);border:1px solid #C5E1A5;border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:6px;">改善案（必須条件）</div>
+              <div style="font-size:11px;color:var(--gray-dark);line-height:1.8;">
+                ・学歴・職歴・転職回数不問<br>
+                ・日本語でのコミュニケーションができる方<br>
+                　┗（日常会話レベル以上、業種未経験OK）
+              </div>
+            </div>
+          </div>
+
+          <!-- 訴求の整合性 -->
+          <div style="margin:8px 0;font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:0.05em;">▶ 訴求ブロックの整理（未経験OK訴求を冒頭に移動）</div>
+          <div style="background:var(--gray-light);border-radius:6px;padding:12px 14px;font-size:11px;line-height:1.9;color:var(--gray-dark);margin-bottom:12px;">
+            ✓ 仕事内容の冒頭に「<strong>社会人経験ゼロでもOK・ビジネスマナーから丁寧に教えます</strong>」を明記<br>
+            ✓「フリーターの方・接客・販売経験者歓迎」→前職の具体例を追記（例：元アパレル、元飲食スタッフ）<br>
+            ✓「入社後のフォロー面談あり」「研修期間あり」の記載を必須条件の直前に配置して安心感を演出
+          </div>
+
+          <div class="action-row">
+            <span class="ar-label effect">想定効果</span>
+            <span class="ar-text">訴求と条件の矛盾が解消されることで、詳細ページでの離脱が減少。応募開始率が<strong>4.26% → 10〜20%</strong>に改善し、応募数が現状の2〜5倍になる見込み。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-card">
+        <div class="action-head">
+          <div class="action-num">2</div>
+          <div class="action-title">タイトルに訴求ワードを追加してCTRをさらに強化する</div>
+          <span style="font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;background:#E3F2FD;color:#1565C0;">CTR強化</span>
+        </div>
+        <div class="action-body">
+          <div class="action-row">
+            <span class="ar-label" style="background:var(--gray-mid);">背景</span>
+            <span class="ar-text">現状のCTR 7.81%はすでに良好だが、タイトルは「受付事務」のみでシンプル。施策①で条件が整理された後は、タイトルでも「未経験OK」「月給26万〜」を明示することでCTRと応募開始率の両方をさらに伸ばせる。</span>
+          </div>
+
+          <div style="margin:12px 0 8px;font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:0.05em;">▶ タイトル候補（ABテスト推奨）</div>
+          <div style="background:var(--gray-light);border-radius:6px;padding:12px 14px;font-size:11px;line-height:2.0;color:var(--gray-dark);margin-bottom:12px;">
+            <span style="font-weight:700;color:var(--green);">案A：</span>【未経験OK】受付事務／月給26万〜／梅田・残業なし<br>
+            <span style="font-weight:700;color:var(--green);">案B：</span>受付事務（髪色・ネイル自由）月給26万〜33万円／大阪市北区<br>
+            <span style="font-weight:700;color:var(--green);">案C：</span>【土日祝休み】受付事務・未経験歓迎／月給26万〜／梅田駅近
+          </div>
+
+          <div class="action-row">
+            <span class="ar-label effect">想定効果</span>
+            <span class="ar-text">すでに高いCTRをさらに安定化させつつ、タイトルで条件を明示することでクリック後の「期待外れ感」による離脱を減らし、応募開始率の改善にも寄与する。</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6 数値改善予測 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">6</div>数値改善予測</div>
+    <div class="card-body">
+      <div style="font-size:11px;color:var(--gray-mid);margin-bottom:12px;">
+        ※ 施策①（必須条件の整理による応募開始率の改善）を実施した場合の予測。CTR・応募完了率は現状維持と仮定。<br>
+        保守予測：応募開始率が10%に改善／楽観予測：応募開始率が20%に改善
+      </div>
+
+      <table class="pred-table">
+        <thead><tr>
+          <th>指標</th>
+          <th>現状</th>
+          <th>保守予測<br><span style="font-weight:400;font-size:10px;">応募開始率 10%</span></th>
+          <th>楽観予測<br><span style="font-weight:400;font-size:10px;">応募開始率 20%</span></th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>応募開始率</td>
+            <td><span class="pred-val current">4.26%</span></td>
+            <td><span class="pred-val conservative">10%</span><br><span class="pred-change up">+5.74pt</span></td>
+            <td><span class="pred-val optimistic">20%</span><br><span class="pred-change up">+15.74pt</span></td>
+          </tr>
+          <tr>
+            <td>応募開始数</td>
+            <td><span class="pred-val current">17件</span></td>
+            <td><span class="pred-val conservative">40件</span><br><span class="pred-change up">+23件</span></td>
+            <td><span class="pred-val optimistic">80件</span><br><span class="pred-change up">+63件</span></td>
+          </tr>
+          <tr>
+            <td>応募数</td>
+            <td><span class="pred-val current">10件</span></td>
+            <td><span class="pred-val conservative">24件</span><br><span class="pred-change up">+14件（+140%）</span></td>
+            <td><span class="pred-val optimistic">47件</span><br><span class="pred-change up">+37件（+370%）</span></td>
+          </tr>
+          <tr>
+            <td>応募単価（CPA）</td>
+            <td><span class="pred-val current">¥3,003</span></td>
+            <td><span class="pred-val conservative">¥1,251</span><br><span class="pred-change up">▲¥1,752（▲58%）</span></td>
+            <td><span class="pred-val optimistic">¥639</span><br><span class="pred-change up">▲¥2,364（▲79%）</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 応募数バーグラフ -->
+      <div style="padding:16px;background:var(--gray-light);border-radius:8px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gray-mid);margin-bottom:12px;letter-spacing:0.05em;">応募数の変化（件）</div>
+        <div style="display:flex;align-items:flex-end;gap:24px;height:110px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="font-size:13px;font-weight:900;color:var(--gray-mid);">10</div>
+            <div style="width:52px;height:24px;background:var(--gray-mid);border-radius:4px 4px 0 0;"></div>
+            <div style="font-size:10px;color:var(--gray-mid);">現状</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="font-size:13px;font-weight:900;color:var(--orange);">24</div>
+            <div style="width:52px;height:57px;background:var(--orange-lt);border-radius:4px 4px 0 0;"></div>
+            <div style="font-size:10px;color:var(--gray-mid);">保守予測</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="font-size:13px;font-weight:900;color:var(--green);">47</div>
+            <div style="width:52px;height:110px;background:var(--green-lt);border-radius:4px 4px 0 0;"></div>
+            <div style="font-size:10px;color:var(--gray-mid);">楽観予測</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <strong>改善のポイント：</strong>このケースは広告費やCTRは問題なく、<strong>原稿の条件記載の矛盾を直すだけで応募数が2〜5倍になる</strong>可能性がある非常に改善しやすい案件。追加費用なしで成果を大幅に改善できる。施策①の実施後、2週間でデータを確認して効果を検証することを推奨。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  © EISHIN Inc. — Indeed 運用診断レポート（紹介会社向け）| 本レポートは診断時点の情報に基づいています
+</footer>
+</body>
+</html>
