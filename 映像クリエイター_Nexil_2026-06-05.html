@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>映像クリエイター（株式会社Capitan）｜Indeed運用診断レポート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #AE1C3B; --red-deep: #9C0B2D; --red-pale: #FBEBEE;
+    --orange: #E65100; --orange-lt: #FFA726; --orange-pale: #FFFDE7;
+    --green: #2E7D32; --green-lt: #66BB6A; --green-pale: #F1F8E9;
+    --gray-dark: #434343; --gray-mid: #666666; --gray-light: #F4F4F4;
+    --border: #E0E0E0; --white: #FFFFFF;
+  }
+  body { font-family: 'Noto Sans JP', sans-serif; background: #F0F0F0; color: var(--gray-dark); font-size: 14px; line-height: 1.6; }
+  .site-header { background: var(--red); height: 52px; display: flex; align-items: center; padding: 0 28px; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .site-header .logo { color: white; font-size: 15px; font-weight: 700; }
+  .site-header .logo span { opacity: 0.65; font-weight: 400; font-size: 12px; margin-left: 10px; }
+  .site-header .eishin { color: rgba(255,255,255,0.75); font-size: 11px; }
+  .meta-bar { background: var(--red-pale); border-bottom: 2px solid var(--red); padding: 8px 28px; font-size: 11px; color: var(--gray-mid); display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-bar span b { color: var(--gray-dark); }
+  .page-wrap { max-width: 860px; margin: 24px auto 48px; padding: 0 16px; }
+  .card { background: white; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 18px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .card-head { background: var(--red); color: white; padding: 11px 18px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .card-head .cn { background: rgba(255,255,255,0.22); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+  .card-body { padding: 20px 22px; }
+  .profile-item { background: var(--gray-light); border-radius: 7px; padding: 10px 14px; }
+  .profile-item .pi-label { font-size: 10px; font-weight: 700; color: var(--gray-mid); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .profile-item .pi-value { font-size: 13px; font-weight: 700; color: var(--gray-dark); line-height: 1.4; }
+  .profile-item .pi-sub { font-size: 10px; color: var(--gray-mid); margin-top: 2px; }
+  .profile-item.highlight { background: var(--green-pale); border: 1px solid #C5E1A5; }
+  .profile-item.highlight .pi-value { color: var(--green); }
+  .target-box { background: var(--gray-light); border-radius: 7px; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .target-chip { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 700; color: var(--gray-dark); }
+  .target-chip .tc-label { color: var(--gray-mid); font-weight: 400; margin-right: 4px; }
+  .judge-badge { font-size: 10px; font-weight: 700; color: white; padding: 2px 10px; border-radius: 8px; white-space: nowrap; }
+  .bg-red { background: var(--red); } .bg-orange { background: var(--orange-lt); } .bg-green { background: var(--green-lt); } .bg-green2 { background: var(--green); }
+  .c-red { color: var(--red); } .c-orange { color: var(--orange); } .c-green { color: var(--green); }
+  .mark-ok { color: var(--green); font-weight: 700; } .mark-warn { color: var(--orange); font-weight: 700; } .mark-ng { color: var(--red); font-weight: 700; }
+  .summary-box { background: var(--gray-light); border-radius: 7px; padding: 14px 16px; font-size: 12px; color: var(--gray-dark); line-height: 1.8; border-left: 3px solid var(--red); }
+  .summary-box.good { border-left-color: var(--green); background: var(--green-pale); }
+  .summary-box strong { font-weight: 700; }
+  .align-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .align-card { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
+  .align-card.ok { background: var(--green-pale); border-color: #C5E1A5; }
+  .align-card.warn { background: var(--orange-pale); border-color: #FFE082; }
+  .align-card.ng { background: var(--red-pale); border-color: #F5C6D0; }
+  .align-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .align-mark { font-size: 18px; font-weight: 900; line-height: 1; }
+  .align-card.ok .align-mark { color: var(--green); } .align-card.warn .align-mark { color: var(--orange); } .align-card.ng .align-mark { color: var(--red-deep); }
+  .align-title { font-size: 12px; font-weight: 700; color: var(--gray-dark); }
+  .align-body { font-size: 11px; color: var(--gray-dark); line-height: 1.7; }
+  .issue-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 8px; border: 1px solid; margin-bottom: 10px; }
+  .issue-item:last-child { margin-bottom: 0; }
+  .issue-item.p1 { background: var(--orange-pale); border-color: #FFE082; }
+  .issue-item.p2 { background: var(--gray-light); border-color: var(--border); }
+  .issue-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: white; flex-shrink: 0; margin-top: 2px; }
+  .p1 .issue-num { background: var(--orange-lt); }
+  .p2 .issue-num { background: var(--gray-mid); }
+  .issue-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .p1 .issue-content h4 { color: var(--orange); }
+  .p2 .issue-content h4 { color: var(--gray-dark); }
+  .issue-content p { font-size: 12px; color: var(--gray-dark); line-height: 1.7; }
+  .issue-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 5px; }
+  .issue-tag.quality { background: #FDE7F3; color: #880E4F; }
+  .issue-tag.rule { background: #FFF3E0; color: #E65100; }
+  .action-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+  .action-card:last-child { margin-bottom: 0; }
+  .action-head { display: flex; align-items: center; gap: 12px; padding: 11px 16px; background: var(--gray-light); border-bottom: 1px solid var(--border); }
+  .action-num { width: 24px; height: 24px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+  .action-title { font-size: 13px; font-weight: 700; color: var(--gray-dark); flex: 1; }
+  .action-body { padding: 14px 16px; }
+  .action-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: flex-start; }
+  .action-row:last-child { margin-bottom: 0; }
+  .ar-label { font-size: 10px; font-weight: 700; color: white; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 2px; white-space: nowrap; }
+  .ar-label.action { background: var(--red); } .ar-label.effect { background: var(--green); }
+  .pred-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .pred-table th { background: var(--red); color: white; font-weight: 700; padding: 9px 12px; text-align: center; }
+  .pred-table th:first-child { text-align: left; }
+  .pred-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: center; vertical-align: middle; }
+  .pred-table td:first-child { text-align: left; font-weight: 700; }
+  .pred-table tr:last-child td { border-bottom: none; }
+  .pred-table tr:nth-child(even) td { background: var(--gray-light); }
+  .pred-val { font-size: 15px; font-weight: 900; }
+  .pred-val.current { color: var(--gray-mid); } .pred-val.conservative { color: var(--orange); } .pred-val.optimistic { color: var(--green); }
+  .pred-change.up { color: var(--green); font-size:11px; font-weight:700; }
+  .site-footer { background: var(--red); color: rgba(255,255,255,0.65); font-size: 11px; text-align: center; padding: 10px; margin-top: 32px; }
+  .funnel-arrow-row { display:flex; align-items:center; height:36px; padding-left:180px; }
+  .funnel-rate-box { border-radius:6px; padding:4px 12px; display:flex; align-items:center; gap:8px; }
+  @media (max-width: 600px) { .align-grid { grid-template-columns: 1fr; } .page-wrap { padding: 0 10px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Indeed 運用診断レポート <span>紹介会社向け</span></div>
+  <div class="eishin">Powered by EISHIN</div>
+</header>
+
+<div class="meta-bar">
+  <span><b>求人企業：</b>株式会社Capitan（紹介：株式会社Nexil）</span>
+  <span><b>診断日：</b>2026年6月5日</span>
+  <span><b>対象原稿：</b>映像クリエイター</span>
+  <span><b>掲載エリア：</b>大阪市北区梅田</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ― プロフィール -->
+  <div class="card">
+    <div class="card-head"><div class="cn">―</div>診断対象プロフィール</div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
+        <div class="profile-item">
+          <div class="pi-label">原稿タイトル</div>
+          <div class="pi-value">映像クリエイター</div>
+          <div class="pi-sub">未経験OK・企画〜編集まで一貫して学べる映像の仕事</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">求人企業 / 紹介事業者</div>
+          <div class="pi-value">株式会社Capitan</div>
+          <div class="pi-sub">紹介：株式会社Nexil（許可番号：13-ユ-315541）</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">勤務地 / 雇用形態</div>
+          <div class="pi-value">大阪市北区梅田1-2-2</div>
+          <div class="pi-sub">正社員 ／ 〒530-0001 大阪駅前第2ビル12-12</div>
+        </div>
+        <div class="profile-item">
+          <div class="pi-label">掲載給与</div>
+          <div class="pi-value">月給 26万〜33万円</div>
+          <div class="pi-sub">土日休み・年間休日120日以上・10:00〜19:00</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+        <div class="profile-item highlight">
+          <div class="pi-label">総費用</div>
+          <div class="pi-value">¥16,617</div>
+          <div class="pi-sub">表示回数 2,112 imp</div>
+        </div>
+        <div class="profile-item highlight">
+          <div class="pi-label">応募数（実績）</div>
+          <div class="pi-value">14件</div>
+          <div class="pi-sub">クリック数 209件</div>
+        </div>
+        <div class="profile-item highlight">
+          <div class="pi-label">応募単価（CPA）</div>
+          <div class="pi-value">¥1,187</div>
+          <div class="pi-sub">クリック単価 ¥80</div>
+        </div>
+      </div>
+      <div style="margin-bottom:6px;font-size:11px;font-weight:700;color:var(--gray-mid);letter-spacing:0.05em;">ターゲット定義</div>
+      <div class="target-box">
+        <span class="target-chip"><span class="tc-label">職種</span>映像クリエイター</span>
+        <span class="target-chip"><span class="tc-label">雇用形態</span>正社員</span>
+        <span class="target-chip"><span class="tc-label">エリア</span>大阪市北区梅田</span>
+        <span class="target-chip"><span class="tc-label">給与</span>月26〜33万</span>
+        <span class="target-chip"><span class="tc-label">ターゲット</span>35歳以下・日本人男女・未経験OK</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 ファネル診断 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">1</div>ファネル診断</div>
+    <div class="card-body">
+
+      <!-- ファネル図 -->
+      <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
+
+        <div style="display:flex;align-items:center;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">表示回数</div>
+            <div style="font-size:20px;font-weight:900;color:var(--gray-dark);">2,112<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> imp</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--red);width:100%;">表示回数</div>
+          </div>
+          <div style="width:200px;"></div>
+        </div>
+
+        <div class="funnel-arrow-row">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
+            <span style="font-size:10px;color:var(--gray-mid);">クリック率</span>
+            <span style="font-size:14px;font-weight:900;color:var(--green);">9.90%</span>
+            <span class="judge-badge bg-green2">良好</span>
+            <span style="font-size:11px;color:var(--gray-mid);">目標 <b style="color:var(--gray-dark);">5%以上</b></span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">クリック数（PV数）</div>
+            <div style="font-size:20px;font-weight:900;color:var(--green);">209<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:82%;">クリック数</div>
+          </div>
+          <div style="width:200px;"></div>
+        </div>
+
+        <div class="funnel-arrow-row">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
+            <span style="font-size:10px;color:var(--gray-mid);">応募開始率</span>
+            <span style="font-size:14px;font-weight:900;color:var(--green);">7.18%</span>
+            <span class="judge-badge bg-green2">良好</span>
+            <span style="font-size:11px;color:var(--gray-mid);">目標 <b style="color:var(--gray-dark);">2%以上</b></span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募開始数</div>
+            <div style="font-size:20px;font-weight:900;color:var(--green);">15<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:42%;">応募開始</div>
+          </div>
+          <div style="width:200px;"></div>
+        </div>
+
+        <div class="funnel-arrow-row">
+          <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
+          <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
+            <span style="font-size:10px;color:var(--gray-mid);">応募完了率</span>
+            <span style="font-size:14px;font-weight:900;color:var(--green);">93.33%</span>
+            <span class="judge-badge bg-green2">良好</span>
+            <span style="font-size:11px;color:var(--gray-mid);">目標 <b style="color:var(--gray-dark);">25%以上</b></span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;">
+          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+            <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募数</div>
+            <div style="font-size:20px;font-weight:900;color:var(--green);">14<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
+          </div>
+          <div style="flex:1;padding:6px 0;">
+            <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:22%;">応募完了</div>
+          </div>
+          <div style="width:200px;"></div>
+        </div>
+
+      </div>
+
+      <!-- 指標テーブル -->
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+        <thead><tr>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">指標</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">計算式</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">実績値</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">目標値</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">判定</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">クリック率</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:11px;color:var(--gray-mid);">209 ÷ 2,112</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">9.90%</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">5%以上</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span></td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">応募開始率</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:11px;color:var(--gray-mid);">15 ÷ 209</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">7.18%</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">2%以上</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span></td>
+          </tr>
+          <tr>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">応募完了率</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:11px;color:var(--gray-mid);">14 ÷ 15</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">93.33%</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">25%以上</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span></td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">
+              応募率
+              <div style="font-size:10px;font-weight:400;color:var(--green);margin-top:2px;">★ 職種別ベンチマーク適用（映像）</div>
+            </td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:11px;color:var(--gray-mid);">14 ÷ 209</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">6.70%</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">0.60%<div style="font-size:10px;">職種別（映像）</div></td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span><div style="font-size:10px;color:var(--green);margin-top:2px;">ベンチマークの11倍超</div></td>
+          </tr>
+          <tr>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;">
+              クリック単価（CPC）
+              <div style="font-size:10px;font-weight:400;color:var(--green);margin-top:2px;">★ 職種別ベンチマーク適用（映像）</div>
+            </td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:11px;color:var(--gray-mid);">実績値</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:900;color:var(--green);">¥80</td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;color:var(--gray-mid);">¥300〜¥500<div style="font-size:10px;">職種別（映像）</div></td>
+            <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="judge-badge bg-green2">良好</span><div style="font-size:10px;color:var(--green);margin-top:2px;">CPA良好のため問題なし</div></td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:9px 12px;font-weight:700;">応募単価（CPA）</td>
+            <td style="padding:9px 12px;text-align:center;font-size:11px;color:var(--gray-mid);">¥16,617 ÷ 14</td>
+            <td style="padding:9px 12px;text-align:center;font-weight:900;color:var(--green);">¥1,187</td>
+            <td style="padding:9px 12px;text-align:center;color:var(--gray-mid);">CPC × 応募率から算出<div style="font-size:10px;">映像：¥500÷0.6%≒¥83,333が目安上限</div></td>
+            <td style="padding:9px 12px;text-align:center;"><span class="judge-badge bg-green2">良好</span><div style="font-size:10px;color:var(--green);margin-top:2px;">目安上限の約1.4%</div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary-box good">
+        <strong>ファネル診断まとめ：</strong>全4指標がいずれも目標値を上回っており、<strong>配信パフォーマンスは極めて良好な状態</strong>。特にクリック率9.90%（目標5%）・応募完了率93.33%（目標25%）は目標を大幅に超えており、応募率6.70%は職種別ベンチマーク0.60%の11倍超を記録。現状の運用を維持しつつ、<strong>ポリシー準拠の表現修正</strong>のみで良好な配信効率を継続できる。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 ターゲット×原稿 整合性チェック -->
+  <div class="card">
+    <div class="card-head"><div class="cn">2</div>ターゲット × 原稿　整合性チェック</div>
+    <div class="card-body">
+      <div class="align-grid">
+        <div class="align-card warn">
+          <div class="align-card-head"><div class="align-mark">△</div><div class="align-title">タイトル訴求</div></div>
+          <div class="align-body">「映像クリエイター」というシンプルなタイトルだが、本文内で「未経験から映像業界デビューOK（研修あり）」「企画〜撮影〜編集まで一貫して学べる」というアピールが明示されており、未経験層へのクリック訴求は十分に補完されている。タイトル単体での差別化余地は残るが、現状のクリック率9.90%がそれを証明している。</div>
+        </div>
+        <div class="align-card ok">
+          <div class="align-card-head"><div class="align-mark">○</div><div class="align-title">給与の整合</div></div>
+          <div class="align-body">月給26〜33万円は35歳以下・未経験層のターゲットに対して映像制作職としては競争力のある水準。未経験OKにもかかわらず入社時から26万円スタートとなる点は応募動機として機能している。</div>
+        </div>
+        <div class="align-card ok">
+          <div class="align-card-head"><div class="align-mark">○</div><div class="align-title">訴求の一致</div></div>
+          <div class="align-body">
+            「未経験大歓迎」「フリーター歓迎」「社会人デビュー歓迎」は未経験層向けに整合した訴求。必須条件の「日本企業での就業経験がある方」は<strong>海外就業経験のみの外国人を除外するための記載</strong>であり、ターゲット（35歳以下・日本人男女・未経験OK）には適切に機能している。訴求と条件の間に矛盾はない。
+          </div>
+        </div>
+        <div class="align-card ok">
+          <div class="align-card-head"><div class="align-mark">○</div><div class="align-title">エリアの整合</div></div>
+          <div class="align-body">梅田エリアは大阪市内最大のターミナルで6路線の最寄り駅・徒歩分数が明記されている（JR大阪駅8分、メトロ西梅田5分など）。35歳以下の大阪在住者のほぼ全員が通勤圏内に入るため問題なし。</div>
+        </div>
+      </div>
+      <div class="summary-box good">
+        <strong>整合性チェックまとめ：</strong>4軸すべてで実質的な問題なし。タイトル単体の訴求力は標準的だが、本文内の未経験OK訴求で補完できており、クリック率9.90%がそれを証明している。給与・条件・エリアはターゲット（35歳以下・日本人・未経験OK）と整合が取れている。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 紹介会社用ルールチェック -->
+  <div class="card">
+    <div class="card-head">
+      <div class="cn">3</div>
+      紹介会社用ルールチェック
+      <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:0.8;">アカウントBan防止・Indeed掲載ポリシー準拠</span>
+    </div>
+    <div class="card-body">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+        <thead><tr>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;width:36px;">#</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">チェック項目</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;width:60px;">判定</th>
+          <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">確認内容・対応</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">①</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">勤務地は郵便番号〜番地まで記載されているか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">「〒530-0001 大阪府大阪市北区梅田1-2-2 大阪駅前第2ビル12-12」と郵便番号・番地・建物名まで記載あり。問題なし。</td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">②</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">経験要件と年齢制限の整合性</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-warn">△</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">「未経験大歓迎」と記載しながら「20代〜30代が活躍中！」と年齢層を示唆する表現がある。明示的な年齢制限ではないが、Indeedポリシー上、特定年齢層を連想させる表現は避けることが推奨されている。<br><span style="color:var(--orange);font-weight:700;">→「20代〜30代が活躍中！」を「未経験スタートが活躍中！」等に変更検討</span></td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">③</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アウトソース系企業の場合、「プロジェクト先勤務」の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">勤務地に「大阪本社」と自社勤務が明示されており、プロジェクト先常駐型ではないため記載不要。問題なし。</td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">④</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アクセス欄に最寄り駅・路線・徒歩分数の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);">6路線（JR大阪駅8分・メトロ西梅田5分など）について徒歩分数まで記載。十分。</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;font-weight:700;color:var(--gray-mid);">⑤</td>
+            <td style="padding:10px 12px;font-weight:700;">その他欄に紹介会社の旨・職業紹介許可番号の記載があるか</td>
+            <td style="padding:10px 12px;text-align:center;"><span class="mark-ok">○</span></td>
+            <td style="padding:10px 12px;">「有料職業紹介許可番号：13-ユ-315541」が記載されており問題なし。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;gap:12px;">
+        <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--red);">0</div>
+          <div style="font-size:10px;color:var(--red-deep);font-weight:700;">要対応（✕）</div>
+        </div>
+        <div style="background:var(--orange-pale);border:1px solid #FFE082;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--orange);">1</div>
+          <div style="font-size:10px;color:var(--orange);font-weight:700;">要確認（△）</div>
+        </div>
+        <div style="background:var(--green-pale);border:1px solid #C5E1A5;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--green);">4</div>
+          <div style="font-size:10px;color:var(--green);font-weight:700;">問題なし（○）</div>
+        </div>
+        <div class="summary-box" style="margin-top:0;flex:1;">
+          Banリスクとなる重大な違反はなし。②の「20代〜30代が活躍中！」という年齢示唆表現のみ、Indeedポリシー準拠の観点から変更を推奨。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 課題特定 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">4</div>課題特定</div>
+    <div class="card-body">
+      <div class="issue-item p1">
+        <div class="issue-num">1</div>
+        <div class="issue-content">
+          <span class="issue-tag rule">ルール</span>
+          <h4>「20代〜30代が活躍中！」という年齢示唆表現の修正</h4>
+          <p>Indeedポリシー上、特定の年齢層を連想させる表現は避けることが推奨される。全配信指標は良好であり数値的な課題はないが、この表現はポリシー違反リスクを持つ。「未経験スタートが活躍中！」等の年齢中立な表現への変更が必要。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 改善施策 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">5</div>改善施策</div>
+    <div class="card-body">
+
+      <div class="action-card">
+        <div class="action-head">
+          <div class="action-num">1</div>
+          <div class="action-title">「20代〜30代が活躍中！」の表現を年齢中立な表現に変更する</div>
+          <span style="font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;background:#FFF3E0;color:#E65100;">ルール対応</span>
+        </div>
+        <div class="action-body">
+          <div class="action-row">
+            <span class="ar-label action">改善内容</span>
+            <span class="ar-text">
+              「20代〜30代が活躍中！」という表現を、年齢を連想させない表現に変更する。<br>
+              <span style="display:inline-block;margin-top:6px;background:var(--gray-light);padding:6px 10px;border-radius:4px;width:100%;">
+                <span style="color:var(--red-deep);font-weight:700;">現状：</span>「20代〜30代が活躍中！」<br>
+                <span style="color:var(--green);font-weight:700;">改善案：</span>「未経験スタートが9割！同期と一緒に成長できる映像制作の仕事」
+              </span>
+            </span>
+          </div>
+          <div class="action-row">
+            <span class="ar-label effect">想定効果</span>
+            <span class="ar-text">Indeedポリシーへの準拠強化。数値的な改善よりもポリシー準拠が主目的。現状の良好な配信効率をそのまま維持できる。</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6 数値改善予測 -->
+  <div class="card">
+    <div class="card-head"><div class="cn">6</div>数値改善予測</div>
+    <div class="card-body">
+      <div style="font-size:11px;color:var(--gray-mid);margin-bottom:12px;">
+        ※ 現状すべての指標が目標値をクリアしているため、今回の改善施策（年齢示唆表現の修正）による数値変化は軽微。現状維持を想定。
+      </div>
+
+      <table class="pred-table">
+        <thead><tr>
+          <th>指標</th>
+          <th>現状</th>
+          <th>改善後（目安）</th>
+          <th>変化</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>クリック率</td>
+            <td><span class="pred-val current">9.90%</span><br><span style="font-size:10px;color:var(--gray-mid);">目標5%超え ✅</span></td>
+            <td><span class="pred-val optimistic">9〜10%</span></td>
+            <td><span style="font-size:12px;color:var(--gray-mid);">現状維持</span></td>
+          </tr>
+          <tr>
+            <td>応募開始率</td>
+            <td><span class="pred-val current">7.18%</span><br><span style="font-size:10px;color:var(--gray-mid);">目標2%超え ✅</span></td>
+            <td><span class="pred-val optimistic">7〜8%</span></td>
+            <td><span style="font-size:12px;color:var(--gray-mid);">現状維持</span></td>
+          </tr>
+          <tr>
+            <td>応募数</td>
+            <td><span class="pred-val current">14件</span></td>
+            <td><span class="pred-val optimistic">14〜15件</span></td>
+            <td><span class="pred-change up">現状維持</span></td>
+          </tr>
+          <tr>
+            <td>応募単価（CPA）</td>
+            <td><span class="pred-val current">¥1,187</span><br><span style="font-size:10px;color:var(--gray-mid);">目安上限の約1.4% ✅</span></td>
+            <td><span class="pred-val optimistic">¥1,100〜1,200</span></td>
+            <td><span class="pred-change up">現状維持</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary-box good">
+        <strong>総評：</strong>全指標が目標値をクリアしており、現状の配信パフォーマンスは極めて良好。応募率6.70%は職種別ベンチマーク（映像：0.60%）の11倍超、CPA¥1,187は目安上限の約1.4%という高い効率を記録している。今回の改善施策（年齢示唆表現の修正）は数値インパクトより<strong>Indeedポリシー準拠の観点</strong>での対応となる。この1点の表現修正のみで、現状の良好な配信効率を維持したまま運用継続できる。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  © EISHIN Inc. — Indeed 運用診断レポート（紹介会社向け）
+</footer>
+</body>
+</html>
