@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用CX診断レポート - 株式会社VITA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
+        }
+        .section-content {
+            padding: 1.5rem;
+        }
+        .tag-red {
+            background-color: #fee2e2; /* red-100 */
+            color: #b91c1c; /* red-700 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-green {
+            background-color: #dcfce7; /* green-100 */
+            color: #15803d; /* green-700 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-blue {
+            background-color: #dbeafe; /* blue-100 */
+            color: #1d4ed8; /* blue-700 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        /* For sitemap tree */
+        .sitemap-tree {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        .sitemap-tree ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            border-left: 1px solid #d1d5db; /* gray-300 */
+        }
+        .sitemap-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            width: 1rem;
+            height: 1px;
+            background-color: #d1d5db; /* gray-300 */
+        }
+        .sitemap-tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+        }
+        .sitemap-tree li:last-child > ul {
+            border-left: none;
+        }
+        .sitemap-tree li:last-child::before {
+             border-bottom-left-radius: 5px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .comparison-card {
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .comparison-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .comparison-card-title.current {
+            color: #dc2626; /* red-600 */
+        }
+        .comparison-card-title.proposal {
+            color: #16a34a; /* green-600 */
+        }
+        
+        /* 印刷用スタイル */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .section-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            canvas {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">採用CX診断レポート</h1>
+            <p class="mt-2 text-lg text-gray-600">株式会社VITA 様</p>
+        </header>
+
+        <!-- Overall Score Section -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    0. 総合評価スコア
+                </h2>
+            </div>
+            <div class="section-content grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <!-- Summary -->
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-lg text-gray-600">総合採用力スコア</p>
+                        <p class="text-6xl font-bold text-gray-900">2.1<span class="text-3xl text-gray-500">/5.0</span></p>
+                        <div class="flex items-center mt-2">
+                            <!-- Star Rating -->
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-green-700">強み：少数精鋭による裁量権と医療現場直結の開発</span>
+                                <span class="text-sm font-medium text-green-700">3.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
+                            </div>
+                             <p class="text-sm text-gray-500 mt-1">個人の影響力が大きく、医療現場と直接対話しながら開発できる環境。スピード感のある意思決定と成長機会。</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-red-700">弱み：採用情報発信と企業認知度の圧倒的不足</span>
+                                <span class="text-sm font-medium text-red-700">1.0 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full" style="width: 20%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">Indeed企業ページ未作成、採用サイト不在、SNS活用ゼロ。医療IT分野での優位性が全く伝わっていない。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Diagnosis Sections -->
+
+        <!-- 00. 総合診断サマリー -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    1. 総合診断サマリー
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">主要発見事項</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">企業の強み・優位性</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-green-700">
+                                <li><span class="font-semibold">少数精鋭の機動力：</span>個人の裁量権が大きく、提案が即座に製品に反映される環境</li>
+                                <li><span class="font-semibold">医療現場との距離：</span>医療従事者と直接対話しながらの開発が可能</li>
+                                <li><span class="font-semibold">最新技術への挑戦：</span>中小規模ならではの新技術導入の柔軟性とスピード</li>
+                                <li><span class="font-semibold">社会的意義：</span>「VITA（生命・活力）」の社名が示す医療への純粋な貢献意識</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">主要課題</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li><span class="font-semibold">Indeed企業ページ未作成：</span>競合他社に大きく遅れ、求職者への情報発信ゼロ</li>
+                                <li><span class="font-semibold">採用サイト不在：</span>企業情報・募集要項が不明で応募導線が存在しない</li>
+                                <li><span class="font-semibold">SNS活用ゼロ：</span>LinkedIn、Twitter、Wantedly全て未開設</li>
+                                <li><span class="font-semibold">企業認知度の低さ：</span>医療IT分野での存在感が全く確立されていない</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善提案の全体像</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">緊急（1週間以内）</span></p>
+                            <p class="mt-2 text-gray-600">Indeed企業ページ作成、LinkedIn開設、採用基本情報の整備。最低限の情報発信体制を構築。</p>
+                            <p class="mt-1 font-semibold">期待効果：競合との情報格差を最小限に、応募導線の確立</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">短期（1-3ヶ月）</span></p>
+                            <p class="mt-2 text-gray-600">採用サイト構築、社員インタビュー作成、Wantedly展開、求人原稿最適化。「少数精鋭×医療IT」の魅力発信。</p>
+                            <p class="mt-1 font-semibold">期待効果：応募数3倍増、医療IT経験者の獲得開始</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-green">中長期（3-6ヶ月）</span></p>
+                            <p class="mt-2 text-gray-600">動画コンテンツ制作、技術ブログ開設、採用ブランディング確立。医療IT分野での独自ポジション構築。</p>
+                            <p class="mt-1 font-semibold">期待効果：業界認知度向上、優秀エンジニアの継続的獲得</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">結論</h3>
+                    <p class="text-gray-600">
+                        貴社は<span class="text-green-600 font-semibold">少数精鋭による機動力、医療現場との直接的な開発、個人の裁量権の大きさ</span>という、大手企業にはない強みを持っています。しかし、採用情報発信が完全に欠如しており、その価値が求職者に全く伝わっていません。医療IT市場の急成長期において、極めて大きな機会損失となっています。提案施策を段階的に実行することで、<span class="font-semibold text-indigo-500">医療IT分野で「小さくても輝く」独自のポジション</span>を確立し、優秀人材の継続的な獲得が可能になります。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 01. 現状分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    2. 現状分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">医療IT業界での位置づけ</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="font-bold text-yellow-800">市場成長性: 年率20%成長の急拡大市場</p>
+                            <p class="text-sm text-yellow-700">医療DX需要の急増、政府支援による市場拡大。<span class="font-bold text-lg">参入タイミングは最適</span>だが、認知度向上が急務。</p>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <p class="font-bold text-red-800">競争環境: 大手との人材獲得競争激化</p>
+                            <p class="text-sm text-red-700">MDV、エムスリー等の上場企業が積極採用。<span class="font-bold text-lg">差別化戦略が不可欠</span>。</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">3C分析</h3>
+                     <p class="text-gray-600 mb-4">貴社は<span class="font-semibold text-green-600">少数精鋭の機動力と医療現場との密接な関係</span>を強みとし、他社の<span class="font-semibold text-red-600">大規模・画一的な開発体制</span>とは明確に差別化できるポジションにいます。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">優位点</th>
+                                    <th class="p-3 font-semibold">VITAの差別化ポイント</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">メディカル・データ・ビジョン</td>
+                                    <td class="p-3">上場企業、医療ビッグデータ分野トップ</td>
+                                    <td class="p-3 text-green-600">個人の裁量権×スピード感</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">シーエスアイ</td>
+                                    <td class="p-3">電子カルテシェアNo.1クラス</td>
+                                    <td class="p-3 text-green-600">医療現場との直接対話開発</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">ソフトウェア・サービス</td>
+                                    <td class="p-3">創業50年の安定性</td>
+                                    <td class="p-3 text-green-600">最新技術への柔軟な対応力</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                 <div>
+                    <h3 class="text-xl font-semibold mb-2">最も重大な課題</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-800">採用情報発信の完全欠如による機会損失</h4>
+                        <p class="mt-2 text-red-700">少数精鋭の機動力、医療現場直結の開発、個人の大きな裁量権という圧倒的な強みを持ちながら、Indeed企業ページ未作成、採用サイト不在、SNS活用ゼロという状況で、その価値が求職者に全く伝わっていません。医療IT人材の需要急増期において、極めて大きな機会損失となっています。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. 求人原稿改善 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    3. 求人原稿改善診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">タイトル改善案 (Before/After)</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在（想定）</p>
+                            <p class="text-lg font-medium">システムエンジニア募集</p>
+                            <p class="text-sm text-red-600 mt-2">課題：汎用的すぎて医療IT分野の魅力や少数精鋭の環境が伝わらない。</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p class="text-lg font-medium">【医療DX最前線】少数精鋭で医療を変革するエンジニア｜裁量権大・最新技術</p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：医療IT分野の社会的意義と個人の影響力の大きさを前面に訴求。</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">待遇・条件の見せ方改善</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在（想定）</p>
+                            <p>年収400-600万円</p>
+                            <p>勤務時間9:00-18:00</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p>年収400-700万円（スキル・貢献度による）＋フレックスタイム＋リモート可 <span class="text-sm text-gray-500">(柔軟性重視)</span></p>
+                            <p>少数精鋭だから実現できる個別最適な働き方＋早期のマネジメント機会 <span class="text-sm text-gray-500">(成長機会アピール)</span></p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：大手にはない柔軟性と成長スピードを強調、個人の価値を最大化。</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">A/Bテスト提案</h3>
+                    <p class="text-gray-600 mb-4">異なる訴求軸で3パターンの求人広告をテストし、最も効果の高いメッセージを見つけ出します。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">A: 社会貢献重視</p>
+                            <p class="text-sm mt-1">「あなたのコードが医療現場を変える」医療への貢献と技術の融合をメイン訴求</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">B: 成長機会重視</p>
+                            <p class="text-sm mt-1">「3年で10年分の経験を」少数精鋭だからこその急速な成長機会をメイン訴求</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">C: 裁量権重視</p>
+                            <p class="text-sm mt-1">「一人一人が医療DXの主役」個人の影響力と責任範囲の大きさをメイン訴求</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. 採用サイト診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    4. 採用サイト診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">採用サイト状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">採用専用ページが存在しない（企業サイト内に採用情報なし）</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">求職者が採用情報を見つけられない、応募方法が不明、企業文化が伝わらない</p>
+                    </div>
+                </div>
+                 <div>
+                    <h3 class="text-xl font-semibold mb-2">改善が必要な課題</h3>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <ul class="list-disc list-inside space-y-1 text-yellow-800">
+                            <li><span class="font-semibold">基本的な採用情報の欠如：</span>募集職種、応募要件、選考フローが不明</li>
+                            <li><span class="font-semibold">社員の声・働く環境の不在：</span>実際の職場環境や社員の様子が分からない</li>
+                            <li><span class="font-semibold">医療ITへの取り組み未訴求：</span>事業内容や社会的意義が伝わらない</li>
+                            <li><span class="font-semibold">応募導線の不在：</span>応募フォームやエントリー方法が設置されていない</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善版サイトマップ提案</h3>
+                    <p class="text-gray-600 mb-4">候補者が知りたい情報を網羅し、VITAの魅力を最大限に伝える構成を提案します。</p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <ul class="sitemap-tree">
+                            <li>トップページ
+                                <ul>
+                                    <li>「医療の未来を、技術で創る」メインキャッチコピー</li>
+                                </ul>
+                            </li>
+                            <li>VITAについて
+                                <ul>
+                                    <li>ミッション「生命・活力を医療に」、少数精鋭の組織文化</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-red-600">【新規作成】採用情報</span>
+                                <ul>
+                                    <li>募集職種（エンジニア、PM、営業）、応募要件詳細</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-red-600">【新規作成】社員インタビュー</span>
+                                <ul>
+                                    <li>3名以上の社員による入社理由、やりがい、成長実感</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-red-600">【新規作成】プロジェクト事例</span>
+                                <ul>
+                                    <li>医療現場との協働事例、システム導入効果</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-red-600">【新規作成】選考フロー・FAQ</span>
+                                <ul>
+                                    <li>カジュアル面談、選考ステップ、よくある質問</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 04. Indeed企業ページ最適化 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c1.657 0 3-4.03 3-9s-1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                    5. Indeed企業ページ最適化
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Indeed企業ページ状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732 3L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">Indeed企業ページが存在しない（未作成）</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">企業情報ゼロ、カスタムコンテンツ0個、クチコミなし。競合他社に大きく遅れを取っている</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">情報不足による機会損失</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">求職者への情報発信機会の完全損失</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>医療IT企業としての存在が認知されない</li>
+                                <li>少数精鋭の魅力が全く伝わらない</li>
+                                <li>働く環境・制度が不明で応募に至らない</li>
+                                <li>Indeed検索での露出機会ゼロ</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">競合との圧倒的格差</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>MDV: カスタムコンテンツ充実、評価3.5以上</li>
+                                <li>シーエスアイ: 企業情報完備、社員の声掲載</li>
+                                <li>信頼性: 企業ページ不在で信頼性ゼロ</li>
+                                <li>応募意欲: 情報不足で応募に至らない</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善提案</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">緊急改善（1週間以内）</span></p>
+                            <p class="mt-2 text-gray-600">Indeed企業ページの新規作成、基本情報入力、企業紹介文作成、ロゴ・ヘッダー画像設定</p>
+                            <p class="mt-1 font-semibold">期待効果: 最低限の企業情報発信開始、検索露出の獲得</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">短期改善（1ヶ月以内）</span></p>
+                            <p class="mt-2 text-gray-600">カスタムコンテンツ10個追加、企業写真5-10枚追加、FAQ作成、求人原稿との連携</p>
+                            <p class="mt-1 font-semibold">期待効果: 応募数3倍増、医療IT人材の獲得開始</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05. 競合分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    6. 競合分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合他社の採用活動調査</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">給与水準</th>
+                                    <th class="p-3 font-semibold">採用サイト</th>
+                                    <th class="p-3 font-semibold">主要訴求</th>
+                                    <th class="p-3 font-semibold">差別化ポイント</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">MDV</td>
+                                    <td class="p-3">400-800万円</td>
+                                    <td class="p-3">充実（20P以上）</td>
+                                    <td class="p-3">医療ビッグデータ、上場企業</td>
+                                    <td class="p-3 text-green-600">個人の裁量権で差別化</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">シーエスアイ</td>
+                                    <td class="p-3">350-650万円</td>
+                                    <td class="p-3">充実（15P以上）</td>
+                                    <td class="p-3">電子カルテNo.1、安定性</td>
+                                    <td class="p-3 text-green-600">機動力・柔軟性で差別化</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">VITA</td>
+                                    <td class="p-3">400-700万円（想定）</td>
+                                    <td class="p-3 text-red-600">不在</td>
+                                    <td class="p-3">未訴求</td>
+                                    <td class="p-3 text-green-600">少数精鋭×医療現場直結</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">差別化戦略</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">「質」による差別化戦略</p>
+                            <p class="text-sm text-green-700 mt-2">規模では勝てないため、少数精鋭の「質」で勝負。一人一人が医療DXの主役になれる環境、3年で10年分の経験を積める成長速度を訴求</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">医療現場直結の開発</p>
+                            <p class="text-sm text-green-700 mt-2">大手の間接的開発vs VITAの直接的開発。医師・看護師と直接対話しながら、本当に必要とされるシステムを開発できる環境を強調</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合対策アクションプラン</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">緊急対策</span></p>
+                            <p class="mt-2 text-gray-600">採用サイト・Indeed企業ページの基本整備、「少数精鋭×医療IT」のメッセージング確立、個人の影響力の可視化</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">中期対策</span></p>
+                            <p class="mt-2 text-gray-600">社員の成長ストーリー発信、医療現場との協働事例公開、技術ブログでの専門性アピール</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06. 外部PR活動診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+                    7. 外部PR活動診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">現在のPR活動状況</h3>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">未活用</div>
+                            <div class="text-sm text-red-700">LinkedIn・Twitter未開設</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">ゼロ</div>
+                            <div class="text-sm text-red-700">Wantedly・技術ブログ不在</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">Level 2/5</div>
+                            <div class="text-sm text-red-700">総合活動レベル（低）</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">プラットフォーム別改善戦略</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">LinkedIn戦略（最優先・新規開設）</h4>
+                            <p class="mt-2 text-gray-600">B2B向け企業ブランディング、「医療DXの最前線から」シリーズ記事（月2回）、経営陣メッセージ、採用情報発信（週1回）</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Wantedly戦略（優先・新規開設）</h4>
+                            <p class="mt-2 text-gray-600">エンジニアストーリー（月2本）、医療現場との協働プロジェクト事例、技術スタック紹介、「なぜ医療ITで社会を変えるのか」創業ストーリー</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Twitter/X戦略（中期・新規開設）</h4>
+                            <p class="mt-2 text-gray-600">医療IT関連ニュースへのコメント、技術Tips共有、採用情報告知、#医療IT #ヘルスケアDX トレンド参加</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">コンテンツ制作計画</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-800">月間コンテンツカレンダー</h4>
+                        <div class="grid sm:grid-cols-2 gap-4 mt-3">
+                            <div>
+                                <p class="font-semibold">第1-2週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• LinkedIn：業界インサイト・技術記事投稿</li>
+                                    <li>• Wantedly：エンジニアストーリー公開</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold">第3-4週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• LinkedIn：経営陣メッセージ・採用情報</li>
+                                    <li>• Wantedly：プロジェクト事例紹介</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Radar Chart Logic
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        const SCORE = 2.1; // 総合評価スコア（5.0満点）
+        const SCORE1 = 3.0; // 企業安定性スコア（5.0満点）
+        const SCORE2 = 1.0; // 採用情報発信力スコア（5.0満点）
+        const SCORE3 = 3.5; // 研修・サポート制度スコア（5.0満点）
+        const SCORE4 = 3.0; // 働き方・労働環境スコア（5.0満点）
+        const SCORE5 = 2.0; // 競合優位性スコア（5.0満点）
+        const SCORE6 = 1.0; // デジタルPR対応スコア（5.0満点）
+        const score = SCORE; // 総合スコアを設定
+        let chartColor = 'rgba(239, 68, 68, 0.6)'; // Red for low score
+        let chartBorderColor = 'rgba(239, 68, 68, 1)';
+        
+        if (score >= 4.0) {
+            chartColor = 'rgba(34, 197, 94, 0.6)'; // Green
+            chartBorderColor = 'rgba(34, 197, 94, 1)';
+        } else if (score >= 3.0) {
+            chartColor = 'rgba(249, 115, 22, 0.6)'; // Orange
+            chartBorderColor = 'rgba(249, 115, 22, 1)';
+        }
+
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
+        const pointLabelColor = isDarkMode ? '#e5e7eb' : '#1f2937';
+
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['企業安定性', '採用情報発信力', '研修・サポート制度', '働き方・労働環境', '競合優位性', 'デジタルPR対応'],
+                datasets: [{
+                    label: '採用力スコア',
+                    data: [SCORE1, SCORE2, SCORE3, SCORE4, SCORE5, SCORE6], // 各項目のスコア（5.0満点）
+                    backgroundColor: chartColor,
+                    borderColor: chartBorderColor,
+                    borderWidth: 2,
+                    pointBackgroundColor: chartBorderColor,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: chartBorderColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: gridColor
+                        },
+                        grid: {
+                            color: gridColor
+                        },
+                        pointLabels: {
+                            color: pointLabelColor,
+                            font: {
+                                size: 14,
+                                family: "'Inter', 'Noto Sans JP', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: pointLabelColor,
+                            stepSize: 1,
+                            font: {
+                                size: 12
+                            }
+                        },
+                        min: 0,
+                        max: 5
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += context.parsed.r.toFixed(1);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Budget Chart Logic (Pie Chart)
+        const budgetCtx = document.getElementById('budgetChart');
+        
+        if (budgetCtx) {
+            const budgetCtx2d = budgetCtx.getContext('2d');
+            new Chart(budgetCtx2d, {
+                type: 'doughnut',
+                data: {
+                    labels: ['求人媒体費', '人材紹介費', 'ダイレクト採用', 'その他・運営費'],
+                    datasets: [{
+                        data: [40, 30, 20, 10], // [予算配分データ] - 各項目の予算配分（パーセント）※テンプレート値
+                        backgroundColor: [
+                            'rgba(99, 102, 241, 1)',    // インディゴ
+                            'rgba(16, 185, 129, 1)',    // エメラルド  
+                            'rgba(245, 158, 11, 1)',    // オレンジ
+                            'rgba(139, 92, 246, 1)'     // パープル
+                        ],
+                        borderColor: [
+                            'rgba(99, 102, 241, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(139, 92, 246, 1)'
+                        ],
+                        borderWidth: 2,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                font: {
+                                    size: 12
+                                },
+                                color: pointLabelColor
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '50%'
+                }
+            });
+        }
+    </script>
+</body>
+</html>

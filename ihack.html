@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用CX診断レポート - 株式会社iHack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .section-content {
+            padding: 1.5rem;
+        }
+        .tag-red {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-green {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-blue {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .sitemap-tree {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        .sitemap-tree ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            border-left: 1px solid #d1d5db;
+        }
+        .sitemap-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            width: 1rem;
+            height: 1px;
+            background-color: #d1d5db;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .comparison-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .comparison-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .comparison-card-title.current {
+            color: #dc2626;
+        }
+        .comparison-card-title.proposal {
+            color: #16a34a;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .section-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            canvas {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">採用CX診断レポート</h1>
+            <p class="mt-2 text-lg text-gray-600">株式会社iHack 様</p>
+        </header>
+
+        <!-- Overall Score Section -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    0. 総合評価スコア
+                </h2>
+            </div>
+            <div class="section-content grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <!-- Summary -->
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-lg text-gray-600">総合採用力スコア</p>
+                        <p class="text-6xl font-bold text-gray-900">2.5<span class="text-3xl text-gray-500">/5.0</span></p>
+                        <div class="flex items-center mt-2">
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-green-700">強み：革新的な技術文化と挑戦的環境</span>
+                                <span class="text-sm font-medium text-green-700">3.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">「Hack精神」による革新的文化、少数精鋭での大きな裁量権、最新技術への挑戦機会</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-red-700">弱み：採用情報発信力と企業認知度</span>
+                                <span class="text-sm font-medium text-red-700">1.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full" style="width: 30%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">SNS未活用、Indeed企業ページ未整備、採用サイトの情報不足、待遇条件の不透明性</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 00. 総合診断サマリー -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    1. 総合診断サマリー
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">主要発見事項</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">企業の強み・優位性</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-green-700">
+                                <li><span class="font-semibold">革新的企業文化：</span>「Hack精神」による創造的・挑戦的な環境</li>
+                                <li><span class="font-semibold">技術的自由度：</span>最新技術スタックの選定・実装の完全な裁量</li>
+                                <li><span class="font-semibold">少数精鋭組織：</span>個人のインパクトが大きく、成長速度が速い</li>
+                                <li><span class="font-semibold">東京立地：</span>IT人材が集中する首都圏でのアクセス性</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">主要課題</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li><span class="font-semibold">PR活動の完全不在：</span>SNS未開設、採用ブランディング機会の逸失</li>
+                                <li><span class="font-semibold">Indeed最適化不足：</span>カスタムコンテンツ未整備、企業情報が伝わらない</li>
+                                <li><span class="font-semibold">待遇条件の不透明性：</span>給与・福利厚生が不明で競合劣位</li>
+                                <li><span class="font-semibold">採用サイト未整備：</span>エンジニア向け情報（技術スタック等）不足</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善提案の全体像</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">短期的改善案 (1-3ヶ月)</span></p>
+                            <p class="mt-2 text-gray-600">LinkedIn・Twitter開設、Indeed企業ページ整備、給与レンジ明確化、技術ブログ開始</p>
+                            <p class="mt-1 font-semibold">期待効果：応募数200%増加、エンジニア認知度向上、優秀人材へのリーチ拡大</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">中期的改善案 (3-6ヶ月)</span></p>
+                            <p class="mt-2 text-gray-600">Wantedly活用開始、採用サイトリニューアル、社員インタビュー掲載、技術イベント開催</p>
+                            <p class="mt-1 font-semibold">期待効果：応募者の質向上、IT業界での認知度確立、採用ブランド形成</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">長期的改善案 (6ヶ月以上)</span></p>
+                            <p class="mt-2 text-gray-600">採用CRM導入、データドリブン採用体制、技術ブランド確立、OSS貢献による認知拡大</p>
+                            <p class="mt-1 font-semibold">期待効果：継続的な優秀人材確保、採用コスト50%削減、IT業界での地位確立</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">結論</h3>
+                    <p class="text-gray-600">
+                        貴社は<span class="text-green-600 font-semibold">「Hack精神」による革新的文化、技術的自由度の高さ、少数精鋭での成長機会</span>という他社にない強みを持っています。しかし、SNS完全未活用、Indeed最適化不足、採用情報の不透明性により、その価値が求職者に全く伝わっていません。特に競合他社（ラクス、アイスタイル、ネオジャパン）と比較して、採用活動の基盤が整っていない状況です。提案施策を段階的に実行することで、<span class="font-semibold text-indigo-500">革新的IT企業としての採用ブランド確立</span>と優秀なエンジニア人材の継続的確保が可能です。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 01. 現状分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    2. 現状分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">IT業界での位置づけ</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">技術力: 高い技術志向と革新性</p>
+                            <p class="text-sm text-green-700">「iHack」という社名が示す技術への情熱。<span class="font-bold text-lg">最新技術への挑戦機会で差別化</span>可能</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="font-bold text-yellow-800">市場認知度: 限定的な認知</p>
+                            <p class="text-sm text-yellow-700">大手競合と比較して認知度不足。<span class="font-bold text-lg">PR活動強化が急務</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">3C分析</h3>
+                    <p class="text-gray-600 mb-4">貴社は<span class="font-semibold text-green-600">技術的自由度、少数精鋭の成長環境</span>を強みとし、他社の<span class="font-semibold text-red-600">大規模・安定性重視</span>とは差別化できるポジションにいます。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">優位点</th>
+                                    <th class="p-3 font-semibold">貴社の差別化ポイント</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">ラクス (大手SaaS)</td>
+                                    <td class="p-3">売上214億円、1,000名規模、高給与</td>
+                                    <td class="p-3 text-green-600">少数精鋭での大きな裁量権</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">アイスタイル</td>
+                                    <td class="p-3">美容×IT、1,700万人プラットフォーム</td>
+                                    <td class="p-3 text-green-600">技術選定の完全な自由度</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">ネオジャパン</td>
+                                    <td class="p-3">東証上場、安定経営</td>
+                                    <td class="p-3 text-green-600">革新的な「Hack精神」文化</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">最も重大な課題</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-800">採用基盤の未整備による機会損失</h4>
+                        <p class="mt-2 text-red-700">革新的な技術文化と少数精鋭での成長機会という圧倒的な強みを持ちながら、SNS未開設、Indeed未最適化、採用サイト情報不足により、エンジニア採用市場での存在感がゼロに近い状況。競合他社が月間数百名の応募を獲得する中、貴社の価値が全く伝わっていません。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. 求人原稿改善 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    3. 求人原稿改善診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">タイトル改善案 (Before/After)</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在</p>
+                            <p class="text-lg font-medium">エンジニア募集</p>
+                            <p class="text-sm text-red-600 mt-2">課題：技術スタック不明、待遇不透明、魅力が伝わらない汎用的表現</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p class="text-lg font-medium">【完全リモート可/年収600万円〜】Go/Rust/k8s｜革新的サービスを創るフルスタックエンジニア</p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：具体的な技術スタックと待遇明示、リモート対応で優秀人材にリーチ</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">待遇・条件の見せ方改善</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在</p>
+                            <p>給与：応相談</p>
+                            <p>勤務時間：記載なし</p>
+                            <p>福利厚生：記載なし</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p>年収600-1,200万円（スキル・経験による）＋ストックオプション制度 <span class="text-sm text-gray-500">(成果重視)</span></p>
+                            <p>完全フルリモート＋フルフレックス（コアタイムなし） <span class="text-sm text-gray-500">(自律的な働き方)</span></p>
+                            <p>技術書籍購入補助15万円/年＋カンファレンス参加費全額補助 <span class="text-sm text-gray-500">(成長支援)</span></p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：具体的な金額提示と成長支援制度で、技術者への訴求力を最大化</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">A/Bテスト提案</h3>
+                    <p class="text-gray-600 mb-4">異なる訴求軸で3パターンの求人広告をテストし、最も効果の高いメッセージを見つけ出します。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">A: 技術自由度重視</p>
+                            <p class="text-sm mt-1">Go/Rust/k8sなど最新技術スタック、技術選定の完全な裁量権、OSS活動推奨をメイン訴求</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">B: 成長機会重視</p>
+                            <p class="text-sm mt-1">少数精鋭で3年で10年分の経験、個人のインパクト大、スタートアップ的環境をメイン訴求</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">C: 働き方重視</p>
+                            <p class="text-sm mt-1">完全フルリモート、フルフレックス、地理的制約なし、自律的な働き方をメイン訴求</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. 採用サイト診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    4. 採用サイト診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">採用サイト状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">採用情報が極めて不足（基本的な情報のみ）</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">募集要項、給与条件、福利厚生、技術スタック、開発環境等の重要情報が不明確</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善が必要な課題</h3>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <ul class="list-disc list-inside space-y-1 text-yellow-800">
+                            <li><span class="font-semibold">技術情報の不足：</span>使用技術スタック、開発環境、プロジェクト事例が不明</li>
+                            <li><span class="font-semibold">社員の声の欠如：</span>インタビュー、1日の流れ等のリアルな情報なし</li>
+                            <li><span class="font-semibold">「Hack精神」の未活用：</span>独自の企業文化が採用メッセージに反映されていない</li>
+                            <li><span class="font-semibold">応募導線の不明確さ：</span>応募プロセスの説明、エントリーボタン配置が不適切</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善版サイトマップ提案</h3>
+                    <p class="text-gray-600 mb-4">エンジニアが知りたい情報を網羅し、貴社の魅力を最大限に伝える構成に変更します。</p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <ul class="sitemap-tree">
+                            <li>トップページ
+                                <ul>
+                                    <li>「技術で未来をHackする」キャッチコピー</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】Technology & Projects</span>
+                                <ul>
+                                    <li>技術スタック詳細（Go/Rust/k8s/AWS/GCP）</li>
+                                    <li>プロジェクト事例・技術的チャレンジ</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】People & Culture</span>
+                                <ul>
+                                    <li>エンジニアインタビュー（3名以上）</li>
+                                    <li>「Hack精神」の実践例</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】Career & Growth</span>
+                                <ul>
+                                    <li>キャリアパス事例・成長ストーリー</li>
+                                    <li>技術力向上支援制度</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【強化】Benefits & Environment</span>
+                                <ul>
+                                    <li>給与レンジ明示（600-1,200万円）</li>
+                                    <li>フルリモート・フルフレックス詳細</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 04. Indeed企業ページ最適化 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c1.657 0 3-4.03 3-9s-1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                    5. Indeed企業ページ最適化
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Indeed企業ページ状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">Indeed企業ページが未整備（カスタムコンテンツ3-5個/10個）</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">企業紹介、クチコミ、画像等の基本要素が不足、競合他社と比較して大幅な劣位</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">情報不足による機会損失</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">未活用の機能</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>カスタムコンテンツ（5-7個分未登録）</li>
+                                <li>企業ロゴ・ヘッダー画像未設定</li>
+                                <li>企業写真（0-3枚のみ）</li>
+                                <li>クチコミ（0-2件で未表示）</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">競合との格差</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>ラクス：フル活用、クチコミ多数</li>
+                                <li>アイスタイル：充実したコンテンツ</li>
+                                <li>ネオジャパン：基本情報は整備済み</li>
+                                <li>応募率：競合の1/10以下と推定</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善提案</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">最優先改善（1週間以内）</span></p>
+                            <p class="mt-2 text-gray-600">基本ビジュアル設定（ロゴ・ヘッダー・写真5枚）、企業紹介文の全面改訂、「Hack精神」を前面に出したメッセージング</p>
+                            <p class="mt-1 font-semibold">期待効果：第一印象の大幅改善、応募数100%増加</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">高優先改善（2週間以内）</span></p>
+                            <p class="mt-2 text-gray-600">カスタムコンテンツ10個フル活用、クチコミ獲得キャンペーン（社員協力で2-3件）、質問箱への積極回答</p>
+                            <p class="mt-1 font-semibold">期待効果：情報量3倍増、信頼性向上、競合との差別化</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05. 競合分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    6. 競合分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合他社の採用活動調査</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">給与水準</th>
+                                    <th class="p-3 font-semibold">福利厚生</th>
+                                    <th class="p-3 font-semibold">SNS活用</th>
+                                    <th class="p-3 font-semibold">差別化ポイント</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">ラクス</td>
+                                    <td class="p-3">月40-60万円</td>
+                                    <td class="p-3">書籍補助10万円/年、社内カフェ</td>
+                                    <td class="p-3">Twitter 5,000+フォロワー</td>
+                                    <td class="p-3 text-green-600">少数精鋭の裁量権</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">アイスタイル</td>
+                                    <td class="p-3">月35-55万円</td>
+                                    <td class="p-3">美容製品割引、自社メディア活用</td>
+                                    <td class="p-3">Instagram 20万+フォロワー</td>
+                                    <td class="p-3 text-green-600">技術選定の自由度</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">ネオジャパン</td>
+                                    <td class="p-3">月35-50万円</td>
+                                    <td class="p-3">確定拠出年金、住宅手当3万円</td>
+                                    <td class="p-3">LinkedIn 2,000+</td>
+                                    <td class="p-3 text-green-600">革新的な企業文化</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">差別化戦略</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">技術的自由度×成長速度</p>
+                            <p class="text-sm text-green-700 mt-2">最新技術スタック選定の完全な裁量、少数精鋭で3年で10年分の経験、個人のインパクト最大化</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">「Hack精神」×働き方の先進性</p>
+                            <p class="text-sm text-green-700 mt-2">既存の枠にとらわれない創造的アプローチ、完全フルリモート×フルフレックス、地理的制約なし</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合対策アクションプラン</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">短期対策</span></p>
+                            <p class="mt-2 text-gray-600">給与レンジ明確化（600-1,200万円）、技術書籍補助15万円/年、カンファレンス参加費全額補助の導入、SNS即時開設</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">中長期対策</span></p>
+                            <p class="mt-2 text-gray-600">ストックオプション制度導入、技術ブランド確立、OSS活動時間の確保、技術イベント主催による認知拡大</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06. 外部PR活動診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+                    7. 外部PR活動診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">現在のPR活動状況</h3>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">未実施</div>
+                            <div class="text-sm text-red-700">SNS完全未開設</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">0件</div>
+                            <div class="text-sm text-red-700">技術ブログ・記事投稿</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">未活用</div>
+                            <div class="text-sm text-red-700">Wantedly・採用特化SNS</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">プラットフォーム別改善戦略</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">LinkedIn戦略（最優先）</h4>
+                            <p class="mt-2 text-gray-600">技術記事週1-2回、社員スポットライト月2回、業界インサイト月1-2回。3ヶ月で300フォロワー、6ヶ月で800フォロワー目標</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Twitter（X）戦略</h4>
+                            <p class="mt-2 text-gray-600">技術Tips週3-4回、技術イベント告知、エンジニアブログ共有。#エンジニア採用 #技術勉強会等のハッシュタグ活用</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Wantedly戦略（新規開設）</h4>
+                            <p class="mt-2 text-gray-600">「なぜiHackなのか」シリーズ、プロジェクトストーリー、社員の一日密着記事を月2-3本投稿</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">コンテンツ制作計画</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-indigo-800">月間コンテンツカレンダー</h4>
+                        <div class="grid sm:grid-cols-2 gap-4 mt-3">
+                            <div>
+                                <p class="font-semibold">第1-2週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• LinkedIn：技術記事・開発事例投稿</li>
+                                    <li>• Twitter：技術Tips・コード片共有</li>
+                                    <li>• Qiita：技術ブログ記事公開</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold">第3-4週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• Wantedly：社員インタビュー記事</li>
+                                    <li>• LinkedIn：社員スポットライト</li>
+                                    <li>• Twitter：採用情報・カジュアル面談募集</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Radar Chart Logic
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        const SCORE = 2.5; // 総合評価スコア
+        const SCORE1 = 3.5; // 技術力・革新性スコア
+        const SCORE2 = 1.0; // 採用情報発信力スコア
+        const SCORE3 = 3.0; // 成長機会・裁量権スコア
+        const SCORE4 = 3.5; // 働き方の先進性スコア
+        const SCORE5 = 2.0; // 競合優位性スコア
+        const SCORE6 = 1.0; // デジタルPR対応スコア
+        const score = SCORE;
+        let chartColor = 'rgba(239, 68, 68, 0.6)';
+        let chartBorderColor = 'rgba(239, 68, 68, 1)';
+        
+        if (score >= 4.0) {
+            chartColor = 'rgba(34, 197, 94, 0.6)';
+            chartBorderColor = 'rgba(34, 197, 94, 1)';
+        } else if (score >= 3.0) {
+            chartColor = 'rgba(249, 115, 22, 0.6)';
+            chartBorderColor = 'rgba(249, 115, 22, 1)';
+        }
+
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
+        const pointLabelColor = isDarkMode ? '#e5e7eb' : '#1f2937';
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['技術力・革新性', '採用情報発信力', '成長機会・裁量権', '働き方の先進性', '競合優位性', 'デジタルPR対応'],
+                datasets: [{
+                    label: '採用力スコア',
+                    data: [SCORE1, SCORE2, SCORE3, SCORE4, SCORE5, SCORE6],
+                    backgroundColor: chartColor,
+                    borderColor: chartBorderColor,
+                    borderWidth: 2,
+                    pointBackgroundColor: chartBorderColor,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: chartBorderColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: gridColor
+                        },
+                        grid: {
+                            color: gridColor
+                        },
+                        pointLabels: {
+                            color: pointLabelColor,
+                            font: {
+                                size: 14,
+                                family: "'Inter', 'Noto Sans JP', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: pointLabelColor,
+                            stepSize: 1,
+                            font: {
+                                size: 12
+                            }
+                        },
+                        min: 0,
+                        max: 5
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += context.parsed.r.toFixed(1);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

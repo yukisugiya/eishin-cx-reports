@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用CX診断レポート - 株式会社ベストコ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .section-content {
+            padding: 1.5rem;
+        }
+        .tag-red {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-green {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-blue {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .sitemap-tree {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        .sitemap-tree ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            border-left: 1px solid #d1d5db;
+        }
+        .sitemap-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            width: 1rem;
+            height: 1px;
+            background-color: #d1d5db;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .comparison-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .comparison-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .comparison-card-title.current {
+            color: #dc2626;
+        }
+        .comparison-card-title.proposal {
+            color: #16a34a;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .section-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            canvas {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">採用CX診断レポート</h1>
+            <p class="mt-2 text-lg text-gray-600">株式会社ベストコ 様</p>
+            <p class="text-sm text-gray-500 mt-1">診断実施日：2026年6月5日</p>
+        </header>
+
+        <!-- Overall Score Section -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    総合評価スコア
+                </h2>
+            </div>
+            <div class="section-content grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <!-- Summary -->
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-lg text-gray-600">総合採用力スコア</p>
+                        <p class="text-6xl font-bold text-gray-900">2.3<span class="text-3xl text-gray-500">/5.0</span></p>
+                        <div class="flex items-center mt-2">
+                            <!-- Star Rating -->
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-green-700">強み：地域密着性と安定した事業基盤</span>
+                                <span class="text-sm font-medium text-green-700">3.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">福島県拠点の地域密着型企業、建設業界での確立された事業基盤、総合建設業としての幅広いサービス領域。</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-red-700">弱み：採用情報発信力とデジタルプレゼンス</span>
+                                <span class="text-sm font-medium text-red-700">1.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full" style="width: 30%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">企業情報の公開度が極めて限定的、Indeed企業ページ未確認、SNS活用ゼロ、採用サイトの不在。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 1. 総合診断サマリー -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    1. 総合診断サマリー
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">主要発見事項</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">企業の強み・優位性</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-green-700">
+                                <li><span class="font-semibold">地域密着型の安定基盤：</span>福島県を拠点とした地域特化型事業展開、長期的な信頼関係構築</li>
+                                <li><span class="font-semibold">総合建設業としての技術力：</span>土木・建築・設備工事の幅広い対応力、専門技術の蓄積</li>
+                                <li><span class="font-semibold">地域社会への貢献：</span>インフラ整備から住宅建設まで、地域発展に直接寄与</li>
+                                <li><span class="font-semibold">安定した雇用環境：</span>建設業界の継続需要による安定した雇用機会の提供</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">主要課題</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li><span class="font-semibold">企業情報の極端な不足：</span>基本情報（設立年、従業員数、売上等）が一切不明</li>
+                                <li><span class="font-semibold">デジタル採用活動の完全欠如：</span>Indeed企業ページ未確認、求人原稿不在</li>
+                                <li><span class="font-semibold">SNS・PR活動ゼロ：</span>主要SNS全てで公式アカウント未確認、情報発信なし</li>
+                                <li><span class="font-semibold">採用ブランディング未構築：</span>競合他社との差別化要因が全く不明確</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善提案の全体像</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">緊急改善案 (1ヶ月以内)</span></p>
+                            <p class="mt-2 text-gray-600">Indeed企業ページの新規作成、基本的な企業情報の整備・公開、最低限の求人原稿作成、公式サイトの採用情報追加。</p>
+                            <p class="mt-1 font-semibold">期待効果：求職者への基本情報提供、応募可能性の創出、最低限の採用活動基盤構築</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">短期改善案 (3ヶ月以内)</span></p>
+                            <p class="mt-2 text-gray-600">採用専用サイト構築、Instagram・Facebook公式アカウント開設、社員インタビューコンテンツ作成、競合分析に基づく差別化戦略策定。</p>
+                            <p class="mt-1 font-semibold">期待効果：採用ブランド確立、応募数50%増加、地元人材へのリーチ拡大</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-green">中長期改善案 (6ヶ月以上)</span></p>
+                            <p class="mt-2 text-gray-600">動画コンテンツ制作、Wantedly等採用メディア活用、インターンシップ制度導入、採用データ分析体制構築。</p>
+                            <p class="mt-1 font-semibold">期待効果：福島県建設業界での採用力向上、優秀人材の安定確保、定着率向上</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">結論</h3>
+                    <p class="text-gray-600">
+                        貴社は<span class="text-green-600 font-semibold">福島県での地域密着性、総合建設業としての技術力、安定した事業基盤</span>という強みを持ちながら、採用情報発信が完全に欠如しているため、その価値が求職者に全く伝わっていません。特に<span class="text-red-600 font-semibold">デジタル採用活動がゼロ</span>という現状は、人材獲得競争において致命的な機会損失となっています。提案する段階的改善策により、まず<span class="font-semibold text-indigo-500">基本的な採用インフラを構築</span>し、その後<span class="font-semibold text-indigo-500">福島県建設業界での確固たる採用ポジション</span>を確立することが可能です。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 現状分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    2. 現状分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">建設業界での位置づけ</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="font-bold text-yellow-800">給与水準: 詳細不明（情報開示なし）</p>
+                            <p class="text-sm text-yellow-700">競合他社は月給23-45万円レンジ。<span class="font-bold text-lg">早急な給与情報の開示が必要</span></p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">事業安定性: 地域密着型の確実な需要</p>
+                            <p class="text-sm text-green-700">福島県の復興・発展需要、インフラ更新需要により<span class="font-bold text-lg">長期的な事業安定性を確保</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合企業との比較</h3>
+                    <p class="text-gray-600 mb-4">貴社は<span class="font-semibold text-green-600">地域密着性と技術力</span>を強みとしながらも、<span class="font-semibold text-red-600">情報開示の不足</span>により競争力を発揮できていません。</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">優位点</th>
+                                    <th class="p-3 font-semibold">ベストコの対抗策</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">中部土木</td>
+                                    <td class="p-3">専門性訴求、研修制度明確</td>
+                                    <td class="p-3 text-green-600">福島特化の地域貢献性で差別化</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">東海建設</td>
+                                    <td class="p-3">60年の歴史、充実した採用サイト</td>
+                                    <td class="p-3 text-green-600">少数精鋭による個別成長支援</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium">矢作建設工業</td>
+                                    <td class="p-3">大手の安定性、高待遇</td>
+                                    <td class="p-3 text-green-600">地元密着・転勤なしの安定性</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">最も重大な課題</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-800">採用情報インフラの完全欠如</h4>
+                        <p class="mt-2 text-red-700">企業の基本情報（設立年、従業員数、売上）から求人条件まで、採用に必要な情報が一切公開されていません。求職者は応募を検討する材料が全くない状態で、これは人材獲得において致命的です。競合他社が積極的に情報発信している中、貴社の存在自体が認知されていない可能性があります。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 求人原稿改善 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    3. 求人原稿改善診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">キャッチコピー改善案</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在</p>
+                            <p class="text-lg font-medium">（求人原稿未作成）</p>
+                            <p class="text-sm text-red-600 mt-2">課題：求人原稿自体が存在せず、応募受付ができない状態</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p class="text-lg font-medium">「福島の未来を創る。地域No.1の技術力で、あなたも成長。」</p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：地域貢献性と成長機会を組み合わせ、地元志向者へ訴求</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">訴求ポイントの構築</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <p class="comparison-card-title current">現在</p>
+                            <p>情報なし</p>
+                            <p>強み・特徴が不明</p>
+                            <p>応募メリット不在</p>
+                        </div>
+                        <div class="comparison-card">
+                            <p class="comparison-card-title proposal">改善案</p>
+                            <p>✓ 福島県特化の地域貢献「地元の安全・安心を守るインフラ整備」</p>
+                            <p>✓ 少数精鋭による成長環境「若手でも責任ある仕事を任される」</p>
+                            <p>✓ ワークライフバランス「転勤なし、地元で家族との時間を大切に」</p>
+                            <p class="text-sm text-green-600 mt-2">改善理由：地域密着性を最大限活用し、大手にない魅力を訴求</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">職種別求人原稿テンプレート案</h3>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">施工管理技士</p>
+                            <p class="text-sm mt-1">「インフラ整備から住宅まで、幅広いプロジェクトで技術力を磨く」資格取得支援充実</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">技術営業職</p>
+                            <p class="text-sm mt-1">「地域の課題を技術で解決する提案営業」顧客との長期的な信頼関係構築</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">CADオペレーター</p>
+                            <p class="text-sm mt-1">「最新技術で建設プロジェクトを支える」BIM/CIM導入による先進的な環境</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 採用サイト診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    4. 採用サイト診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">採用サイト状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">採用専用ページが存在しない、または発見できない状態</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">公式サイト（https://bestco.jp/）内での採用情報の存在が不明、求職者向けコンテンツが一切確認できない</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">必要な採用コンテンツ</h3>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <ul class="list-disc list-inside space-y-1 text-yellow-800">
+                            <li><span class="font-semibold">社員インタビュー：</span>リアルな職場の声が最重要（求職者の70%が重視）</li>
+                            <li><span class="font-semibold">仕事内容・1日の流れ：</span>職種理解を深める具体的情報</li>
+                            <li><span class="font-semibold">キャリアパス・成長事例：</span>将来のビジョンを描ける情報</li>
+                            <li><span class="font-semibold">福利厚生・待遇詳細：</span>求職者の最重要検討事項</li>
+                            <li><span class="font-semibold">研修制度・資格取得支援：</span>建設業界では資格が重要な評価基準</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">改善版サイトマップ提案</h3>
+                    <p class="text-gray-600 mb-4">求職者が必要とする情報を網羅し、応募までスムーズに導く構成を提案します。</p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <ul class="sitemap-tree">
+                            <li>トップページ
+                                <ul>
+                                    <li>「福島の未来を、共に創る。ベストコで築くキャリア」</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】ベストコについて</span>
+                                <ul>
+                                    <li>事業内容・強み、施工実績、地域貢献活動</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】働く環境</span>
+                                <ul>
+                                    <li>職種別仕事内容、1日の流れ、研修制度、キャリアパス</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】社員の声</span>
+                                <ul>
+                                    <li>若手・中堅・ベテラン社員インタビュー、成長エピソード</li>
+                                </ul>
+                            </li>
+                            <li><span class="font-bold text-green-600">【新規】採用情報</span>
+                                <ul>
+                                    <li>募集要項、選考フロー、FAQ、エントリーフォーム</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 5. Indeed企業ページ最適化 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9" /></svg>
+                    5. Indeed企業ページ最適化
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Indeed企業ページ状況</h3>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            <span class="text-red-600 font-semibold">Indeed企業ページの存在が未確認</span>
+                        </div>
+                        <p class="text-sm text-red-700 mt-2">求職者の70%以上が利用するIndeedで企業情報が確認できず、重大な機会損失が発生</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">緊急実施事項</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">現在の機会損失</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>月間数千人の求職者へのリーチ失敗</li>
+                                <li>企業認知度ゼロ状態</li>
+                                <li>競合他社への人材流出</li>
+                                <li>採用コスト増大（他媒体依存）</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">改善後の期待効果</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-green-700">
+                                <li>月間閲覧数500件以上</li>
+                                <li>応募数200%増加</li>
+                                <li>採用コスト30%削減</li>
+                                <li>質の高い応募者獲得</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">企業ページ作成プラン</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">第1週：基本設定</span></p>
+                            <p class="mt-2 text-gray-600">Indeed企業アカウント作成、基本情報登録（所在地、業種、従業員数）、企業ロゴ・写真アップロード</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">第2-3週：コンテンツ作成</span></p>
+                            <p class="mt-2 text-gray-600">企業紹介文（400文字）作成、カスタムコンテンツ10個作成、福利厚生・制度の詳細記載</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-green">第4週以降：運用開始</span></p>
+                            <p class="mt-2 text-gray-600">求人掲載開始、クチコミへの返信体制構築、定期的な情報更新</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 競合分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    6. 競合分析
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合他社の採用活動調査</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 font-semibold">競合企業</th>
+                                    <th class="p-3 font-semibold">給与水準</th>
+                                    <th class="p-3 font-semibold">年間休日</th>
+                                    <th class="p-3 font-semibold">SNS活用</th>
+                                    <th class="p-3 font-semibold">Indeed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">中部土木</td>
+                                    <td class="p-3">月給25-40万円</td>
+                                    <td class="p-3">110日</td>
+                                    <td class="p-3">Facebook活用</td>
+                                    <td class="p-3">○充実</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">東海建設</td>
+                                    <td class="p-3">月給23-38万円</td>
+                                    <td class="p-3">105日</td>
+                                    <td class="p-3">全SNS活用</td>
+                                    <td class="p-3">○充実</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-3 font-medium">矢作建設工業</td>
+                                    <td class="p-3">月給28-45万円</td>
+                                    <td class="p-3">120日</td>
+                                    <td class="p-3">全SNS+YouTube</td>
+                                    <td class="p-3">◎最高水準</td>
+                                </tr>
+                                <tr class="bg-yellow-50">
+                                    <td class="p-3 font-bold">ベストコ（現状）</td>
+                                    <td class="p-3 text-red-600">不明</td>
+                                    <td class="p-3 text-red-600">不明</td>
+                                    <td class="p-3 text-red-600">×未活用</td>
+                                    <td class="p-3 text-red-600">×未確認</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">差別化戦略</h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">福島特化の地域貢献性</p>
+                            <p class="text-sm text-green-700 mt-2">復興から発展へ、次世代の福島を築く使命感。大手にはない地域密着の強みを最大限活用</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="font-bold text-green-800">少数精鋭による成長環境</p>
+                            <p class="text-sm text-green-700 mt-2">大手では得られないマンツーマン指導、若手でも責任ある仕事を任される環境を訴求</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">競合対策アクションプラン</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">情報開示による信頼獲得</p>
+                            <p class="mt-2 text-gray-600">給与・待遇・休日等の基本情報を明確に開示し、透明性の高い企業イメージを構築</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">地域密着性の徹底訴求</p>
+                            <p class="mt-2 text-gray-600">「転勤なし」「地元福島で長期キャリア」「地域貢献」を前面に出した差別化</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold">デジタル採用活動の早期立ち上げ</p>
+                            <p class="mt-2 text-gray-600">Indeed・SNS・採用サイトを同時並行で構築し、競合との差を埋める</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. 外部PR活動診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
+                    7. 外部PR活動診断
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">現在のPR活動状況</h3>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">0%</div>
+                            <div class="text-sm text-red-700">SNS活用率</div>
+                            <div class="text-xs text-red-600 mt-1">全SNSで未確認</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">未活用</div>
+                            <div class="text-sm text-red-700">Wantedly</div>
+                            <div class="text-xs text-red-600 mt-1">採用メディア未活用</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600">なし</div>
+                            <div class="text-sm text-red-700">情報発信</div>
+                            <div class="text-xs text-red-600 mt-1">プレスリリース等なし</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">SNS活用計画</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Instagram開設（第1優先）</h4>
+                            <p class="mt-2 text-gray-600">建設現場の魅力を視覚的に訴求。週3回投稿（現場風景、社員紹介、プロジェクト紹介）</p>
+                            <p class="text-sm text-green-600 mt-1">期待効果：20-30代技術職へのリーチ、月間フォロワー100名獲得</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Facebook開設（第2優先）</h4>
+                            <p class="mt-2 text-gray-600">企業の信頼性訴求。週2回投稿（企業ニュース、地域貢献活動、採用情報）</p>
+                            <p class="text-sm text-green-600 mt-1">期待効果：30-40代経験者へのリーチ、B2B関係構築</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <h4 class="font-bold">Wantedly活用（第3優先）</h4>
+                            <p class="mt-2 text-gray-600">ストーリー性のある採用広報。月2回記事投稿（社員インタビュー、プロジェクト紹介）</p>
+                            <p class="text-sm text-green-600 mt-1">期待効果：意欲的な求職者獲得、企業文化の発信</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">月間コンテンツカレンダー案</h3>
+                    <div class="bg-indigo-50 p-4 rounded-lg">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <p class="font-semibold">第1-2週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• 月曜：週始まりの現場風景</li>
+                                    <li>• 水曜：技術・施工事例紹介</li>
+                                    <li>• 金曜：社員紹介・インタビュー</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold">第3-4週</p>
+                                <ul class="text-sm space-y-1 text-indigo-700">
+                                    <li>• 月曜：地域貢献活動レポート</li>
+                                    <li>• 水曜：安全への取り組み</li>
+                                    <li>• 金曜：採用情報・イベント告知</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 実装ロードマップ -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    実装ロードマップ
+                </h2>
+            </div>
+            <div class="section-content">
+                <h3 class="text-xl font-semibold mb-4">段階的改善計画</h3>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-500 pl-4">
+                        <p class="font-bold text-red-700">フェーズ1：緊急対応（1ヶ月以内）</p>
+                        <ul class="mt-2 space-y-1 text-sm">
+                            <li>✓ 基本的な企業情報の整備と公開</li>
+                            <li>✓ Indeed企業ページの新規作成</li>
+                            <li>✓ 最低限の求人原稿作成</li>
+                            <li>✓ 公式サイトへの採用情報追加</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <p class="font-bold text-blue-700">フェーズ2：基盤構築（2-3ヶ月）</p>
+                        <ul class="mt-2 space-y-1 text-sm">
+                            <li>✓ 採用専用サイトの構築</li>
+                            <li>✓ Instagram・Facebook公式アカウント開設</li>
+                            <li>✓ 社員インタビューコンテンツ作成（3名以上）</li>
+                            <li>✓ 競合分析に基づく差別化戦略実行</li>
+                        </ul>
+                    </div>
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <p class="font-bold text-green-700">フェーズ3：成長加速（4-6ヶ月）</p>
+                        <ul class="mt-2 space-y-1 text-sm">
+                            <li>✓ 動画コンテンツ制作（施工現場、職場紹介）</li>
+                            <li>✓ Wantedly活用開始</li>
+                            <li>✓ インターンシップ制度導入</li>
+                            <li>✓ 採用データ分析と改善サイクル確立</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Radar Chart Logic
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        const SCORE = 2.3; // 総合評価スコア
+        const SCORE1 = 3.5; // 企業安定性スコア
+        const SCORE2 = 1.0; // 採用情報発信力スコア
+        const SCORE3 = 2.5; // 研修・サポート制度スコア
+        const SCORE4 = 3.0; // 働き方・労働環境スコア
+        const SCORE5 = 2.0; // 競合優位性スコア
+        const SCORE6 = 1.5; // デジタルPR対応スコア
+        
+        const score = SCORE;
+        let chartColor = 'rgba(239, 68, 68, 0.6)'; // Red for low score
+        let chartBorderColor = 'rgba(239, 68, 68, 1)';
+        
+        if (score >= 4.0) {
+            chartColor = 'rgba(34, 197, 94, 0.6)'; // Green
+            chartBorderColor = 'rgba(34, 197, 94, 1)';
+        } else if (score >= 3.0) {
+            chartColor = 'rgba(249, 115, 22, 0.6)'; // Orange
+            chartBorderColor = 'rgba(249, 115, 22, 1)';
+        }
+
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
+        const pointLabelColor = isDarkMode ? '#e5e7eb' : '#1f2937';
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['企業安定性', '採用情報発信力', '研修・サポート制度', '働き方・労働環境', '競合優位性', 'デジタルPR対応'],
+                datasets: [{
+                    label: '採用力スコア',
+                    data: [SCORE1, SCORE2, SCORE3, SCORE4, SCORE5, SCORE6],
+                    backgroundColor: chartColor,
+                    borderColor: chartBorderColor,
+                    borderWidth: 2,
+                    pointBackgroundColor: chartBorderColor,
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: chartBorderColor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: gridColor
+                        },
+                        grid: {
+                            color: gridColor
+                        },
+                        pointLabels: {
+                            color: pointLabelColor,
+                            font: {
+                                size: 14,
+                                family: "'Inter', 'Noto Sans JP', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: pointLabelColor,
+                            stepSize: 1,
+                            font: {
+                                size: 12
+                            }
+                        },
+                        min: 0,
+                        max: 5
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += context.parsed.r.toFixed(1);
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

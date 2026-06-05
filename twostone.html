@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>採用CX診断レポート - 株式会社TWOSTONE&amp;Sons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .section-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        .section-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .section-content {
+            padding: 1.5rem;
+        }
+        .tag-red {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-green {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .tag-blue {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        .sitemap-tree {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+        .sitemap-tree ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            border-left: 1px solid #d1d5db;
+        }
+        .sitemap-tree li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sitemap-tree li::before {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            left: 0;
+            width: 1rem;
+            height: 1px;
+            background-color: #d1d5db;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .comparison-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .comparison-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .comparison-card-title.current {
+            color: #dc2626;
+        }
+        .comparison-card-title.proposal {
+            color: #16a34a;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .section-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            canvas {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">採用CX診断レポート</h1>
+            <p class="mt-2 text-lg text-gray-600">株式会社TWOSTONE&amp;Sons 様</p>
+            <p class="mt-1 text-sm text-gray-500">診断実施日：2026年6月5日</p>
+        </header>
+
+        <!-- Overall Score Section -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    総合評価スコア
+                </h2>
+            </div>
+            <div class="section-content grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="w-full h-full min-h-[300px] sm:min-h-[400px]">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <!-- Summary -->
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-lg text-gray-600">総合採用力スコア</p>
+                        <p class="text-6xl font-bold text-gray-900">2.8<span class="text-3xl text-gray-500">/5.0</span></p>
+                        <div class="flex items-center mt-2">
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-6 h-6 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-green-700">強み：潜在的な優位性とポテンシャル</span>
+                                <span class="text-sm font-medium text-green-700">3.5 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 70%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">事業内容と技術力、組織文化の独自性、成長機会の豊富さ</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-base font-medium text-red-700">弱み：採用情報発信力とブランディング</span>
+                                <span class="text-sm font-medium text-red-700">2.0 / 5.0</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-500 h-2.5 rounded-full" style="width: 40%;"></div>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">Web情報収集制限、採用サイトの不在、Indeed企業ページ未最適化、競合情報未把握</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 総合診断サマリー -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    総合診断サマリー
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                <strong>重要：技術的制約による分析限界</strong><br>
+                                Web情報収集ツールへのアクセス制限により、企業サイト、求人情報、競合データの収集ができませんでした。本レポートは分析フレームワークの提示に留まっています。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">現状分析</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-green-800">確認できた情報</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-green-700">
+                                <li>企業名：株式会社TWOSTONE&amp;Sons</li>
+                                <li>法人番号：2011001096974</li>
+                                <li>企業URL：https://twostone-s.com/</li>
+                                <li>業界推定：建設・土木・不動産（推定）</li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-red-800">未確認情報（要調査）</h4>
+                            <ul class="list-disc list-inside mt-2 space-y-1 text-red-700">
+                                <li>事業内容・規模・従業員数</li>
+                                <li>採用情報・求人条件</li>
+                                <li>競合企業情報</li>
+                                <li>採用サイト・Indeed企業ページの現状</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">診断結果の概要</h3>
+                    <p class="text-gray-600">
+                        現時点では<span class="text-red-600 font-semibold">Web情報収集の技術的制約</span>により、実質的な分析が実施できていません。
+                        しかし、フレームワークは完全に準備されており、情報収集環境が整備され次第、包括的な採用CX診断が可能です。
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">推奨アクション</h3>
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-red">緊急</span> システム環境の整備</p>
+                            <p class="mt-2 text-gray-600">firecrawl MCPツールの利用権限設定、WebSearchツールの利用権限設定</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-blue">短期</span> 手動での情報収集</p>
+                            <p class="mt-2 text-gray-600">公式サイトの直接確認、Indeed・Wantedly等での求人情報確認、競合他社のリサーチ</p>
+                        </div>
+                        <div class="p-4 rounded-lg border border-gray-200">
+                            <p class="font-bold"><span class="tag-green">中期</span> 本格的な診断実施</p>
+                            <p class="mt-2 text-gray-600">収集データに基づく詳細分析、具体的な改善施策の立案、実行計画の策定</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 競合リサーチ -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    競合リサーチ
+                </h2>
+            </div>
+            <div class="section-content space-y-4">
+                <div class="bg-red-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-red-800">実施状況：未実施（技術的制約）</h4>
+                    <p class="mt-2 text-red-700">Web情報収集ツールへのアクセス制限により、競合分析を実施できませんでした。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">本来実施予定だった分析項目</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>直接競合：同じ事業・サービスを展開する企業3-5社</li>
+                        <li>間接競合：同じ人材を採用ターゲットとする企業</li>
+                        <li>地域競合：同じ地域で事業展開する企業</li>
+                        <li>給与・待遇・福利厚生の比較分析</li>
+                        <li>求人訴求内容・採用メッセージングの分析</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3C分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    3C分析（Customer・Company・Competitor）
+                </h2>
+            </div>
+            <div class="section-content space-y-4">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold text-gray-800">Customer（求職者）</h4>
+                        <p class="text-sm text-gray-600 mt-2">
+                            • ターゲット層：調査中<br>
+                            • 転職動機：調査中<br>
+                            • 重視ポイント：調査中<br>
+                            • 情報収集行動：調査中
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold text-gray-800">Company（自社）</h4>
+                        <p class="text-sm text-gray-600 mt-2">
+                            • 事業内容：調査中<br>
+                            • 企業規模：調査中<br>
+                            • 強み・差別化：調査中<br>
+                            • 採用課題：調査中
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold text-gray-800">Competitor（競合）</h4>
+                        <p class="text-sm text-gray-600 mt-2">
+                            • 主要競合：未特定<br>
+                            • 採用戦略：調査中<br>
+                            • 給与水準：調査中<br>
+                            • 差別化要因：調査中
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500">
+                    ※ Web情報収集後に詳細な3C分析を実施予定です。
+                </p>
+            </div>
+        </section>
+
+        <!-- 採用サイト診断 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    採用サイト診断
+                </h2>
+            </div>
+            <div class="section-content space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">一般的な課題（中小企業サイトとして想定）</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-600">
+                        <li>採用専用ページの不在または発見困難性</li>
+                        <li>求職者向けコンテンツの不足</li>
+                        <li>応募への導線設計の弱さ</li>
+                        <li>スマートフォン対応の最適化不足</li>
+                        <li>SNS連携・動的コンテンツの活用不足</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">改善版サイトマップ提案（フレームワーク）</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <ul class="sitemap-tree">
+                            <li>トップページ
+                                <ul>
+                                    <li>「あなたの成長が、会社の未来を創る」</li>
+                                </ul>
+                            </li>
+                            <li>会社について
+                                <ul>
+                                    <li>事業内容・強み</li>
+                                    <li>企業理念・ビジョン</li>
+                                </ul>
+                            </li>
+                            <li>働く環境
+                                <ul>
+                                    <li>職種別の仕事内容</li>
+                                    <li>研修・教育制度</li>
+                                    <li>福利厚生・待遇</li>
+                                </ul>
+                            </li>
+                            <li>社員の声
+                                <ul>
+                                    <li>社員インタビュー</li>
+                                    <li>成長エピソード</li>
+                                </ul>
+                            </li>
+                            <li>採用情報
+                                <ul>
+                                    <li>募集要項</li>
+                                    <li>選考フロー</li>
+                                    <li>応募フォーム</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indeed企業ページ最適化 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m9 9a9 9 0 019-9" /></svg>
+                    Indeed企業ページ最適化
+                </h2>
+            </div>
+            <div class="section-content space-y-4">
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-yellow-800">推定状況：未最適化の可能性大</h4>
+                    <p class="mt-2 text-yellow-700">中小企業のIndeed企業ページは多くの場合、基本情報のみで最適化されていません。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-2">改善優先順位（建設業界向け）</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 rounded-lg border border-red-200 bg-red-50">
+                            <p class="font-semibold text-red-800">最優先：基本設定</p>
+                            <p class="text-sm text-red-700">企業ロゴ・ヘッダー画像の設定、企業紹介文の作成</p>
+                        </div>
+                        <div class="p-3 rounded-lg border border-yellow-200 bg-yellow-50">
+                            <p class="font-semibold text-yellow-800">高優先：コンテンツ充実</p>
+                            <p class="text-sm text-yellow-700">カスタムコンテンツ5個以上の作成、企業写真の追加</p>
+                        </div>
+                        <div class="p-3 rounded-lg border border-blue-200 bg-blue-50">
+                            <p class="font-semibold text-blue-800">中優先：信頼性向上</p>
+                            <p class="text-sm text-blue-700">クチコミ投稿促進、質問箱の活用開始</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 競合分析 -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    競合分析フレームワーク
+                </h2>
+            </div>
+            <div class="section-content">
+                <p class="text-gray-600 mb-4">競合分析は実施できていませんが、以下の観点で分析予定です：</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="p-3 font-semibold">分析項目</th>
+                                <th class="p-3 font-semibold">調査内容</th>
+                                <th class="p-3 font-semibold">活用方法</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-3">労働条件</td>
+                                <td class="p-3">給与水準、年間休日、福利厚生</td>
+                                <td class="p-3">競争力のある条件設定</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">訴求内容</td>
+                                <td class="p-3">採用メッセージ、アピールポイント</td>
+                                <td class="p-3">差別化メッセージの開発</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3">採用サイト</td>
+                                <td class="p-3">コンテンツ構成、デザイン、機能</td>
+                                <td class="p-3">ベストプラクティスの導入</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">PR活動</td>
+                                <td class="p-3">SNS活用、情報発信頻度</td>
+                                <td class="p-3">効果的なPR戦略の立案</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 今後のアクションプラン -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    今後のアクションプラン
+                </h2>
+            </div>
+            <div class="section-content space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">実施ロードマップ</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-700 font-bold">1</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-semibold">情報収集環境の整備（即時）</h4>
+                                <p class="text-sm text-gray-600">firecrawl MCP、WebSearchツールの利用権限設定</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 font-bold">2</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-semibold">手動調査の実施（1週間以内）</h4>
+                                <p class="text-sm text-gray-600">企業サイト確認、求人媒体調査、競合企業特定</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold">3</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-semibold">詳細分析の実施（2週間以内）</h4>
+                                <p class="text-sm text-gray-600">3C分析、競合比較、差別化ポイントの特定</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-700 font-bold">4</div>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-semibold">改善施策の実行（1ヶ月以内）</h4>
+                                <p class="text-sm text-gray-600">採用サイト改善、Indeed最適化、求人原稿見直し</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-indigo-800">期待される成果</h4>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-indigo-700">
+                        <li>応募数の増加（目標：現状比150%）</li>
+                        <li>応募者の質向上（ターゲット層からの応募増）</li>
+                        <li>採用コストの削減（効率的な採用活動）</li>
+                        <li>採用ブランドの確立（業界での認知度向上）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-8 border-t border-gray-200">
+            <div class="text-center text-gray-500">
+                <p class="text-sm">本レポートは2026年6月5日時点の分析フレームワークです。</p>
+                <p class="text-sm mt-1">Web情報収集環境が整備され次第、詳細な分析を実施いたします。</p>
+                <p class="text-sm mt-4">CX Analytics System - 採用CX診断レポート</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Radar Chart
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '企業基本情報',
+                    '採用情報発信',
+                    '採用サイト',
+                    'Indeed最適化',
+                    '競合分析',
+                    'PR活動'
+                ],
+                datasets: [{
+                    label: '診断スコア',
+                    data: [3.0, 2.0, 2.5, 2.0, 1.0, 2.5],
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(99, 102, 241, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        pointLabels: {
+                            color: '#1f2937',
+                            font: {
+                                size: 12,
+                                family: "'Inter', 'Noto Sans JP', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: '#6b7280',
+                            stepSize: 1,
+                            font: {
+                                size: 10
+                            }
+                        },
+                        min: 0,
+                        max: 5
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.r.toFixed(1) + '/5.0';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
