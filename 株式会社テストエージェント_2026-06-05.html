@@ -703,10 +703,84 @@
     </div>
   </div>
 
-  <!-- ── 3 課題特定 ── -->
+  <!-- ── 3 紹介会社用ルールチェック ── -->
   <div class="card">
     <div class="card-head">
       <div class="cn">3</div>
+      紹介会社用ルールチェック
+      <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:0.8;">アカウントBan防止・Indeed掲載ポリシー準拠</span>
+    </div>
+    <div class="card-body">
+
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+        <thead>
+          <tr>
+            <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;width:36px;">#</th>
+            <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">チェック項目</th>
+            <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;width:60px;">判定</th>
+            <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">確認内容・対応</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">①</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">勤務地の住所は郵便番号〜番地まで記載されているか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ng">✕</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--gray-dark);">現状「大阪府大阪市北区梅田」のみ。郵便番号・番地が未記載。Indeed側で住所不備と判定され掲載品質に影響する可能性あり。<br><span style="color:var(--red-deep);font-weight:700;">→ 郵便番号・丁目番地まで補完が必要</span></td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">②</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">経験要件と年齢制限の整合性（未経験OKなら年齢制限なし）</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-warn">△</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--gray-dark);">現原稿は「経験3年以上必須」のため年齢制限との矛盾は現時点でなし。ただし施策①でターゲット向けに「未経験OK」原稿を作成する場合、<strong>年齢制限・学歴制限の文言を一切入れないこと</strong>が必要。「大卒以上」の記載も削除対象。<br><span style="color:var(--orange);font-weight:700;">→ 新規原稿作成時に要確認</span></td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">③</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アウトソース系企業の場合、勤務地補足に「プロジェクト先勤務」の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-warn">△</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--gray-dark);">SIGNATEは自社プラットフォーム運営会社のため、当該求人ではプロジェクト先常駐の記載は不要。ただし今後アウトソース・SES系クライアントの原稿を取り扱う場合は「実際の勤務地はプロジェクト先となる場合があります」の文言を勤務地補足に必ず記載すること。<br><span style="color:var(--orange);font-weight:700;">→ SES・アウトソース案件では必須対応</span></td>
+          </tr>
+          <tr style="background:var(--gray-light);">
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--gray-mid);">④</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);font-weight:700;">アクセス欄に最寄り駅の記載があるか</td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;"><span class="mark-ng">✕</span></td>
+            <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--gray-dark);">現状、アクセス欄に最寄り駅の記載なし。「梅田」という地名は含まれているが、最寄り駅・路線・徒歩分数の記載がないため、求職者が通勤イメージを持ちにくく応募開始率の低下にもつながる。<br><span style="color:var(--red-deep);font-weight:700;">→「大阪メトロ四つ橋線/御堂筋線 梅田駅 徒歩〇分」等の記載を追加</span></td>
+          </tr>
+          <tr>
+            <td style="padding:10px 12px;font-weight:700;color:var(--gray-mid);">⑤</td>
+            <td style="padding:10px 12px;font-weight:700;">その他の項目に紹介会社の求人である旨・許可番号の記載があるか</td>
+            <td style="padding:10px 12px;text-align:center;"><span class="mark-ng">✕</span></td>
+            <td style="padding:10px 12px;color:var(--gray-dark);">掲載原稿に職業紹介事業許可番号の記載が確認できない。Indeed上で「人材紹介会社による求人」と明示しない場合、ポリシー違反とみなされアカウントBanリスクがある。<br><span style="color:var(--red-deep);font-weight:700;">→ その他・補足欄に「本求人は〇〇株式会社（職業紹介事業許可番号：〇〇-〇〇〇〇〇〇〇）による人材紹介求人です」の文言を追加</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 判定サマリー -->
+      <div style="display:flex;gap:12px;margin-bottom:14px;">
+        <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--red);">2</div>
+          <div style="font-size:10px;color:var(--red-deep);font-weight:700;">要対応（✕）</div>
+        </div>
+        <div style="background:var(--orange-pale);border:1px solid #FFE082;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--orange);">2</div>
+          <div style="font-size:10px;color:var(--orange);font-weight:700;">要確認（△）</div>
+        </div>
+        <div style="background:var(--green-pale);border:1px solid #C5E1A5;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
+          <div style="font-size:20px;font-weight:900;color:var(--green);">1</div>
+          <div style="font-size:10px;color:var(--green);font-weight:700;">問題なし（○）</div>
+        </div>
+        <div class="summary-box" style="margin-top:0;flex:1;">
+          <strong>優先対応：</strong>①住所の補完・④最寄り駅の追加・⑤許可番号の記載の3点は<strong>アカウントBanに直結するリスク</strong>があるため即時対応が必要。②は新規原稿作成時に未経験OKと記載する場合に必ず確認すること。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 4 課題特定 ── -->
+  <div class="card">
+    <div class="card-head">
+      <div class="cn">4</div>
       課題特定
     </div>
     <div class="card-body">
@@ -732,10 +806,10 @@
     </div>
   </div>
 
-  <!-- ── 4 改善施策 ── -->
+  <!-- ── 5 改善施策 ── -->
   <div class="card">
     <div class="card-head">
-      <div class="cn">4</div>
+      <div class="cn">5</div>
       改善施策
     </div>
     <div class="card-body">
@@ -901,10 +975,10 @@
     </div>
   </div>
 
-  <!-- ── 5 数値改善予測 ── -->
+  <!-- ── 6 数値改善予測 ── -->
   <div class="card">
     <div class="card-head">
-      <div class="cn">5</div>
+      <div class="cn">6</div>
       数値改善予測
     </div>
     <div class="card-body">
