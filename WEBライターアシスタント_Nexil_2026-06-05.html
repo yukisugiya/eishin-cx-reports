@@ -131,6 +131,17 @@
     .rule-table { font-size: 10px; }
     .rule-table th, .rule-table td { padding: 6px 6px; }
     .rule-table td:nth-child(4) { min-width: 160px; }
+    /* ルールチェックサマリー */
+    .rule-summary-flex { flex-direction: column !important; }
+    .rule-summary-flex > div:not(.summary-box) { min-width: unset !important; flex-direction: row; align-items: center; gap: 12px; justify-content: center; padding: 8px 12px !important; }
+    .rule-summary-flex .summary-box { margin-top: 0 !important; flex: unset !important; width: 100%; }
+
+    /* ファネル右バッジ列 */
+    .funnel-right-badge { display: none !important; }
+
+    /* ファネル矢印ボックスのwrap */
+    .fai > div { flex-wrap: wrap; gap: 4px; }
+
   }
 </style>
 </head>
@@ -432,7 +443,7 @@
           </tr>
         </tbody>
       </table>
-      <div style="display:flex;gap:12px;">
+      <div class="rule-summary-flex" style="display:flex;gap:12px;">
         <div style="background:var(--red-pale);border:1px solid #F5C6D0;border-radius:7px;padding:8px 16px;text-align:center;min-width:70px;">
           <div style="font-size:20px;font-weight:900;color:var(--red);">0</div>
           <div style="font-size:10px;color:var(--red-deep);font-weight:700;">要対応（✕）</div>
