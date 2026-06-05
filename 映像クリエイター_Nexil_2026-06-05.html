@@ -89,7 +89,49 @@
   .site-footer { background: var(--red); color: rgba(255,255,255,0.65); font-size: 11px; text-align: center; padding: 10px; margin-top: 32px; }
   .funnel-arrow-row { display:flex; align-items:center; height:36px; padding-left:180px; }
   .funnel-rate-box { border-radius:6px; padding:4px 12px; display:flex; align-items:center; gap:8px; }
-  @media (max-width: 600px) { .align-grid { grid-template-columns: 1fr; } .page-wrap { padding: 0 10px; } }
+  /* ── モバイル対応 ── */
+  @media (max-width: 640px) {
+    /* ページ全体 */
+    .page-wrap { padding: 0 8px; }
+    .meta-bar { padding: 8px 12px; gap: 6px; }
+    .meta-bar span { font-size: 10px; }
+    .card-body { padding: 14px 12px; }
+    .site-header { padding: 0 14px; }
+    .site-header .logo { font-size: 13px; }
+
+    /* プロフィールグリッド */
+    .pg2 { grid-template-columns: 1fr !important; }
+    .pg3 { grid-template-columns: 1fr 1fr !important; }
+
+    /* ファネル図 */
+    .fl { width: 80px !important; padding-right: 8px !important; }
+    .fl .f-label { font-size: 9px; }
+    .fl .f-value { font-size: 14px !important; }
+    .fr { display: none !important; }
+    .fai { padding-left: 80px !important; }
+    .funnel-rate-box { flex-wrap: wrap; gap: 4px; }
+    .funnel-rate-box span { font-size: 9px; }
+
+    /* 整合性チェック */
+    .align-grid { grid-template-columns: 1fr; }
+
+    /* テーブル横スクロール */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .pred-table th, .pred-table td { padding: 7px 6px; font-size: 11px; }
+    .pred-val { font-size: 12px; }
+
+    /* アクションカード */
+    .action-head { flex-wrap: wrap; gap: 6px; }
+
+    /* Before/After グリッド */
+    .ba-grid { grid-template-columns: 1fr !important; }
+    .ba-arrow { display: none !important; }
+
+    /* ルールチェックテーブル */
+    .rule-table { font-size: 10px; }
+    .rule-table th, .rule-table td { padding: 6px 6px; }
+    .rule-table td:nth-child(4) { min-width: 160px; }
+  }
 </style>
 </head>
 <body>
@@ -112,7 +154,7 @@
   <div class="card">
     <div class="card-head"><div class="cn">―</div>診断対象プロフィール</div>
     <div class="card-body">
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
+      <div class="pg2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
         <div class="profile-item">
           <div class="pi-label">原稿タイトル</div>
           <div class="pi-value">映像クリエイター</div>
@@ -134,7 +176,7 @@
           <div class="pi-sub">土日休み・年間休日120日以上・10:00〜19:00</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div class="pg3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
         <div class="profile-item highlight">
           <div class="pi-label">総費用</div>
           <div class="pi-value">¥16,617</div>
@@ -171,17 +213,17 @@
       <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">表示回数</div>
             <div style="font-size:20px;font-weight:900;color:var(--gray-dark);">2,112<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> imp</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--red);width:100%;">表示回数</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
             <span style="font-size:10px;color:var(--gray-mid);">クリック率</span>
@@ -192,17 +234,17 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">クリック数（PV数）</div>
             <div style="font-size:20px;font-weight:900;color:var(--green);">209<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:82%;">クリック数</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
             <span style="font-size:10px;color:var(--gray-mid);">応募開始率</span>
@@ -213,17 +255,17 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募開始数</div>
             <div style="font-size:20px;font-weight:900;color:var(--green);">15<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:42%;">応募開始</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
             <span style="font-size:10px;color:var(--gray-mid);">応募完了率</span>
@@ -234,20 +276,20 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募数</div>
             <div style="font-size:20px;font-weight:900;color:var(--green);">14<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:22%;">応募完了</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
       </div>
 
       <!-- 指標テーブル -->
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <div class="table-scroll"><table class="rule-table" style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
         <thead><tr>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">指標</th>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">計算式</th>
@@ -305,8 +347,7 @@
             <td style="padding:9px 12px;text-align:center;"><span class="judge-badge bg-green2">良好</span><div style="font-size:10px;color:var(--green);margin-top:2px;">目安上限の約1.4%</div></td>
           </tr>
         </tbody>
-      </table>
-
+      </table></div>
       <div class="summary-box good">
         <strong>ファネル診断まとめ：</strong>全4指標がいずれも目標値を上回っており、<strong>配信パフォーマンスは極めて良好な状態</strong>。特にクリック率9.90%（目標5%）・応募完了率93.33%（目標25%）は目標を大幅に超えており、応募率6.70%は職種別ベンチマーク0.60%の11倍超を記録。現状の運用を維持しつつ、<strong>ポリシー準拠の表現修正</strong>のみで良好な配信効率を継続できる。
       </div>
@@ -351,7 +392,7 @@
       <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:0.8;">アカウントBan防止・Indeed掲載ポリシー準拠</span>
     </div>
     <div class="card-body">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <div class="table-scroll"><table class="rule-table" style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
         <thead><tr>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;width:36px;">#</th>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">チェック項目</th>
@@ -466,7 +507,7 @@
         ※ 現状すべての指標が目標値をクリアしているため、今回の改善施策（年齢示唆表現の修正）による数値変化は軽微。現状維持を想定。
       </div>
 
-      <table class="pred-table">
+      <div class="table-scroll"><table class="pred-table">
         <thead><tr>
           <th>指標</th>
           <th>現状</th>
@@ -499,8 +540,7 @@
             <td><span class="pred-change up">現状維持</span></td>
           </tr>
         </tbody>
-      </table>
-
+      </table></div>
       <div class="summary-box good">
         <strong>総評：</strong>全指標が目標値をクリアしており、現状の配信パフォーマンスは極めて良好。応募率6.70%は職種別ベンチマーク（映像：0.60%）の11倍超、CPA¥1,187は目安上限の約1.4%という高い効率を記録している。今回の改善施策（年齢示唆表現の修正）は数値インパクトより<strong>Indeedポリシー準拠の観点</strong>での対応となる。この1点の表現修正のみで、現状の良好な配信効率を維持したまま運用継続できる。
       </div>

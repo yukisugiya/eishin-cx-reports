@@ -91,7 +91,49 @@
   .site-footer { background: var(--red); color: rgba(255,255,255,0.65); font-size: 11px; text-align: center; padding: 10px; margin-top: 32px; }
   .funnel-arrow-row { display:flex; align-items:center; height:36px; padding-left:180px; }
   .funnel-rate-box { border-radius:6px; padding:4px 12px; display:flex; align-items:center; gap:8px; }
-  @media (max-width: 600px) { .align-grid { grid-template-columns: 1fr; } .page-wrap { padding: 0 10px; } }
+  /* ── モバイル対応 ── */
+  @media (max-width: 640px) {
+    /* ページ全体 */
+    .page-wrap { padding: 0 8px; }
+    .meta-bar { padding: 8px 12px; gap: 6px; }
+    .meta-bar span { font-size: 10px; }
+    .card-body { padding: 14px 12px; }
+    .site-header { padding: 0 14px; }
+    .site-header .logo { font-size: 13px; }
+
+    /* プロフィールグリッド */
+    .pg2 { grid-template-columns: 1fr !important; }
+    .pg3 { grid-template-columns: 1fr 1fr !important; }
+
+    /* ファネル図 */
+    .fl { width: 80px !important; padding-right: 8px !important; }
+    .fl .f-label { font-size: 9px; }
+    .fl .f-value { font-size: 14px !important; }
+    .fr { display: none !important; }
+    .fai { padding-left: 80px !important; }
+    .funnel-rate-box { flex-wrap: wrap; gap: 4px; }
+    .funnel-rate-box span { font-size: 9px; }
+
+    /* 整合性チェック */
+    .align-grid { grid-template-columns: 1fr; }
+
+    /* テーブル横スクロール */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .pred-table th, .pred-table td { padding: 7px 6px; font-size: 11px; }
+    .pred-val { font-size: 12px; }
+
+    /* アクションカード */
+    .action-head { flex-wrap: wrap; gap: 6px; }
+
+    /* Before/After グリッド */
+    .ba-grid { grid-template-columns: 1fr !important; }
+    .ba-arrow { display: none !important; }
+
+    /* ルールチェックテーブル */
+    .rule-table { font-size: 10px; }
+    .rule-table th, .rule-table td { padding: 6px 6px; }
+    .rule-table td:nth-child(4) { min-width: 160px; }
+  }
 </style>
 </head>
 <body>
@@ -114,7 +156,7 @@
   <div class="card">
     <div class="card-head"><div class="cn">―</div>診断対象プロフィール</div>
     <div class="card-body">
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
+      <div class="pg2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
         <div class="profile-item">
           <div class="pi-label">原稿タイトル</div>
           <div class="pi-value">採用アシスタント</div>
@@ -136,7 +178,7 @@
           <div class="pi-sub">残業ほぼなし・土日祝休み</div>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div class="pg3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
         <div class="profile-item highlight">
           <div class="pi-label">総費用</div>
           <div class="pi-value">¥12,129</div>
@@ -173,17 +215,17 @@
       <div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">表示回数</div>
             <div style="font-size:20px;font-weight:900;color:var(--gray-dark);">1,320<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> imp</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--red);width:100%;">表示回数</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
             <span style="font-size:10px;color:var(--gray-mid);">クリック率</span>
@@ -194,17 +236,17 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">クリック数（PV数）</div>
             <div style="font-size:20px;font-weight:900;color:var(--green);">113<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:86%;">クリック数</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--green-pale);border:1px solid #C5E1A5;">
             <span style="font-size:10px;color:var(--gray-mid);">応募開始率</span>
@@ -215,17 +257,17 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募開始数</div>
             <div style="font-size:20px;font-weight:900;color:var(--green);">4<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
           <div style="flex:1;padding:6px 0;">
             <div style="height:36px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:white;background:var(--green);width:32%;">応募開始</div>
           </div>
-          <div style="width:200px;"></div>
+          <div class="fr" style="width:200px;"></div>
         </div>
 
-        <div class="funnel-arrow-row">
+        <div class="funnel-arrow-row fai">
           <div style="color:var(--gray-mid);font-size:18px;margin-right:8px;">↓</div>
           <div class="funnel-rate-box" style="background:var(--orange-pale);border:1px solid #FFE082;">
             <span style="font-size:10px;color:var(--gray-mid);">応募完了率</span>
@@ -236,7 +278,7 @@
         </div>
 
         <div style="display:flex;align-items:center;">
-          <div style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
+          <div class="fl" style="width:180px;flex-shrink:0;text-align:right;padding-right:14px;">
             <div style="font-size:11px;font-weight:700;color:var(--gray-mid);">応募数</div>
             <div style="font-size:20px;font-weight:900;color:var(--orange);">1<span style="font-size:10px;color:var(--gray-mid);font-weight:400;"> 件</span></div>
           </div>
@@ -249,7 +291,7 @@
       </div>
 
       <!-- 指標テーブル -->
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <div class="table-scroll"><table class="rule-table" style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
         <thead><tr>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">指標</th>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:center;font-weight:700;">計算式</th>
@@ -307,8 +349,7 @@
             <td style="padding:9px 12px;text-align:center;"><span class="judge-badge bg-green2">良好</span><div style="font-size:10px;color:var(--green);margin-top:2px;">目安上限の約28%</div></td>
           </tr>
         </tbody>
-      </table>
-
+      </table></div>
       <div class="summary-box warn">
         <strong>ファネル診断まとめ：</strong>クリック率8.56%・応募開始率3.54%はいずれも目標値を大幅に上回り良好。一方、<strong>応募完了率は25%ちょうどで「標準」判定</strong>——4件がフォームを開いたが3件が途中離脱し、応募完了はわずか1件。CPA¥12,129は目安上限（¥43,750）の約28%で効率は良いが、<strong>応募数そのものが少ない状態</strong>。また、表示回数1,320は他の原稿と比べて低水準であり、露出の拡大も優先課題となっている。
       </div>
@@ -351,7 +392,7 @@
       <span style="margin-left:auto;font-size:10px;font-weight:400;opacity:0.8;">アカウントBan防止・Indeed掲載ポリシー準拠</span>
     </div>
     <div class="card-body">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <div class="table-scroll"><table class="rule-table" style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
         <thead><tr>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;width:36px;">#</th>
           <th style="background:var(--red);color:white;padding:8px 12px;text-align:left;font-weight:700;">チェック項目</th>
@@ -565,7 +606,7 @@
         </div>
       </div>
 
-      <table class="pred-table">
+      <div class="table-scroll"><table class="pred-table">
         <thead><tr>
           <th>指標</th>
           <th>現状</th>
@@ -604,8 +645,7 @@
             <td><span class="pred-val optimistic">¥3,032</span><br><span class="pred-change up">▼ 75%改善</span></td>
           </tr>
         </tbody>
-      </table>
-
+      </table></div>
       <div class="summary-box warn" style="border-left-color:var(--orange);">
         <strong>総評：</strong>クリック率・応募開始率はいずれも目標を大幅に超えており、<strong>原稿の訴求力・ターゲット整合性は高水準</strong>。改善すべきは①応募フォームの完了ハードル（現状4件開始→1件完了）と②表示回数の少なさの2点に絞られる。施策①②を実施することで応募数は保守でも2〜3倍、CPAは¥12,129から¥4,852〜¥3,032まで改善できる見込みであり、<strong>コスト効率の高い改善余地が残っている案件</strong>といえる。
       </div>
