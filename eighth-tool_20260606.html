@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>doda求人診断レポート｜株式会社eighth tool</title>
+<style>
+  :root { --red:#AE1C3B; --orange:#E65100; --green:#2E7D32; --blue:#1565C0; --bg:#F5F5F5; --card:#fff; --text:#212121; --sub:#757575; --border:#E0E0E0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:170px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .rm div{margin-bottom:1px}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-top:10px}
+  .li{background:#E3F2FD;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--blue)}
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg,.sa{grid-template-columns:1fr;flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>doda 求人診断レポート</h1>
+  <p>診断日：2026年6月6日｜対象：株式会社eighth tool</p>
+</div>
+
+<div class="container">
+
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>株式会社eighth tool</span></div>
+      <div><label>求人タイトル</label><span>企業の課題を解決するコンサル営業／入社半年で月給60万到達</span></div>
+      <div><label>職種カテゴリ</label><span>コンサルティング型営業（DX・省エネ商材）</span></div>
+      <div><label>雇用形態</label><span>正社員（試用期間6カ月・待遇変動なし）</span></div>
+      <div><label>給与</label><span>月給30万円以上＋インセンティブ＋賞与年2回<br><small style="color:var(--orange);font-size:11px">※固定残業代20時間分（4万5000円以上）含む。超過分別途支給。</small></span></div>
+      <div><label>勤務地</label><span>東京都渋谷区千駄ヶ谷（新宿駅徒歩3分・転勤なし）</span></div>
+      <div><label>掲載期間</label><span>2026年6月1日〜7日</span></div>
+      <div><label>最終更新日</label><span>2026年6月1日（診断日より5日前）</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">正社員</span>
+      <span class="badge">転勤なし</span>
+      <span class="badge g">職種未経験歓迎</span>
+      <span class="badge g">業種未経験歓迎</span>
+      <span class="badge s">5名以上採用</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">タイトル文字数：</span>
+      <span class="badge o">29文字（推奨30〜40文字・1文字不足）</span>
+      <span style="font-size:12px;color:var(--sub);margin-left:8px">企業情報：</span>
+      <span class="badge g">社員インタビュー3件</span>
+      <span class="badge o">写真3枚（取材）</span>
+      <span class="badge o">社員顔写真は汎用アイコン</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 スコアサマリー -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業情報から確認できる事実の積み上げで算出。確認できた内容のみを根拠とします。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <!-- 76/100 → 339.292 × 0.24 = 81.43 -->
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="81.43" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">76</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① 検索ヒット・一覧クリック訴求</span><span><strong>14</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:70%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 応募要件の間口設計</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 仕事内容・ミッションの具体性</span><span><strong>15</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:75%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ 待遇・条件の透明性と競争力</span><span><strong>14</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:70%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 企業・ポジションの独自性</span><span><strong>13</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:65%"></div></div></div>
+      </div>
+    </div>
+    <div class="sb">「応募要件の間口設計（満点）」「給与訴求の強さ（平均月収60万・インセンティブ年間1億円）」「両面開示（やりがい・きびしさ）」は高評価。一方、<strong>冒頭キャッチコピーが候補者の悩みから入っていない</strong>（3つのメリット列挙型）、<strong>人物像が価値観条件でなく欲求・スキル条件の列挙</strong>、<strong>月給上限とリモートワーク対応の未記載</strong>の3点が改善余地。これらを修正すると85点以上が視野に入る。</div>
+  </div>
+</div>
+
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>doda ファネル診断</h2><span class="sub-title">STEP1〜4の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">検索にヒットするか</div><span class="ss">キーワード・職種名・絞り込み条件への対応</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">職種名の語彙</div><div class="cd">「コンサル営業」は転職市場で流通している語。「コンサルティング営業」「提案営業」等の検索にヒットしやすい。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">未経験歓迎バッジ</div><div class="cd"><div class="tl"><span class="tg">職種未経験歓迎</span><span class="tg">業種未経験歓迎</span><span class="tg">転勤なし</span></div>人気絞り込み条件に対応済み。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">タイトル文字数</div><div class="cd">29文字。doda推奨の30〜40文字に1文字不足。実害は軽微だが、もう1文字加えることで推奨範囲に入る。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">リモートワーク対応</div><div class="cd">リモートワークバッジ・本文への記載なし。競合の多くが「フルリモートあり」「リモートOK」を明示しており、リモート絞り込みフィルターでのヒット機会を逃している。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・給与・バッジの訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">タイトルの未来像・給与数値</div><div class="cd">「入社半年で月給60万到達」は候補者が「半年後の自分の収入」という具体的な未来像を想像できる数値訴求。給与数値もタイトルに含まれており競合と一覧で並んだ際に目を引く。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">冒頭キャッチコピー</div><div class="cd">「【未経験◎】先輩もほぼ全員完全未経験から成長 【収入◎】平均月収60万！インセン年間1億円 【メリハリ◎】残業なしで自分の時間を」という3つのメリット列挙型。候補者の悩み・共感ポイントから入る表現になっていない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">バッジの多様性</div><div class="cd">職種未経験歓迎・業種未経験歓迎・転勤なし・5名以上採用・締切間近と多数のバッジでターゲットを明示。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">詳細ページで離脱されないか</div><span class="ss">コンテンツ充実度・要件設計・表現の質で評価</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">人物像の価値観表現</div><div class="cd">「こんな方を歓迎」が「◎今すぐ収入を倍増させたい　◎WLBも大事にしたい　◎家庭と仕事を両立したい　◎実力本位で早期出世・昇給　◎営業・接客スキルを活かしたい」という欲求・スキル条件の列挙。候補者の価値観・信念に訴える表現（「顧客の課題に本気で向き合える人」等）になっていない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">仕事内容の流れ</div><div class="cd">「ヒアリング→社内相談→課題解決提案→アフターフォロー」の流れを明記。「国策のDX推進→補助金後押しあり→必要とされる商材」という市場背景も説明あり。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">ミッションの言語化</div><div class="cd">「お客様の悩みが解決から成長に変わる瞬間を作る」「本当に助かった！ありがとう！の言葉をたくさんいただく仕事」という仕事の意義が言語化されている。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">両面開示</div><div class="cd">「やりがい」（感謝の言葉・スキルアップ）と「きびしさ」（契約まで時間がかかる場合も・覚えることが多く苦労することも）のセクションあり。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">チーム情報</div><div class="cd">「チーム4〜5名構成」「ほぼ全員が未経験スタート」「前職が販売・接客・配送・工場等さまざま」「20代〜40代活躍」「女性リーダーも活躍」を明記。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">キャリアパスの具体性</div><div class="cd">「チームリーダー・マネージャー等の管理職も目指せる」「企画・人事・採用担当へ挑戦可能」とあるが、何年目で・どんな実績でという数値・実例がない。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">リモートワーク対応</div><div class="cd">記載なし（対面営業職の実態と思われるが明示なし）。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">4</div><div class="st">企業情報・メッセージで応募を決断できるか</div><span class="ss">採用担当者メッセージ・企業情報・写真で評価</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">取材レポート</div><div class="cd">「収入もプライベートも！なりたい自分に最速でたどり着く」をテーマに、入社動機（稼ぎたい・プライベートも充実）の実例を紹介。具体的な社員のコメントあり。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">社員インタビュー</div><div class="cd">3件（営業部2年目・1年目×2名）。前職・転職理由・現在の状況を具体的に記載。ただし顔写真は汎用アイコンで実際の社員の顔が見えない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">文化の言語化</div><div class="cd">「人生における価値観の多様性はとても重要。お金で選択肢を狭めてほしくないという想いで還元率を高めている」という経営哲学の記述あり。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">写真</div><div class="cd">取材レポート写真3枚（職場の様子・先輩サポート・商材説明）はあるが、社員インタビューは汎用アイコン。顔が見えるリアルな社員写真は少ない。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">採用担当者メッセージ</div><div class="cd">採用担当者の名前・顔写真・専用メッセージセクションなし。連絡先に「採用担当宛て（TEL）」のみ。</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 3 媒体最適化チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>doda 媒体最適化チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>dodaの求人票は「検索ヒット」と「スカウト提示資料」の二役を担う。</strong><br>同一求人票がアクティブ求職者の検索応募とスカウト候補者への提示（開封率64.8%）の両方に使われる。媒体機能を最大限に活用することで両チャネルの成果を高められる。</div>
+    <table class="t">
+      <thead><tr><th>チェック項目</th><th>評価</th><th>確認内容</th></tr></thead>
+      <tbody>
+        <tr><td>タイトル文字数 30〜40文字（doda推奨）</td><td class="tr">△</td><td>29文字（推奨範囲に1文字不足）。「コンサル営業」→「コンサルティング営業」等で1〜2文字追加で達成可能。</td></tr>
+        <tr><td>給与上限・下限の両方明示</td><td class="ng">✕</td><td>「月給30万円以上」の下限のみ。上限の記載なし。</td></tr>
+        <tr><td>必須要件と歓迎要件の分離（2段階設計）</td><td class="ok">○</td><td>必須要件の記載なし（未経験・学歴・ブランク不問を明示）＋「こんな方を歓迎」リストで2段階になっている。</td></tr>
+        <tr><td>キャッチコピーの掲載</td><td class="ok">○</td><td>「この求人を要約すると…」として3点の特徴を要約掲載。ただし情報告知型（悩みから入る共感型ではない）。</td></tr>
+        <tr><td>仕事の大変な面の記載（両面開示）</td><td class="ok">○</td><td>「きびしさ」セクションあり（契約まで時間がかかる・覚えることが多い）。</td></tr>
+        <tr><td>写真の掲載（職場の雰囲気が伝わるもの）</td><td class="tr">△</td><td>取材レポート写真3枚あり。社員インタビューは汎用アイコンで実際の顔写真なし。</td></tr>
+        <tr><td>採用担当者メッセージの掲載</td><td class="ng">✕</td><td>採用担当者の名前・顔写真・専用メッセージセクションなし。</td></tr>
+        <tr><td>選考フローの明示</td><td class="ok">○</td><td>4ステップ（書類選考→カジュアル面談Web→面接対面→内定）。応募から内定1週間以内予定・土日面接可を明記。</td></tr>
+        <tr><td>更新鮮度（30日以内）</td><td class="ok">○</td><td>更新日：2026年6月1日（診断日の5日前）。</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--sub);margin-top:10px">充足：5項目　△（部分的）：2項目　✕：2項目</p>
+  </div>
+</div>
+
+<!-- 4 応募要件チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>応募要件チェック</h2><span class="sub-title">doda公式「応募が来ない最大原因＝要件の絞り込みすぎ」への対応を評価</span></div>
+  <div class="card-body">
+    <div class="info">💡 この求人の間口評価：<strong>最大級に広い（◎）</strong>　必須要件の記載が存在しない。「経験不問・学歴不問・第二新卒歓迎・ブランク歓迎」を明示し、「一つでも当てはまったらご応募を」というオープンな設計。応募要件に起因する応募数の制約はゼロ。</div>
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>要件区分</th><th>内容</th><th>評価</th></tr></thead>
+      <tbody>
+        <tr><td>必須要件</td><td>記載なし（「経験不問・学歴不問」が明示されており実質必須ゼロ）</td><td class="ok">○ 業界最大級の開放度</td></tr>
+        <tr><td>歓迎要件</td><td>◎収入倍増させたい　◎WLBも大事にしたい　◎家庭と仕事を両立したい　◎実力本位で早期出世・昇給　◎営業・接客スキル、コミュニケーション能力を活かしたい</td><td class="ok">○ 欲求・スキル重視で広い間口</td></tr>
+        <tr><td>制約条件</td><td>年齢制限：なし　資格：不問　業種：なし（ブランク歓迎・第二新卒歓迎）　学歴：不問</td><td class="ok">○ 制約なし</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 5 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸①</span><span class="at">検索ヒット・一覧クリック訴求</span><span class="as B">14 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 職種名に一般語彙「コンサル営業」を含む（+3点）</div>
+            <div><span class="ng">✕</span> タイトル29文字（推奨30文字に1文字不足）（0点）</div>
+            <div><span class="ok">○</span> タイトルに未来像「入社半年で月給60万到達」—候補者が半年後の自分の収入を想像できる（+3点）</div>
+            <div><span class="ok">○</span> タイトルに給与数値「月給60万」あり（+2点）</div>
+            <div><span class="ok">○</span> 人気絞り込み条件（転勤なし・未経験歓迎）にバッジ対応済み（+3点）</div>
+            <div><span class="ok">○</span> 「職種未経験歓迎」「業種未経験歓迎」の2種バッジあり（+3点）</div>
+            <div><span class="ng">✕</span> 冒頭キャッチコピーが「悩み・共感ポイント」から入っていない—【未経験◎】【収入◎】【メリハリ◎】の3メリット列挙型（0点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>タイトルの未来像・給与数値訴求は強い（競合と比べて目を引く）。弱点は2点：①冒頭の「この求人を要約すると…」がメリット列挙型で、候補者の現状の悩みや「わかる」と感じる共感から入っていない。②タイトルが29文字で推奨の30文字に1文字届いていない（実害は小さいが改善は容易）。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>キャッチコピーを「頑張っても収入が上がらない、というモヤモヤを感じている方へ」等の候補者の悩みから入る共感型に変更する。タイトルは「コンサル営業」→「コンサルティング営業」で1文字追加して30文字に揃えることも容易。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸②</span><span class="at">応募要件の間口設計</span><span class="as A">20 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 必須要件の記載なし＋歓迎リストのみの2段階設計（+5点）</div>
+            <div><span class="ok">○</span> 必須要件が存在しない（学歴・経験・業種・年齢すべて不問）（+5点）</div>
+            <div><span class="ok">○</span> 経験不問・学歴不問・第二新卒歓迎・ブランク歓迎を明示（+5点）</div>
+            <div><span class="ok">○</span> 年齢・資格・業種の制約なし（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>評価</label><p>満点。応募要件の観点では業界最大級の開放度。この軸は現状維持を推奨する。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸③</span><span class="at">仕事内容・ミッションの具体性</span><span class="as B">15 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 仕事内容に業務フロー（ヒアリング→相談→提案→フォロー）・市場背景（国策DX・補助金）の説明あり（+3点）</div>
+            <div><span class="ok">○</span> ミッション明記：「お客様の悩みが解決から成長に変わる瞬間を作る」という言葉で役割を言語化（+3点）</div>
+            <div><span class="tr">△</span> キャリアパスは方向性のみ（管理職・他職種転換の記載あり、実績・年数・実例は不明）（+2点）</div>
+            <div><span class="ok">○</span> 両面開示あり：「やりがい」「きびしさ」セクションで具体的な場面を記載（+4点）</div>
+            <div><span class="ok">○</span> チーム情報あり：人数・前職・年齢構成・女性リーダー活躍を記載（+3点）</div>
+            <div><span class="ng">✕</span> 人物像（「こんな方を歓迎」）が「価値観条件」でなく「欲求条件」の列挙：「収入を倍増させたい」「WLBを大事にしたい」「実力本位で出世したい」等（0点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>「こんな方を歓迎します」の記述が候補者の「欲求（収入・WLB・出世）」とスキル（「営業・接客スキルを活かしたい」）の列挙になっている。これは誰でも当てはまる内容で、eighth toolという会社のカルチャー・価値観との相性を確認できない。「感謝の言葉が原動力になる人」「お客様の課題に正面から向き合うことを楽しめる人」等、仕事観・価値観ベースの表現に変えることで差別化につながる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>「一つでも当てはまったらご応募を！」のリストを欲求条件から価値観条件に書き換える。例：「数字より先に、お客様の顔が浮かぶ人」「自分の成長が誰かの成長になることが嬉しい人」等。現在の欲求訴求（稼ぎたい・WLB）は別のセクション（会社の訴求文）でカバーする切り分けも有効。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸④</span><span class="at">待遇・条件の透明性と競争力</span><span class="as B">14 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="tr">△</span> 月給：「30万円以上」の下限のみ。上限記載なし（+2点）</div>
+            <div><span class="ok">○</span> 年収例3パターン（500万/28歳2年・1100万/24歳3年・1500万/34歳5年）（+3点）</div>
+            <div><span class="tr">△</span> 賞与：「年2回（7・12月）」の支給回数はあり。金額・実績の記載なし（+1点）</div>
+            <div><span class="ok">○</span> 年間休日127日以上・有給消化率100%・10連休可能等を実数値で記載（+2点）</div>
+            <div><span class="ng">✕</span> リモートワーク・フレックス等の現代的働き方への対応の記載なし（0点）</div>
+            <div><span class="ok">○</span> 固定残業代20時間・超過分別途支給・平均残業月10時間以下の実数値あり（+3点）</div>
+            <div><span class="ok">○</span> 住宅手当（月1万円）・交通費（月2万円）・クラブ活動補助・社員旅行（オーストラリア）等、自社固有の制度を具体的に記載（+3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>月給の上限が不明で「入社後どこまで上がるか」が給与テーブルだけでは判断しにくい（インセンティブ込みの平均月収60万円は訴求されているが基本給の上限が見えない）。リモートワーク対応の記載もなし。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>基本給の目安上限（例：「月給30〜60万円（スキル・実績考慮）」）を追記する。対面営業職であればリモート不可の事実をむしろ正直に「お客様に直接会いにいく営業職です」と表現する方が、ミスマッチ防止と信頼獲得につながる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸⑤</span><span class="at">企業・ポジションの独自性</span><span class="as B">13 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ng">✕</span> 採用担当者・現場責任者メッセージ：名前・顔写真・専用メッセージセクションなし（0点）</div>
+            <div><span class="ok">○</span> 数値化された実績：「平均月収60万円」「インセン年間支給額1億円」「92%がインセンティブ獲得」「売上高35億円」「有給消化率100%」等複数（+3点）</div>
+            <div><span class="ok">○</span> 「なぜここか」：「お金で選択肢を狭めてほしくない」「先輩全員が未経験スタートで後輩を育てる文化」「ありがとうをもらえる仕事」等の文化・価値観訴求あり（+3点）</div>
+            <div><span class="tr">△</span> 採用文のトーン：「なりたい自分に最速でたどり着く」「いいとこどり」等は候補者目線だが「一つでも当てはまったらご応募を！」はやや選ぶ側目線（+2点）</div>
+            <div><span class="tr">△</span> 写真でリアルが伝わるか：取材レポート写真3枚は職場の様子を伝えているが、社員インタビューは汎用アイコン使用で実際の社員の顔が見えない（+5点→3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>採用担当者のメッセージがゼロ点。「入社した社員のほとんどが前職に悩みを抱えていた」という社員インタビューの内容は共感喚起力が高いが、顔が見えない（汎用アイコン）ため信頼感が落ちている。実際の社員の顔写真一枚が持つ影響力は大きい。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>社員インタビューに実際の顔写真を追加することで信頼感が大幅に向上する。採用担当者の顔写真・一言メッセージセクションを追加することで「この人に話を聞いてみたい」という応募障壁低下につなげる。</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 6 TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <h4>冒頭キャッチコピーを「候補者の悩み・共感」から入る表現に変える</h4>
+        <span class="ft">確認事実：「この求人を要約すると…」が【未経験◎】【収入◎】【メリハリ◎】の3メリット列挙型。候補者の悩みや現状への共感から入っていない。</span>
+        <p>タイトルの「入社半年で月給60万到達」という未来像訴求は強い。しかし直後のキャッチコピーがメリット告知型に切り替わることで「あなたにはこんないいことがある会社です」という会社起点の訴求になっている。「頑張っても収入が上がらない、今の仕事このままでいいのかと感じている方へ」等の候補者の悩みから入る表現にすることで、詳細ページへの滞在時間が伸びる。</p>
+        <div class="wy">▶ ①軸14→18点程度。文言変更のみで実行できる最優先施策。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <h4>「こんな方を歓迎」を欲求条件から価値観・仕事観の言葉に書き換える</h4>
+        <span class="ft">確認事実：「◎収入を倍増させたい　◎WLBも大事に　◎家庭と仕事を両立」等、欲求条件の列挙。eighth toolとしての「カルチャーフィット」が伝わらない。</span>
+        <p>現在の表現はどの会社でも書ける内容で、eighth toolという会社の文化との相性を確認できない。仕事の「やりがい」セクションで「感謝の言葉が原動力」と語っているのに、人物像では「稼ぎたい人」になっており訴求がバラバラ。「お客様の成長が自分の喜びになれる人」「感謝された経験が忘れられない人」等、ミッションと連動した価値観条件に統一することで独自性が出る。</p>
+        <div class="wy">▶ ③軸15→17点。仕事内容の「ありがとうをもらえる仕事」というミッションとの一貫性も高まる。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <h4>社員インタビューに実際の顔写真を追加し、採用担当者のメッセージを設ける</h4>
+        <span class="ft">確認事実：社員インタビュー3件は内容が充実しているが、全員が汎用アイコン使用。採用担当者の名前・顔写真・メッセージなし。</span>
+        <p>インタビューの内容（前職の悩み・入社理由・現在の状況）は共感喚起力が高く、ターゲット候補者の「転職後の自分」を想像させる良質なコンテンツ。それが汎用アイコンのせいで「作られた声」に見えてしまっている。顔写真一枚の追加が信頼感を大きく変える。採用担当者メッセージは0点（5点満点）の項目なので、追加するだけで⑤軸が最大5点上がる。</p>
+        <div class="wy">▶ ⑤軸13→18点程度。写真追加と採用担当者メッセージのセット実施で最大効果。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px">本レポートはスクレイピングにより取得したデータをもとに生成しています。診断日：2026年6月6日｜作成：EISHIN</p>
+</div>
+</body>
+</html>
