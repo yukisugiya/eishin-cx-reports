@@ -5,816 +5,392 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>doda求人診断レポート｜株式会社ISS</title>
 <style>
-  :root {
-    --red: #AE1C3B;
-    --orange: #E65100;
-    --green: #2E7D32;
-    --gray-bg: #F5F5F5;
-    --gray-border: #E0E0E0;
-    --gray-text: #757575;
-    --dark: #212121;
-    --doda-blue: #0075C2;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
-    background: #F8F9FA;
-    color: var(--dark);
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .page-header {
-    background: linear-gradient(135deg, #0075C2 0%, #004E8C 100%);
-    color: #fff;
-    padding: 32px 24px 28px;
-    text-align: center;
-  }
-  .page-header .service-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 20px;
-    padding: 3px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
-  }
-  .page-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-  .page-header .sub { font-size: 13px; opacity: 0.85; }
-  .page-header .date { font-size: 12px; opacity: 0.7; margin-top: 8px; }
-
-  .container { max-width: 880px; margin: 0 auto; padding: 0 16px 60px; }
-
-  /* Profile card */
-  .profile-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    padding: 24px;
-    margin: 24px 0 20px;
-    border-top: 4px solid var(--doda-blue);
-  }
-  .profile-card h2 { font-size: 11px; color: var(--doda-blue); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-  .profile-title { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 14px; }
-  .profile-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; }
-  .meta-item { font-size: 13px; color: #444; }
-  .meta-item strong { color: #222; }
-  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .badge-blue { background: #E3F0FF; color: #0055A5; border: 1px solid #B3D0FF; }
-  .badge-green { background: #E8F5E9; color: #1B5E20; border: 1px solid #A5D6A7; }
-  .badge-orange { background: #FFF3E0; color: #E65100; border: 1px solid #FFCC80; }
-  .badge-red { background: #FFEBEE; color: #C62828; border: 1px solid #EF9A9A; }
-  .badge-gray { background: #F5F5F5; color: #555; border: 1px solid #CCC; }
-  .badge-warn { background: #FFF9C4; color: #F57F17; border: 1px solid #FDD835; }
-
-  /* Section */
-  .section {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    padding: 28px 24px;
-    margin-bottom: 20px;
-  }
-  .section-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px; height: 28px;
-    background: var(--doda-blue);
-    color: #fff;
-    border-radius: 50%;
-    font-size: 13px;
-    font-weight: 700;
-    margin-right: 10px;
-    flex-shrink: 0;
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 4px;
-  }
-  .section-title { font-size: 17px; font-weight: 700; }
-  .section-subtitle { font-size: 13px; color: var(--gray-text); margin-top: 4px; margin-left: 38px; }
-
-  /* Score Summary */
-  .score-ring-area {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    margin-bottom: 24px;
-  }
-  .ring-wrap { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
-  .ring-wrap svg { width: 140px; height: 140px; }
-  .ring-score {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  .ring-score .num { font-size: 32px; font-weight: 700; color: var(--dark); line-height: 1; }
-  .ring-score .denom { font-size: 13px; color: var(--gray-text); }
-  .ring-comment { flex: 1; }
-  .ring-comment .grade-line { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-  .ring-comment p { font-size: 13px; color: #444; line-height: 1.8; }
-
-  /* Axis bars */
-  .axis-table { width: 100%; border-collapse: collapse; }
-  .axis-table tr { border-bottom: 1px solid #F0F0F0; }
-  .axis-table tr:last-child { border-bottom: none; }
-  .axis-table td { padding: 10px 8px; vertical-align: middle; }
-  .axis-name { font-size: 13px; font-weight: 600; width: 200px; }
-  .axis-bar-wrap { flex: 1; }
-  .bar-bg { background: #F0F0F0; border-radius: 6px; height: 14px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s; }
-  .bar-green { background: var(--green); }
-  .bar-orange { background: var(--orange); }
-  .bar-red { background: var(--red); }
-  .axis-score-text { font-size: 13px; font-weight: 700; width: 60px; text-align: right; }
-  .axis-grade { width: 40px; text-align: center; }
-  .grade-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .grade-a { background: #E8F5E9; color: var(--green); border: 1px solid #A5D6A7; }
-  .grade-b { background: #FFF3E0; color: var(--orange); border: 1px solid #FFCC80; }
-  .grade-c { background: #FFEBEE; color: var(--red); border: 1px solid #EF9A9A; }
-
-  /* Funnel */
-  .funnel-step {
-    border: 1px solid var(--gray-border);
-    border-radius: 8px;
-    margin-bottom: 14px;
-    overflow: hidden;
-  }
-  .funnel-step-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: #F8F9FA;
-    border-bottom: 1px solid var(--gray-border);
-  }
-  .funnel-step-num {
-    background: var(--doda-blue);
-    color: #fff;
-    border-radius: 50%;
-    width: 26px; height: 26px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700; flex-shrink: 0;
-  }
-  .funnel-step-label { font-weight: 700; font-size: 14px; flex: 1; }
-  .funnel-step-body { padding: 14px 16px; }
-  .check-list { list-style: none; }
-  .check-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 6px 0;
-    font-size: 13px;
-    border-bottom: 1px dotted #EEE;
-  }
-  .check-list li:last-child { border-bottom: none; }
-  .check-ok { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-  .check-ng { color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-  .check-warn { color: var(--orange); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-  /* Media check table */
-  .check-table { width: 100%; border-collapse: collapse; }
-  .check-table th {
-    background: #F3F7FB;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 2px solid #D0E3F3;
-    color: #0055A5;
-  }
-  .check-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #F0F0F0;
-    font-size: 13px;
-    vertical-align: middle;
-  }
-  .check-table tr:last-child td { border-bottom: none; }
-  .check-icon-ok { color: var(--green); font-size: 16px; }
-  .check-icon-ng { color: var(--red); font-size: 16px; }
-  .check-icon-warn { color: var(--orange); font-size: 16px; }
-
-  /* Rubric card */
-  .rubric-card {
-    border: 1px solid var(--gray-border);
-    border-radius: 8px;
-    margin-bottom: 14px;
-    overflow: hidden;
-  }
-  .rubric-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: #F8F9FA;
-    border-bottom: 1px solid var(--gray-border);
-  }
-  .rubric-name { font-weight: 700; font-size: 14px; }
-  .rubric-score-wrap { display: flex; align-items: center; gap: 8px; }
-  .rubric-body { padding: 14px 16px; }
-  .rubric-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
-  .rubric-table th {
-    background: #F5F5F5;
-    padding: 7px 10px;
-    text-align: left;
-    font-weight: 600;
-    border-bottom: 1px solid #E0E0E0;
-    color: #555;
-  }
-  .rubric-table td {
-    padding: 7px 10px;
-    border-bottom: 1px solid #F0F0F0;
-    vertical-align: top;
-  }
-  .rubric-table tr:last-child td { border-bottom: none; }
-  .rubric-issue { margin-top: 10px; }
-  .rubric-issue-label {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    color: var(--orange);
-    margin-bottom: 5px;
-  }
-  .rubric-policy { background: #F0F7FF; border-left: 3px solid var(--doda-blue); padding: 10px 12px; border-radius: 0 6px 6px 0; font-size: 12px; color: #333; margin-top: 8px; }
-  .rubric-policy-label { font-size: 11px; font-weight: 700; color: var(--doda-blue); margin-bottom: 4px; }
-
-  /* TOP3 */
-  .top3-card {
-    border-left: 4px solid var(--red);
-    background: #fff;
-    border-radius: 0 8px 8px 0;
-    padding: 16px 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-  }
-  .top3-card.rank2 { border-left-color: var(--orange); }
-  .top3-card.rank3 { border-left-color: #FDD835; }
-  .top3-rank { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-  .top3-theme { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
-  .top3-fact { font-size: 12px; color: #555; margin-bottom: 8px; background: #F8F8F8; padding: 8px 12px; border-radius: 4px; }
-  .top3-why { font-size: 12px; color: #333; }
-  .top3-impact { display: inline-block; background: #FFEBEE; color: var(--red); border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; margin-left: 6px; }
-
-  /* Competitor note */
-  .competitor-note {
-    background: #F3F7FB;
-    border: 1px solid #B3D0FF;
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-size: 12px;
-    color: #333;
-    margin-bottom: 16px;
-  }
-  .competitor-note strong { color: #0055A5; }
-
-  .note-text { font-size: 11px; color: var(--gray-text); margin-top: 20px; text-align: center; }
-  hr { border: none; border-top: 1px solid #EEE; margin: 20px 0; }
-  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  :root { --red:#AE1C3B; --orange:#E65100; --green:#2E7D32; --blue:#1565C0; --bg:#F5F5F5; --card:#fff; --text:#212121; --sub:#757575; --border:#E0E0E0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  /* score */
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  /* funnel */
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:170px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  /* tables */
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  /* axis */
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .rm div{margin-bottom:1px}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-top:10px}
+  .li{background:#E3F2FD;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--blue)}
+  /* top3 */
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg,.sa{grid-template-columns:1fr;flex-direction:column}.cl{width:120px}}
 </style>
 </head>
 <body>
 
-<div class="page-header">
-  <div class="service-badge">doda 求人診断レポート</div>
-  <h1>株式会社ISS</h1>
-  <div class="sub">３カ月研修／未経験からITインフラエンジニアへ！／年休125</div>
-  <div class="date">診断日：2026年6月6日｜診断者：EISHIN</div>
+<div class="header">
+  <h1>doda 求人診断レポート</h1>
+  <p>診断日：2026年6月6日｜対象：株式会社ISS</p>
 </div>
 
 <div class="container">
 
-  <!-- Profile -->
-  <div class="profile-card">
-    <h2>PROFILE</h2>
-    <div class="profile-title">３カ月研修／未経験からITインフラエンジニアへ！／年休125</div>
-    <div class="profile-meta">
-      <div class="meta-item"><strong>会社名：</strong>株式会社ＩＳＳ</div>
-      <div class="meta-item"><strong>職種：</strong>インフラエンジニア（SIer）</div>
-      <div class="meta-item"><strong>雇用形態：</strong>正社員</div>
-      <div class="meta-item"><strong>勤務地：</strong>東京都品川区西五反田／東京23区・神奈川</div>
-      <div class="meta-item"><strong>給与：</strong>月給23万円以上〜（未経験）／月26〜60万円（経験者）</div>
-      <div class="meta-item"><strong>年間休日：</strong>125日</div>
-      <div class="meta-item"><strong>掲載日：</strong>2026/6/1　<strong>更新日：</strong>2026/6/1</div>
-      <div class="meta-item"><strong>タイトル文字数：</strong><span style="color:var(--green);font-weight:700;">30文字（推奨範囲内）</span></div>
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>株式会社ＩＳＳ</span></div>
+      <div><label>求人タイトル</label><span>３カ月研修／未経験からITインフラエンジニアへ！／年休125</span></div>
+      <div><label>職種カテゴリ</label><span>インフラエンジニア（SIer）</span></div>
+      <div><label>雇用形態</label><span>正社員</span></div>
+      <div><label>給与</label><span>月給23万円以上〜（未経験）／月26〜60万円（経験者）＋賞与年2回<br><small style="color:var(--orange);font-size:11px">※経験者はみなし残業30時間分含む。未経験者は残業代別途全額支給。</small></span></div>
+      <div><label>勤務地</label><span>東京都品川区西五反田（転勤なし）／東京23区・神奈川のプロジェクト先</span></div>
+      <div><label>掲載期間</label><span>2026年6月1日〜7日</span></div>
+      <div><label>最終更新日</label><span>2026年6月1日（診断日より5日前）</span></div>
     </div>
     <div class="badge-row">
-      <span class="badge badge-blue">正社員</span>
-      <span class="badge badge-blue">転勤なし</span>
-      <span class="badge badge-green">職種未経験歓迎</span>
-      <span class="badge badge-green">業種未経験歓迎</span>
-      <span class="badge badge-gray">5名以上採用</span>
-      <span class="badge badge-red">New</span>
-      <span class="badge badge-warn">締切間近</span>
+      <span class="badge">正社員</span>
+      <span class="badge">転勤なし</span>
+      <span class="badge g">職種未経験歓迎</span>
+      <span class="badge g">業種未経験歓迎</span>
+      <span class="badge s">5名以上採用</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">タイトル文字数：</span>
+      <span class="badge g">30文字（推奨範囲内）</span>
+      <span style="font-size:12px;color:var(--sub);margin-left:8px">企業情報：</span>
+      <span class="badge g">社員インタビューあり</span>
+      <span class="badge g">写真7枚（職場・社員）</span>
+      <span class="badge g">採用担当者取材あり</span>
     </div>
   </div>
+</div>
 
-  <!-- 1: Score Summary -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">1</span>
-      <div>
-        <div class="section-title">診断スコアサマリー</div>
-      </div>
-    </div>
-    <div class="score-ring-area">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 140 140">
-          <circle cx="70" cy="70" r="58" fill="none" stroke="#F0F0F0" stroke-width="14"/>
-          <!-- 83/100 = 83% → 2πr ≈ 364.4 → dash = 302.4 -->
-          <circle cx="70" cy="70" r="58" fill="none" stroke="#0075C2" stroke-width="14"
-            stroke-dasharray="302.4 364.4"
-            stroke-dashoffset="91.1"
-            stroke-linecap="round"
-            transform="rotate(-90 70 70)"/>
+<!-- 1 スコアサマリー -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業情報から確認できる事実の積み上げで算出。確認できた内容のみを根拠とします。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <!-- 83/100 → 339.292 × 0.17 = 57.68 -->
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="57.68" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">83</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
         </svg>
-        <div class="ring-score">
-          <div class="num">83</div>
-          <div class="denom">/ 100点</div>
-        </div>
+        <div class="rl">総合スコア</div>
       </div>
-      <div class="ring-comment">
-        <div class="grade-line" style="color:#0075C2;">総合評価：B+</div>
-        <p>「応募要件の間口設計」と「仕事内容の具体性」は高水準で、未経験ターゲットへの訴求力は業界トップクラス。一方、<strong>リモートワーク対応の未記載</strong>と<strong>未経験者向け給与上限の不透明感</strong>が競合と比べた際の弱点。この2点を改善するだけでB+からAへの引き上げが見込める。</p>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① 検索ヒット・一覧クリック訴求</span><span><strong>14</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:70%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 応募要件の間口設計</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 仕事内容・ミッションの具体性</span><span><strong>19</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:95%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ 待遇・条件の透明性と競争力</span><span><strong>14</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:70%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 企業・ポジションの独自性</span><span><strong>16</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:80%"></div></div></div>
       </div>
     </div>
-
-    <table class="axis-table">
-      <tr>
-        <td class="axis-name">① 検索ヒット・一覧訴求</td>
-        <td>
-          <div class="bar-bg"><div class="bar-fill bar-orange" style="width:70%"></div></div>
-        </td>
-        <td class="axis-score-text" style="color:var(--orange);">14 / 20</td>
-        <td class="axis-grade"><span class="grade-badge grade-b">B</span></td>
-      </tr>
-      <tr>
-        <td class="axis-name">② 応募要件の間口設計</td>
-        <td>
-          <div class="bar-bg"><div class="bar-fill bar-green" style="width:100%"></div></div>
-        </td>
-        <td class="axis-score-text" style="color:var(--green);">20 / 20</td>
-        <td class="axis-grade"><span class="grade-badge grade-a">A</span></td>
-      </tr>
-      <tr>
-        <td class="axis-name">③ 仕事内容・ミッションの具体性</td>
-        <td>
-          <div class="bar-bg"><div class="bar-fill bar-green" style="width:95%"></div></div>
-        </td>
-        <td class="axis-score-text" style="color:var(--green);">19 / 20</td>
-        <td class="axis-grade"><span class="grade-badge grade-a">A</span></td>
-      </tr>
-      <tr>
-        <td class="axis-name">④ 待遇・条件の透明性と競争力</td>
-        <td>
-          <div class="bar-bg"><div class="bar-fill bar-orange" style="width:70%"></div></div>
-        </td>
-        <td class="axis-score-text" style="color:var(--orange);">14 / 20</td>
-        <td class="axis-grade"><span class="grade-badge grade-b">B</span></td>
-      </tr>
-      <tr>
-        <td class="axis-name">⑤ 企業・ポジションの独自性</td>
-        <td>
-          <div class="bar-bg"><div class="bar-fill bar-green" style="width:80%"></div></div>
-        </td>
-        <td class="axis-score-text" style="color:var(--green);">16 / 20</td>
-        <td class="axis-grade"><span class="grade-badge grade-a">A</span></td>
-      </tr>
-    </table>
-    <p style="font-size:11px;color:#999;margin-top:12px;">※スコアはルーブリック項目の○×積み上げで算出。確認できた事実のみを根拠とします。</p>
+    <div class="sb">「応募要件の間口設計（満点）」と「仕事内容の具体性」は業界水準を大きく超えており、未経験ターゲットへの訴求力は高い。一方、<strong>リモートワーク対応の未記載</strong>と<strong>未経験者向け給与上限の不透明さ</strong>が競合との差別化で弱点になっている。この2点を改善するだけでB+からAへの引き上げが見込める。</div>
   </div>
+</div>
 
-  <!-- 2: Funnel -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">2</span>
-      <div>
-        <div class="section-title">dodaファネル診断</div>
-      </div>
-    </div>
-    <div class="section-subtitle" style="margin-bottom:16px;">求職者行動フロー（STEP1〜4）に沿って、各ステップで候補者を次のアクションに進められているかを評価します。</div>
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>doda ファネル診断</h2><span class="sub-title">STEP1〜4の行動フローで評価</span></div>
+  <div class="card-body">
 
-    <div class="funnel-step">
-      <div class="funnel-step-header">
-        <div class="funnel-step-num">1</div>
-        <div class="funnel-step-label">検索にヒットするか</div>
-        <span class="badge badge-orange">要改善</span>
-      </div>
-      <div class="funnel-step-body">
-        <ul class="check-list">
-          <li><span class="check-ok">✓</span><span>タイトルに「ITインフラエンジニア」という市場流通語が含まれる（検索ヒット可能）</span></li>
-          <li><span class="check-ok">✓</span><span>タイトル30文字（doda推奨30〜40文字の下限ちょうど）</span></li>
-          <li><span class="check-ok">✓</span><span>「職種未経験歓迎」「業種未経験歓迎」「転勤なし」バッジ — 人気絞り込み条件に対応</span></li>
-          <li><span class="check-ng">✗</span><span><strong>「リモートワーク」バッジ・記載なし</strong> — 競合の多くが「リモートOK」「フルリモートあり」を明示。リモート検索フィルターへのヒット機会を逃している</span></li>
-          <li><span class="check-ng">✗</span><span><strong>タイトルに給与数値なし</strong> — 「年休125」は訴求要素だが、給与を一覧で比較する求職者には刺さりにくい</span></li>
-        </ul>
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">検索にヒットするか</div><span class="ss">キーワード・職種名・絞り込み条件への対応</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">職種名の語彙</div><div class="cd">「ITインフラエンジニア」は転職市場で流通している語で、検索にヒットしやすい。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">タイトル文字数</div><div class="cd">30文字。doda推奨の30〜40文字の下限ちょうど。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">未経験歓迎バッジ</div><div class="cd"><div class="tl"><span class="tg">職種未経験歓迎</span><span class="tg">業種未経験歓迎</span><span class="tg">転勤なし</span></div>人気絞り込み条件に対応済み。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">リモートワーク対応</div><div class="cd">リモートワークバッジ・本文の記載が一切なし。競合の多くが「フルリモートあり」「リモートOK」を明示しており、リモート絞り込みフィルターでのヒット機会を逃している。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルへの給与記載</div><div class="cd">タイトルに給与数値なし。「年休125」は訴求要素だが、一覧で給与を比較する求職者には刺さりにくい。</div></div>
       </div>
     </div>
 
-    <div class="funnel-step">
-      <div class="funnel-step-header">
-        <div class="funnel-step-num">2</div>
-        <div class="funnel-step-label">一覧でクリックされるか</div>
-        <span class="badge badge-orange">改善余地あり</span>
-      </div>
-      <div class="funnel-step-body">
-        <ul class="check-list">
-          <li><span class="check-ok">✓</span><span>「締切間近」バッジによる希少性・緊急性の訴求あり</span></li>
-          <li><span class="check-ok">✓</span><span>未経験歓迎バッジが2種類（職種・業種）あり、ターゲット層に対する間口の広さを一覧で示せている</span></li>
-          <li><span class="check-warn">△</span><span>キャッチコピー画像（★3要素列挙）は情報量は高いが、候補者の「悩みや状況」から入る表現ではなく情報告知型。候補者の「自分ごと化」を促す表現への余地あり</span></li>
-          <li><span class="check-ng">✗</span><span>給与情報が「月給23万円以上」（下限のみ）のため、一覧比較時に上限が不明で候補者が判断しにくい</span></li>
-        </ul>
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・給与・バッジの訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">バッジの緊急性</div><div class="cd">「締切間近」バッジで希少性・緊急性を訴求。クリックを促す要素として機能している。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">未経験歓迎の可視化</div><div class="cd">2種類の未経験歓迎バッジが一覧上で表示され、ターゲット層への間口の広さが伝わる。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">キャッチコピー</div><div class="cd">バナー画像で4要素を★付きで列挙（情報告知型）。候補者の悩み・状況から入る共感型表現への余地がある。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">給与情報の上限</div><div class="cd">未経験者は「月給23万円以上〜」で上限不明。一覧比較時に他社と給与を比べにくく判断材料が欠ける。</div></div>
       </div>
     </div>
 
-    <div class="funnel-step">
-      <div class="funnel-step-header">
-        <div class="funnel-step-num">3</div>
-        <div class="funnel-step-label">詳細ページで離脱されないか</div>
-        <span class="badge badge-green">十分</span>
-      </div>
-      <div class="funnel-step-body">
-        <table class="check-table">
-          <thead>
-            <tr><th>セクション</th><th>充実度</th><th>コメント</th></tr>
-          </thead>
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">詳細ページで離脱されないか</div><span class="ss">コンテンツ充実度・要件設計で評価</span></div>
+      <div class="sb2">
+        <table class="t">
+          <thead><tr><th>セクション</th><th>状況</th><th>評価</th></tr></thead>
           <tbody>
-            <tr><td>仕事内容</td><td><span class="check-icon-ok">●</span> 具体的</td><td>研修カリキュラム詳細・業務領域・開発環境（AWS/VMware等）を具体的に記載</td></tr>
-            <tr><td>必須要件</td><td><span class="check-icon-ok">●</span> 現実的</td><td>未経験：「メール・Word・Excel・タイピングの基礎知識」のみ。極めて低いハードル</td></tr>
-            <tr><td>歓迎要件</td><td><span class="check-icon-ok">●</span> あり</td><td>「強い意志・意欲」「協調性」「能動性」— ポテンシャル重視の設計</td></tr>
-            <tr><td>仕事の大変な面（両面開示）</td><td><span class="check-icon-ok">●</span> あり</td><td>「きびしさ」セクションに「AIによる単純作業代替リスク・継続学習の必要性」を正直に記載</td></tr>
-            <tr><td>キャリアパス</td><td><span class="check-icon-ok">●</span> 具体的</td><td>「開発×インフラ両対応のスーパーエンジニア」「年収例3パターン（330万〜700万）」あり</td></tr>
-            <tr><td>配属チーム情報</td><td><span class="check-icon-ok">●</span> あり</td><td>「未経験者は全員本社配属・先輩と一緒に案件」、社員インタビュー2件（顔写真付き）</td></tr>
-            <tr><td>待遇・条件の詳細</td><td><span class="check-icon-warn">△</span> 一部不明確</td><td>年収例・賞与あり。ただし未経験者の月給上限が「23万円以上〜」で上限不明</td></tr>
-            <tr><td>選考フロー</td><td><span class="check-icon-ok">●</span> あり</td><td>3ステップ（応募→面接2回→内定）。リモート面接・日程相談可を明示</td></tr>
-            <tr><td>リモートワーク対応</td><td><span class="check-icon-ng">✗</span> 未記載</td><td>本社勤務中心の社風だが、リモート可否の記載が一切なし。競合との比較で不利</td></tr>
+            <tr><td>仕事内容</td><td>研修カリキュラム・業務領域・開発環境（AWS/VMware/Java等）を詳細に記載</td><td class="ok">○</td></tr>
+            <tr><td>必須要件</td><td>未経験：「メール・Word・Excel・タイピングの基礎」のみ。実質全員OK。</td><td class="ok">○</td></tr>
+            <tr><td>歓迎要件</td><td>「強い意志・意欲」「協調性」「能動性」— スキルより人物・意欲重視の設計</td><td class="ok">○</td></tr>
+            <tr><td>仕事の大変な面（両面開示）<br><small style="color:var(--red)">doda公式推奨</small></td><td>「きびしさ」セクションに「AI代替リスク・継続学習の必要性」を正直に記載</td><td class="ok">○</td></tr>
+            <tr><td>キャリアパス</td><td>「開発×インフラ両対応」「資格取得全員成功」「年収例3パターン（330〜700万）」あり</td><td class="ok">○</td></tr>
+            <tr><td>配属チーム情報</td><td>「未経験者は全員本社配属・先輩と一緒に案件」・社員インタビュー2件（顔写真付き）</td><td class="ok">○</td></tr>
+            <tr><td>リモートワーク対応</td><td>記載なし（本社勤務中心の実態だが明示していない）</td><td class="ng">✕</td></tr>
+            <tr><td>選考フロー</td><td>3ステップ（応募→面接2回→内定）。リモート面接・日程相談可を明示</td><td class="ok">○</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="funnel-step">
-      <div class="funnel-step-header">
-        <div class="funnel-step-num">4</div>
-        <div class="funnel-step-label">企業情報・メッセージで応募を決断できるか</div>
-        <span class="badge badge-green">十分</span>
-      </div>
-      <div class="funnel-step-body">
-        <ul class="check-list">
-          <li><span class="check-ok">✓</span><span>「取材レポート」に代表取締役（菊地英順）の言葉で戦略・方針が記述されている</span></li>
-          <li><span class="check-ok">✓</span><span>社員インタビュー2件（Kさん・Mさん、顔写真付き）で入社後のリアルな声を掲載</span></li>
-          <li><span class="check-ok">✓</span><span>職場写真7枚程度（女性エンジニア・先輩後輩・社員旅行等）でリアルな職場雰囲気を訴求</span></li>
-          <li><span class="check-ok">✓</span><span>「18期連続黒字経営」「みずほ銀行・ソニーネットワーク等との直取引」で企業の信頼性を担保</span></li>
-          <li><span class="check-warn">△</span><span>採用担当者（高橋）の名前は掲載あり（連絡先に記載）だが、顔写真・担当者メッセージの専用セクションはなし</span></li>
-        </ul>
+    <div class="fs">
+      <div class="sh"><div class="sn">4</div><div class="st">企業情報・メッセージで応募を決断できるか</div><span class="ss">採用担当者メッセージ・企業情報・写真で評価</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">経営者コメント</div><div class="cd">代表取締役（菊地英順）の言葉で「大手直取引戦略・エンジニアのキャリアデザイン方針」を取材レポート形式で記述。具体的な失敗と方針転換のエピソードあり。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">社員インタビュー</div><div class="cd">2件（KさんMさん・顔写真付き）。前職・入社年・現在の業務・感想を具体的に記載。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">写真（約7枚）</div><div class="cd">女性エンジニア・先輩後輩ペア・社員旅行等。リアルな職場の様子が伝わる構成。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">企業の信頼性</div><div class="cd">「18期連続黒字経営」「みずほ銀行・ソニーネットワーク等との直取引」で企業基盤を担保。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">採用担当者メッセージ</div><div class="cd">採用担当者（高橋）の名前・連絡先は記載あり。顔写真付きの専用メッセージセクションはなし。</div></div>
       </div>
     </div>
+
   </div>
+</div>
 
-  <!-- 3: Media Check -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">3</span>
-      <div>
-        <div class="section-title">doda 媒体最適化チェック</div>
-      </div>
-    </div>
-    <div class="section-subtitle" style="margin-bottom:16px;">doda求人票として活用すべき機能・設計の充足状況（9項目）</div>
-
-    <table class="check-table">
-      <thead>
-        <tr><th>チェック項目</th><th>評価</th><th>確認内容</th></tr>
-      </thead>
+<!-- 3 媒体最適化チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>doda 媒体最適化チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>dodaの求人票は「検索ヒット」と「スカウト提示資料」の二役を担う。</strong><br>同一求人票がアクティブ求職者の検索応募とスカウト候補者への提示（開封率64.8%）の両方に使われる。媒体機能を最大限に活用することで両チャネルの成果を高められる。</div>
+    <table class="t">
+      <thead><tr><th>チェック項目</th><th>評価</th><th>確認内容</th></tr></thead>
       <tbody>
-        <tr>
-          <td>タイトル文字数 30〜40文字</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>30文字（推奨範囲の下限ちょうど）</td>
-        </tr>
-        <tr>
-          <td>給与上限・下限の両方明示</td>
-          <td><span class="check-icon-warn">△</span></td>
-          <td>未経験者：下限（23万円以上）のみ。経験者：26〜60万円（両方あり）</td>
-        </tr>
-        <tr>
-          <td>必須要件と歓迎要件の分離</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>「応募条件」と「こんな方を歓迎します」が明確に分離</td>
-        </tr>
-        <tr>
-          <td>キャッチコピーの掲載</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>バナー画像形式でキャッチコピーあり（4要素を★付きで訴求）</td>
-        </tr>
-        <tr>
-          <td>仕事の大変な面の記載（両面開示）</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>「きびしさ」セクションあり（AI代替リスク・継続学習の必要性）</td>
-        </tr>
-        <tr>
-          <td>写真の掲載（職場の雰囲気が伝わるもの）</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>約7枚（社員インタビュー2枚、取材写真3枚等。実際の業務・社員の様子あり）</td>
-        </tr>
-        <tr>
-          <td>採用担当者メッセージの掲載</td>
-          <td><span class="check-icon-warn">△</span></td>
-          <td>代表取締役コメント（取材レポート形式）あり。担当者（高橋）の専用メッセージセクションはなし</td>
-        </tr>
-        <tr>
-          <td>選考フローの明示</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>3ステップ（応募→面接2回→内定）を明記。リモート面接可・日程相談可の記載あり</td>
-        </tr>
-        <tr>
-          <td>更新鮮度（30日以内）</td>
-          <td><span class="check-icon-ok">✓</span></td>
-          <td>更新日：2026/6/1（診断日の5日前）</td>
-        </tr>
+        <tr><td>タイトル文字数 30〜40文字（doda推奨）</td><td class="ok">○</td><td>30文字（推奨範囲の下限ちょうど）</td></tr>
+        <tr><td>給与上限・下限の両方明示</td><td class="tr">△</td><td>未経験者：「23万円以上〜」下限のみ。経験者：「26〜60万円」は両方あり。</td></tr>
+        <tr><td>必須要件と歓迎要件の分離（2段階設計）</td><td class="ok">○</td><td>「応募条件（未経験/経験者）」と「こんな方を歓迎します」が明確に分離。</td></tr>
+        <tr><td>キャッチコピーの掲載</td><td class="ok">○</td><td>バナー画像形式で4要素をキャッチコピーとして掲載（★付き）。</td></tr>
+        <tr><td>仕事の大変な面の記載（両面開示）</td><td class="ok">○</td><td>「きびしさ」セクションあり（AI代替リスク・継続学習の必要性）。</td></tr>
+        <tr><td>写真の掲載（職場の雰囲気が伝わるもの）</td><td class="ok">○</td><td>約7枚（社員インタビュー・取材写真等。実際の業務・社員の様子あり）。</td></tr>
+        <tr><td>採用担当者メッセージの掲載</td><td class="tr">△</td><td>代表コメント（取材レポート形式）はあり。担当者（高橋）の専用メッセージセクションはなし。</td></tr>
+        <tr><td>選考フローの明示</td><td class="ok">○</td><td>3ステップ（応募→面接2回→内定）。リモート面接可・日程相談可を明記。</td></tr>
+        <tr><td>更新鮮度（30日以内）</td><td class="ok">○</td><td>更新日：2026年6月1日（診断日の5日前）。</td></tr>
       </tbody>
     </table>
-    <p style="font-size:12px;color:#666;margin-top:12px;">充足：7項目　△（部分的）：2項目　未達：0項目</p>
+    <p style="font-size:11px;color:var(--sub);margin-top:10px">充足：7項目　△（部分的）：2項目　✕：0項目</p>
   </div>
+</div>
 
-  <!-- 4: Requirement Check -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">4</span>
-      <div>
-        <div class="section-title">応募要件チェック</div>
-      </div>
-    </div>
-    <div class="section-subtitle" style="margin-bottom:16px;">doda公式が指摘する「応募が来ない最大原因＝要件の絞り込みすぎ」に特化した評価。必須要件の難易度と間口の広さを診断します。</div>
-
-    <div style="background:#E8F5E9;border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;">
-      <div style="font-weight:700;font-size:13px;color:var(--green);margin-bottom:6px;">▶ この求人の間口評価：最大級に広い（◎）</div>
-      <p style="font-size:13px;color:#333;">未経験者向け必須要件が「メール・Word・Excel・タイピングの基礎」のみで、学歴不問・業種・職種未経験大歓迎・第二新卒歓迎を明示。実質的に求職者全体を対象としており、応募要件に起因する応募数の制約はほぼゼロ。「要件の絞り込みすぎ」問題は発生していない。</p>
-    </div>
-
-    <table class="check-table">
-      <thead>
-        <tr><th>要件区分</th><th>内容</th><th>難易度評価</th></tr>
-      </thead>
+<!-- 4 応募要件チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>応募要件チェック</h2><span class="sub-title">doda公式「応募が来ない最大原因＝要件の絞り込みすぎ」への対応を評価</span></div>
+  <div class="card-body">
+    <div class="info">💡 この求人の間口評価：<strong>最大級に広い（◎）</strong>　未経験者向け必須要件が「メール・Word・Excel・タイピングの基礎」のみで、学歴不問・業種・職種未経験大歓迎・第二新卒歓迎を明示。応募要件に起因する応募数の制約はほぼゼロ。「要件の絞り込みすぎ」問題は発生していない。</div>
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>要件区分</th><th>内容</th><th>評価</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>必須（未経験）</strong></td>
-          <td>メール・Word・Excel・タイピング等の基礎知識。ITの知識は一切不問。</td>
-          <td><span style="color:var(--green);font-weight:700;">極めて低い ✓</span></td>
-        </tr>
-        <tr>
-          <td><strong>必須（経験者）</strong></td>
-          <td>サーバ・ネットワーク関連またはシステム開発の実務経験1年以上</td>
-          <td><span style="color:var(--green);font-weight:700;">標準的 ✓</span></td>
-        </tr>
-        <tr>
-          <td><strong>歓迎</strong></td>
-          <td>①ITエンジニアになる強い意志・意欲　②協調性　③能動的に業務を進められる方</td>
-          <td><span style="color:var(--green);font-weight:700;">スキルより意欲・人物重視 ✓</span></td>
-        </tr>
-        <tr>
-          <td><strong>制約</strong></td>
-          <td>年齢制限：記載なし　資格：不問　業種制限：なし（業種未経験歓迎）</td>
-          <td><span style="color:var(--green);font-weight:700;">制約なし ✓</span></td>
-        </tr>
+        <tr><td>必須（未経験者）</td><td>メール・Word・Excel・タイピング等の基礎知識。ITの知識は一切不問。</td><td class="ok">○ 極めて低いハードル</td></tr>
+        <tr><td>必須（経験者）</td><td>サーバ・ネットワーク関連またはシステム開発の実務経験1年以上</td><td class="ok">○ 標準的な水準</td></tr>
+        <tr><td>歓迎</td><td>①ITエンジニアになる強い意志・意欲　②協調性　③能動性</td><td class="ok">○ スキルより意欲・人物重視</td></tr>
+        <tr><td>制約条件</td><td>年齢制限：記載なし　資格：不問　業種制限：なし（業種未経験歓迎）　学歴：不問</td><td class="ok">○ 制約なし</td></tr>
       </tbody>
     </table>
   </div>
+</div>
 
-  <!-- 5: Axis Detail -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">5</span>
-      <div>
-        <div class="section-title">軸別診断</div>
+<!-- 5 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸①</span><span class="at">検索ヒット・一覧クリック訴求</span><span class="as B">14 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 職種名に一般語彙「ITインフラエンジニア」を含む（+4点）</div>
+            <div><span class="ok">○</span> タイトル30文字（推奨範囲内）（+2点）</div>
+            <div><span class="ng">✕</span> タイトルに給与数値・自社固有の訴求なし（0点）</div>
+            <div><span class="ok">○</span> 人気絞り込み条件（転勤なし・未経験歓迎）にバッジ対応済み（+4点）</div>
+            <div><span class="ok">○</span> 「職種未経験歓迎」「業種未経験歓迎」の2種バッジあり（+4点）</div>
+            <div><span class="ng">✕</span> キャッチコピーが候補者の悩みから入る共感型表現ではない（情報告知型）（0点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>リモートワーク対応の記載がなく、dodaのリモートフィルター検索でヒットしない。競合（アルユーアイ・exus等）の多くが「フルリモートあり」「リモートOK」を明示して差別化している。タイトルに給与数値がなく、一覧スクロール中に月収イメージが伝わらない。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>リモートワーク対応の実態（本社勤務8割・将来的な方針）を何らかの形で記載し関連バッジを追加する方向で検討。タイトルへの「月給23万円〜」等の数値組み込みも検討。キャッチコピーは「今の仕事、スキルが身についている実感がない人へ」等の共感型の入り方への変更が有効。</p></div>
       </div>
     </div>
 
-    <!-- Axis 1 -->
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <div class="rubric-name">① 検索ヒット・一覧クリック訴求</div>
-        <div class="rubric-score-wrap">
-          <span class="grade-badge grade-b">B</span>
-          <span style="font-weight:700;font-size:16px;margin-left:6px;">14 / 20</span>
+    <div class="ac">
+      <div class="ah"><span class="an">軸②</span><span class="at">応募要件の間口設計</span><span class="as A">20 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 必須要件と歓迎要件が「応募条件」と「こんな方を歓迎します」で明確に分離（+5点）</div>
+            <div><span class="ok">○</span> 未経験者向け必須要件が「メール・Excel・タイピングの基礎」のみで極めて現実的（+5点）</div>
+            <div><span class="ok">○</span> 業種・職種未経験大歓迎、第二新卒歓迎、学歴不問を明示（+5点）</div>
+            <div><span class="ok">○</span> 年齢制限・資格制限・業種制限なし。転換・ポテンシャル採用に完全開放（+5点）</div>
+          </div>
         </div>
-      </div>
-      <div class="rubric-body">
-        <table class="rubric-table">
-          <thead><tr><th>項目</th><th>点数</th><th>判定</th><th>根拠</th></tr></thead>
-          <tbody>
-            <tr><td>職種名に一般語彙が含まれる</td><td>4点</td><td style="color:var(--green);">○</td><td>「ITインフラエンジニア」は転職市場で流通している語</td></tr>
-            <tr><td>タイトル文字数 30〜40文字</td><td>2点</td><td style="color:var(--green);">○</td><td>30文字（下限ちょうど）</td></tr>
-            <tr><td>タイトルに給与数値または独自訴求</td><td>3点</td><td style="color:var(--red);">✗</td><td>タイトルに給与数値なし。「年休125」は条件訴求で差別化要素とは言えない</td></tr>
-            <tr><td>人気絞り込み条件に対応・バッジ化</td><td>4点</td><td style="color:var(--green);">○</td><td>転勤なし・職種未経験歓迎・業種未経験歓迎バッジあり。ただしリモートワーク未記載</td></tr>
-            <tr><td>未経験歓迎等の間口バッジあり</td><td>4点</td><td style="color:var(--green);">○</td><td>「職種未経験歓迎」「業種未経験歓迎」の2種類のバッジあり</td></tr>
-            <tr><td>キャッチコピーが候補者を引き込む</td><td>3点</td><td style="color:var(--red);">✗</td><td>「★未経験・知識ゼロから〜」は情報告知型。候補者の悩み・状況から入る共感表現ではない</td></tr>
-          </tbody>
-        </table>
-        <div class="rubric-issue">
-          <span class="rubric-issue-label">主な課題</span>
-          <ul style="font-size:12px;color:#444;padding-left:16px;">
-            <li>リモートワーク対応の記載がなく、doda上のリモートフィルター検索でヒットしない（競合の多くが「フルリモートあり」「リモートOK」を明示して差別化している）</li>
-            <li>タイトルに給与数値がなく、一覧でのスクロール流し見で「月給いくら？」を確認できない</li>
-          </ul>
-        </div>
-        <div class="rubric-policy">
-          <div class="rubric-policy-label">改善の方向性</div>
-          リモートワーク対応の実態（例：現状は本社中心だが、将来的なリモート対応の方針）を記載し、関連バッジを追加する。タイトルに「月給23万〜」等の数値を組み込むことを検討する。
-        </div>
+        <div class="ar"><label>評価</label><p>満点。doda公式が指摘する「応募が来ない最大原因＝要件の絞り込みすぎ」に対して完全に対策済み。この軸は現状維持を推奨する。</p></div>
       </div>
     </div>
 
-    <!-- Axis 2 -->
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <div class="rubric-name">② 応募要件の間口設計</div>
-        <div class="rubric-score-wrap">
-          <span class="grade-badge grade-a">A</span>
-          <span style="font-weight:700;font-size:16px;margin-left:6px;">20 / 20</span>
+    <div class="ac">
+      <div class="ah"><span class="an">軸③</span><span class="at">仕事内容・ミッションの具体性</span><span class="as A">19 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 仕事内容が具体的：研修カリキュラム全項目・業務領域・開発環境（AWS/VMware/Java等）詳細記載（+5点）</div>
+            <div><span class="tr">△</span> ポジションのミッション・役割：「ITインフラエンジニアになる」というキャリア目標は明確だが、配属後の具体的な期待成果の記述は薄め（+2点）</div>
+            <div><span class="ok">○</span> キャリアパスが具体的：「開発×インフラ両対応のスーパーエンジニア」「全員が資格取得に成功」「年収例3パターン（330〜700万円）」あり（+4点）</div>
+            <div><span class="ok">○</span> 両面開示あり：「きびしさ」セクションにAI代替リスク・継続学習の必要性を正直に記載（+4点）</div>
+            <div><span class="ok">○</span> 配属チーム情報あり：「未経験者は全員本社配属・先輩と一緒に案件」・社員インタビュー2件（前職・入社年・感想付き）（+4点）</div>
+          </div>
         </div>
-      </div>
-      <div class="rubric-body">
-        <table class="rubric-table">
-          <thead><tr><th>項目</th><th>点数</th><th>判定</th><th>根拠</th></tr></thead>
-          <tbody>
-            <tr><td>必須要件と歓迎要件が明確に分離</td><td>5点</td><td style="color:var(--green);">○</td><td>「応募条件（未経験/経験者）」と「こんな方を歓迎します」が明確に分離</td></tr>
-            <tr><td>必須要件が現実的な水準に絞られている</td><td>5点</td><td style="color:var(--green);">○</td><td>未経験向け：「メール・Word・Excel・タイピングの基礎」のみ。実質全員OK</td></tr>
-            <tr><td>歓迎要件で異業種・未経験層に開放</td><td>5点</td><td style="color:var(--green);">○</td><td>業種・職種未経験大歓迎、第二新卒歓迎、学歴不問を明示</td></tr>
-            <tr><td>過度な応募障壁がない</td><td>5点</td><td style="color:var(--green);">○</td><td>年齢制限・資格制限・業種制限なし。転換・ポテンシャル採用に完全開放</td></tr>
-          </tbody>
-        </table>
-        <p style="font-size:12px;color:var(--green);margin-top:8px;font-weight:600;">✓ この軸は満点。doda公式推奨の「応募が来ない原因：要件の絞り込みすぎ」に対して完全に対策済み。</p>
+        <div class="ar"><label>課題</label><p>配属後に「どんなプロジェクトで何を任されるか」「1年後・3年後に何を期待されているか」というポジションとしての役割・ミッションの記述が薄い。業務列挙はあるが「このポジションで何を実現したいか」という採用側の意図が見えにくい。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>「入社1年後のあなたに期待すること」や「3年後にこんな役割を担ってほしい」といったキャリアミッションを1段落追加することで③軸が20点になる。</p></div>
       </div>
     </div>
 
-    <!-- Axis 3 -->
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <div class="rubric-name">③ 仕事内容・ミッションの具体性</div>
-        <div class="rubric-score-wrap">
-          <span class="grade-badge grade-a">A</span>
-          <span style="font-weight:700;font-size:16px;margin-left:6px;">19 / 20</span>
+    <div class="ac">
+      <div class="ah"><span class="an">軸④</span><span class="at">待遇・条件の透明性と競争力</span><span class="as B">14 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="tr">△</span> 月給・年収：未経験者は「23万円以上〜」で上限不明（+2点）。経験者「26〜60万円」は両方あり。</div>
+            <div><span class="ok">○</span> 年収例3パターンあり（330万/26歳3年目・560万/30歳10年目・700万/49歳5年目）（+3点）</div>
+            <div><span class="tr">△</span> 賞与：「年2回（夏季・冬季）」の支給回数はあり。金額・実績（○ヶ月分等）の記載なし（+1点）</div>
+            <div><span class="ok">○</span> 年間休日125日・9連休義務付け制度など実数値を明記（+2点）</div>
+            <div><span class="ng">✕</span> リモートワーク・フレックス等の現代的働き方への対応の記載なし（0点）</div>
+            <div><span class="ok">○</span> 残業代別途全額支給・全社平均残業月10時間未満の実数値あり（+3点）</div>
+            <div><span class="ok">○</span> 独身寮（半額補助）・食費補助（月3780円）・資格費用負担等、自社固有の制度を具体的に記載（+3点）</div>
+          </div>
         </div>
-      </div>
-      <div class="rubric-body">
-        <table class="rubric-table">
-          <thead><tr><th>項目</th><th>点数</th><th>判定</th><th>根拠</th></tr></thead>
-          <tbody>
-            <tr><td>仕事内容の記述が具体的</td><td>5点</td><td style="color:var(--green);">○</td><td>研修カリキュラム全項目・業務領域（インフラ/開発）・開発環境（AWS/VMware/Java等）・1日の流れを詳細に記載</td></tr>
-            <tr><td>ポジションのミッション・役割が明記</td><td>3点→2点</td><td style="color:var(--orange);">△</td><td>「ITインフラエンジニアになる」というキャリア目標は明確。ただし配属後の具体的なミッション・期待成果の記述は薄め</td></tr>
-            <tr><td>キャリアパス・成長機会が具体的</td><td>4点</td><td style="color:var(--green);">○</td><td>「開発×インフラ両対応のスーパーエンジニア」「全員が資格取得に成功」「年収例3パターン（330〜700万円）」あり</td></tr>
-            <tr><td>大変な面の記載（両面開示）</td><td>4点</td><td style="color:var(--green);">○</td><td>「きびしさ」セクションにAI代替リスク・継続学習の必要性を正直に記載</td></tr>
-            <tr><td>配属チーム・メンバー情報あり</td><td>4点</td><td style="color:var(--green);">○</td><td>「チーム組織構成」記載、社員インタビュー2件（KさんMさん、前職・入社年・コメント付き）</td></tr>
-          </tbody>
-        </table>
-        <div class="rubric-policy">
-          <div class="rubric-policy-label">改善の方向性</div>
-          配属後に「どんなプロジェクトで何を任されるか」「1年後・3年後に何を期待されているか」をポジションミッションとして追記すると、候補者の動機形成がさらに強化できる。
-        </div>
+        <div class="ar"><label>課題</label><p>未経験者向け月給の上限が「23万円以上〜」で不明。競合との比較時に「頑張ってもいくらまで上がるかわからない」という不安を生む。リモートワーク対応の記載がなく、現代の求職者（特に20〜30代）が重視する条件を訴求できていない。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>未経験者向け給与レンジの目安（例：「研修終了後は23〜32万円」）を追記する方向で検討。リモートワーク対応の実態（現状は本社中心）を「フルリモートではないが本社勤務のため孤独にならない」という強みとして打ち出す切り替えも一案。</p></div>
       </div>
     </div>
 
-    <!-- Axis 4 -->
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <div class="rubric-name">④ 待遇・条件の透明性と競争力</div>
-        <div class="rubric-score-wrap">
-          <span class="grade-badge grade-b">B</span>
-          <span style="font-weight:700;font-size:16px;margin-left:6px;">14 / 20</span>
+    <div class="ac">
+      <div class="ah"><span class="an">軸⑤</span><span class="at">企業・ポジションの独自性</span><span class="as A">16 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="tr">△</span> 採用担当者・現場責任者メッセージ：代表取締役コメント（取材レポート形式）はあり。担当者（高橋）の顔写真・専用セクションはなし（+3点）</div>
+            <div><span class="ok">○</span> 数値化された実績：「18期連続黒字経営」「全員資格取得成功」「平均残業月10時間未満」等複数あり（+3点）</div>
+            <div><span class="tr">△</span> 「なぜここか」が価値観・文化軸で伝わるか：「大手直取引戦略」は具体的エピソードで語られているが、チーム文化・働く仲間の価値観の訴求は薄め（+3点）</div>
+            <div><span class="tr">△</span> 採用文のトーンがフラットか：全体的にフラットだが「ITエンジニアになる強い意志をお持ちの方」等、選ぶ側目線の表現が一部残存（+2点）</div>
+            <div><span class="ok">○</span> 写真で職場のリアルが伝わる：社員インタビュー・取材写真（女性エンジニア・先輩後輩・社員旅行）計7枚。リアルな職場感あり（+5点）</div>
+          </div>
         </div>
-      </div>
-      <div class="rubric-body">
-        <table class="rubric-table">
-          <thead><tr><th>項目</th><th>点数</th><th>判定</th><th>根拠</th></tr></thead>
-          <tbody>
-            <tr><td>月給/年収の下限・上限を両方明示</td><td>4点→2点</td><td style="color:var(--orange);">△</td><td>未経験：「月給23万円以上〜」で上限不明。経験者：「26〜60万円」で両方あり。未経験者向けの上限が不透明</td></tr>
-            <tr><td>年収例が1パターン以上あり</td><td>3点</td><td style="color:var(--green);">○</td><td>3パターン（330万/26歳3年目、560万/30歳10年目、700万/49歳5年目PM）</td></tr>
-            <tr><td>賞与の支給回数と過去実績</td><td>2点→1点</td><td style="color:var(--orange);">△</td><td>「賞与年2回（夏季・冬季）」の支給回数はあり。ただし金額・実績（○ヶ月分等）の記載なし</td></tr>
-            <tr><td>有給・年間休日の実数値</td><td>2点</td><td style="color:var(--green);">○</td><td>「年間休日125日」明記。半日有給制度・9連休義務付け制度の具体的な記載あり</td></tr>
-            <tr><td>リモートワーク等の現代的働き方</td><td>3点→0点</td><td style="color:var(--red);">✗</td><td>リモートワーク・フレックス制度の記載が一切なし（競合の多くが明示）</td></tr>
-            <tr><td>残業代の扱いと月平均残業時間</td><td>3点</td><td style="color:var(--green);">○</td><td>未経験者「残業代別途全額支給」明記。「全社平均残業時間月10時間未満」の実数値あり</td></tr>
-            <tr><td>福利厚生が自社固有の制度</td><td>3点</td><td style="color:var(--green);">○</td><td>独身寮（半額補助）・食費補助（月3780円/コンビニ等）・携帯補助・資格試験費用負担など固有制度を具体的に記載</td></tr>
-          </tbody>
-        </table>
-        <div class="rubric-issue">
-          <span class="rubric-issue-label">主な課題</span>
-          <ul style="font-size:12px;color:#444;padding-left:16px;">
-            <li>未経験者向け月給の上限が「23万円以上〜」で不明。競合との比較時に「頑張ってもいくらまで上がるかわからない」という不安を生む</li>
-            <li>リモートワーク対応の記載がなく、現代の求職者（特に20〜30代）が重視する条件を訴求できていない</li>
-          </ul>
-        </div>
-        <div class="rubric-policy">
-          <div class="rubric-policy-label">改善の方向性</div>
-          未経験者向けの給与レンジ（例：「23万〜32万円」）の目安を記載する方向で検討。リモートワーク対応の実態（現状は本社中心、将来計画等）を何らかの形で触れることが望ましい。
-        </div>
+        <div class="ar"><label>課題</label><p>「なぜISS か」がまだ条件ベース（直取引・安定・寮）にとどまる部分がある。「本社配属で仲間と一緒に働ける」という他社にない強みが、文化・チームの訴求として前面に出ていない。採用担当者（高橋）の人柄が伝わるセクションがあると、未経験の若手の「入社後が不安」という気持ちに直接応えられる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>採用担当者（高橋）の顔写真・一言メッセージを追加することで候補者との心理的距離を縮める。「客先常駐ではなく本社で仲間と育つ」強みを、チーム・仲間の訴求（「失敗してもすぐ聞ける先輩がいる」等）として前面に出す。</p></div>
       </div>
     </div>
 
-    <!-- Axis 5 -->
-    <div class="rubric-card">
-      <div class="rubric-header">
-        <div class="rubric-name">⑤ 企業・ポジションの独自性</div>
-        <div class="rubric-score-wrap">
-          <span class="grade-badge grade-a">A</span>
-          <span style="font-weight:700;font-size:16px;margin-left:6px;">16 / 20</span>
-        </div>
-      </div>
-      <div class="rubric-body">
-        <table class="rubric-table">
-          <thead><tr><th>項目</th><th>点数</th><th>判定</th><th>根拠</th></tr></thead>
-          <tbody>
-            <tr><td>採用担当者/現場責任者メッセージあり</td><td>5点→3点</td><td style="color:var(--orange);">△</td><td>代表取締役コメントが取材レポート形式でありで存在感あり。ただし担当者（高橋）の顔写真・専用メッセージセクションはなし</td></tr>
-            <tr><td>数値化された実績・魅力ポイントあり</td><td>3点</td><td style="color:var(--green);">○</td><td>「18期連続黒字経営」「全員資格取得成功」「平均残業月10時間未満」「年休125日」「9連休義務付け」など複数</td></tr>
-            <tr><td>「なぜここか」が価値観・文化軸で伝わる</td><td>4点→3点</td><td style="color:var(--green);">○</td><td>「大手直取引案件に絞った戦略」「いろいろ手を広げた時代の反省から」という実際のエピソードで信頼性高い。ただし文体がやや説明調で感情的な共感には至らない</td></tr>
-            <tr><td>採用文のトーンがフラット</td><td>3点→2点</td><td style="color:var(--orange);">△</td><td>全体的にフラットだが「ITエンジニアになる強い意志をお持ちの方」など選ぶ側目線の表現が一部残存</td></tr>
-            <tr><td>写真で職場のリアルな雰囲気が伝わる</td><td>5点</td><td style="color:var(--green);">○</td><td>社員インタビュー（顔写真2枚）・取材写真（女性エンジニア・先輩後輩・社員旅行等）計7枚。リアルな職場感あり</td></tr>
-          </tbody>
-        </table>
-        <div class="competitor-note">
-          <strong>競合比較メモ（一覧で確認できた同カテゴリ競合）</strong><br>
-          アルユーアイ（フルリモート2割・リモート訴求強い）、アクティアス（六本木ミッドタウン・即日内定）、株式会社mot（AI特化型）など。ISSの差別化ポイント：「<strong>客先常駐ではなく全員本社配属</strong>」「<strong>独身寮（半額補助）</strong>」「<strong>18期連続黒字の安定性</strong>」は競合との明確な違いだが、リモート非対応が若年層への訴求では弱点になりうる。
-        </div>
-        <div class="rubric-policy">
-          <div class="rubric-policy-label">改善の方向性</div>
-          採用担当者（高橋）の顔写真付きの一言メッセージを追加することで、候補者の「この人に話を聞いてみたい」という気持ちを引き出す設計に。「本社配属で孤独にならない」強みをより前面に出すことが、リモート重視の競合との差別化軸になりうる。
-        </div>
-      </div>
-    </div>
   </div>
+</div>
 
-  <!-- 6: TOP3 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-num">6</span>
-      <div>
-        <div class="section-title">優先改善テーマ TOP3</div>
+<!-- 6 TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <h4>リモートワーク対応を明示し、リモートフィルター検索にヒットさせる</h4>
+        <span class="ft">確認事実：求人票・バッジともにリモートワーク対応の記載なし。競合10社中8社以上が「フルリモートあり」「リモートOK」を明示。</span>
+        <p>dodaのリモート絞り込みフィルターに非表示となっており、リモートを希望する求職者層に完全にリーチできていない。「客先常駐ではなく本社勤務8割」という実態は、リモートではなく「孤独にならない・仲間と育てる環境」という別の強みとして打ち出す切り替えも一案。</p>
+        <div class="wy">▶ ①軸+3点・④軸+3点。合計で最大+6点の改善が見込める。</div>
       </div>
     </div>
 
-    <div class="top3-card">
-      <div class="top3-rank">PRIORITY 1</div>
-      <div class="top3-theme">リモートワーク対応を明示し、リモートフィルター検索にヒットさせる</div>
-      <div class="top3-fact">
-        現状：求人票・バッジともにリモートワーク対応の記載が一切なし。<br>
-        競合状況：一覧で確認できた同職種競合10社のうち、「フルリモートあり」「リモートOK」を明示していた企業は8社以上。
-      </div>
-      <div class="top3-why">
-        doda上のリモートワーク絞り込みフィルターで非表示になっており、リモートを希望する求職者層に完全にリーチできていない。実態として「客先常駐ではなく本社勤務が8割」という点はリモート訴求はできなくても「勤務環境の安定性」として別の形で強みになりうる。
-        <span class="top3-impact">軸①+3点・軸④+3点 / 最大+6点</span>
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <h4>未経験者向け月給の上限目安を追記し、給与の透明性を高める</h4>
+        <span class="ft">確認事実：未経験者の月給表記が「23万円以上〜」で上限が不明。年収例の最低ラインは「330万円/26歳/3年目」だが入社1〜2年目の水準は不明。</span>
+        <p>給与レンジは転職決断の最重要情報のひとつ。特に未経験者は「頑張ってもいくらまで上がるか」が見えないと他社との比較ができない。「研修終了後23〜32万円」等の目安追記だけで離脱防止につながる。</p>
+        <div class="wy">▶ ④軸+2点。給与の透明化は応募決断の後押しとして即効性が高い施策。</div>
       </div>
     </div>
 
-    <div class="top3-card rank2">
-      <div class="top3-rank">PRIORITY 2</div>
-      <div class="top3-theme">未経験者向け月給の上限目安を追記し、給与の透明性を高める</div>
-      <div class="top3-fact">
-        現状：未経験者の月給表記が「23万円以上〜」で上限が不明。経験者（26〜60万円）と比べて情報量が少ない。<br>
-        年収例は「330万円/26歳/3年目」が最低ラインとして記載されているが、入社1〜2年目の水準が不明。
-      </div>
-      <div class="top3-why">
-        求職者が転職を決断する際、給与レンジは最重要情報のひとつ。特に未経験者は「頑張ってもいくらまで上がるか」が見えないと他社と比較しにくい。「研修終了後の昇給目安」や「1年目の上限目安」を記載することで離脱を防げる。
-        <span class="top3-impact" style="background:#FFF3E0;color:var(--orange);">軸④+2点</span>
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <h4>採用担当者（高橋）の顔写真付きメッセージセクションを追加する</h4>
+        <span class="ft">確認事実：採用担当者「高橋」の名前・連絡先は記載あり。代表コメントは取材レポートで充実。担当者自身の専用メッセージセクションはなし。</span>
+        <p>この求人のターゲット（未経験の若手）は「入社後のフォロー体制」「人間関係の安心感」を重視する傾向が強い。採用担当者の顔・言葉が見えると「この人に話を聞いてみたい」という応募ハードルの低下につながる。求人票内での改修だけで実行できる。</p>
+        <div class="wy">▶ ⑤軸+2点。追加コストゼロで実行可能な施策として優先度が高い。</div>
       </div>
     </div>
 
-    <div class="top3-card rank3">
-      <div class="top3-rank">PRIORITY 3</div>
-      <div class="top3-theme">採用担当者（高橋）の顔写真付きメッセージセクションを追加する</div>
-      <div class="top3-fact">
-        現状：採用担当者「高橋」の名前と連絡先は記載あり。代表取締役のコメントは取材レポートで充実。ただし採用担当者自身の「この人に話を聞いてみたい」と思わせる専用メッセージセクションはなし。<br>
-        競合状況：担当者の顔写真・一言コメントを掲載している求人は信頼感と応募率向上に効果があるとdoda公式も推奨。
-      </div>
-      <div class="top3-why">
-        「人が人を採用する」という採用の本質を体現するセクション。特にこの求人のターゲット（未経験の若手）は「入社後のフォロー体制」「人間関係の安心感」を重視する傾向が強い。採用担当者の人柄が伝わると応募ハードルが下がる。
-        <span class="top3-impact" style="background:#FFFDE7;color:#F9A825;">軸⑤+2点</span>
-      </div>
-    </div>
   </div>
+</div>
 
-  <p class="note-text">
-    本レポートはスクレイピングで確認できた情報のみに基づいて作成しています。<br>
-    掲載内容の変更・取得不可のデータは「確認不可」として評価から除外しています。<br>
-    診断日：2026年6月6日｜作成：EISHIN
-  </p>
-
+<p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px">本レポートはスクレイピングにより取得したデータをもとに生成しています。診断日：2026年6月6日｜作成：EISHIN</p>
 </div>
 </body>
 </html>
