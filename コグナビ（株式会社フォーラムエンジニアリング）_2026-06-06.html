@@ -42,7 +42,7 @@
   .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
   .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
   .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
-  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sn{padding:3px 11px;border-radius:20px;border:2px solid var(--red);color:var(--red);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;letter-spacing:.5px}
   .st{font-size:14px;font-weight:700}
   .ss{font-size:12px;color:var(--sub);margin-left:4px}
   .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
@@ -169,16 +169,17 @@
     <div class="fs">
       <div class="sh"><div class="sn">2</div><div class="st">詳細ページで離脱されないか</div><span class="ss">存在チェック＋質チェックで評価</span></div>
       <div class="sb2">
+        <p style="font-size:11px;color:var(--sub);margin-bottom:10px">評価基準：○＝存在し内容も具体的、△＝存在するが内容が一般論・汎用表現にとどまる、✕＝記載なし</p>
         <table class="t">
-          <thead><tr><th>セクション</th><th>存在</th><th>質チェック結果</th></tr></thead>
+          <thead><tr><th>セクション</th><th style="width:50px;text-align:center">評価</th><th>判定理由</th></tr></thead>
           <tbody>
-            <tr><td>仕事内容</td><td class="ok">○</td><td>9分類・プロジェクト例・使用ツール等1,500文字超で詳細。ただし幅が広すぎて「自分が何をするか」がイメージしにくい。</td></tr>
-            <tr><td>募集背景</td><td class="ok">○</td><td>「6月・7月入社歓迎、採用予定50名以上」と記載あり。</td></tr>
-            <tr><td>やりがい・厳しさ<br><small style="color:var(--red)">エン転職独自</small></td><td class="ok">○ <span class="qtag q">質✕</span></td><td>「大手メーカーのプロジェクトでスケール大きな仕事」「コツコツ技術を習得し続けることが求められる」→一般論にとどまる。「大手メーカーのロケット開発に携わった」等の固有エピソードが取材コメントに一部あるが、やりがいセクション本体には具体的なエピソードがない。</td></tr>
-            <tr><td>向き・不向き<br><small style="color:var(--red)">エン転職独自</small></td><td class="ok">○ <span class="qtag q">質✕</span></td><td>「大手メーカーで働きたい・技術集中したい方が向いている」「積極的チャレンジが苦手な方は不向き」→スキル・状況条件の表現。「知らないことを面白がれる人」等の価値観条件への転換で刺さりが変わる。</td></tr>
-            <tr><td>社員体験談</td><td class="ok">○ <span class="qtag s">質○</span></td><td>20代・30代製造班長・30代整備経験者の3つのビフォーアフター体験談あり。「夜勤なしで給与UP」「上流工程へのステップアップ」等、具体的な変化が記述されている。</td></tr>
-            <tr><td>写真（3枚）・動画</td><td class="ok">○</td><td>写真3枚・動画あり。職場・業務シーン含む。</td></tr>
-            <tr><td>プロ取材<br><small style="color:var(--red)">エン転職標準機能</small></td><td class="ok">○ <span class="qtag q">質△</span></td><td>黒木担当者が取材。「知人紹介が多い・AIマッチング・スキルツリー」等固有要素に触れているが、「充実した環境」等の一般表現も混在する。固有エピソードの比率がもう少し高いと良い。</td></tr>
+            <tr><td>仕事内容</td><td style="text-align:center" class="ok">○</td><td>9分類・プロジェクト例・使用ツール等1,500文字超で詳細。ただし幅が広すぎて「自分が何をするか」がイメージしにくい面がある。</td></tr>
+            <tr><td>募集背景</td><td style="text-align:center" class="ok">○</td><td>「6月・7月入社歓迎、採用予定50名以上」と具体的に記載あり。</td></tr>
+            <tr><td>やりがい・厳しさ<br><small style="color:var(--red)">エン転職独自</small></td><td style="text-align:center" class="tr">△</td><td>記載はあるが「大手メーカーのプロジェクトでスケールの大きな仕事ができる」等、一般論にとどまる。固有のエピソード（「ロケット開発に携わった瞬間」等）が本文中になく、エン転職が意図するミスマッチ防止機能として十分機能していない。</td></tr>
+            <tr><td>向き・不向き<br><small style="color:var(--red)">エン転職独自</small></td><td style="text-align:center" class="tr">△</td><td>記載はあるが「大手メーカーで働きたい・技術に集中したい方が向いている」はスキル・状況条件の表現。「知らないことを面白がれる人」等の価値観条件への転換で応募者の共感が変わる。</td></tr>
+            <tr><td>社員体験談</td><td style="text-align:center" class="ok">○</td><td>20代・30代製造班長・30代整備経験者のビフォーアフター体験談3つ。「夜勤なしで給与UP」「上流工程へのステップアップ」等、具体的な変化が記述されており質が高い。</td></tr>
+            <tr><td>写真（3枚）・動画</td><td style="text-align:center" class="ok">○</td><td>写真3枚・動画あり。職場・業務シーン含む。</td></tr>
+            <tr><td>プロ取材<br><small style="color:var(--red)">エン転職標準機能</small></td><td style="text-align:center" class="tr">△</td><td>黒木担当者が取材。「知人紹介が多い・AIマッチング・スキルツリー」等の固有要素はあるが、「充実した環境です」「成長できます」等の一般表現も混在しており、自社固有の強みが十分に引き出されていない。</td></tr>
           </tbody>
         </table>
       </div>
@@ -221,28 +222,9 @@
   </div>
 </div>
 
-<!-- 4 媒体機能 -->
+<!-- 4 軸別診断 -->
 <div class="card">
-  <div class="card-head"><div class="cn">4</div><h2>媒体機能 活用チェック</h2></div>
-  <div class="card-body">
-    <table class="t" style="font-size:13px">
-      <thead><tr><th>機能</th><th>状況</th><th>評価</th></tr></thead>
-      <tbody>
-        <tr><td>プロ取材</td><td>利用あり（黒木担当者）</td><td class="ok">○</td></tr>
-        <tr><td>求人タグ</td><td>8個</td><td><strong>8個</strong></td></tr>
-        <tr><td>特長バッジ</td><td>7種類</td><td class="ok">○</td></tr>
-        <tr><td>写真</td><td>3枚</td><td><strong>3枚</strong></td></tr>
-        <tr><td>動画</td><td>掲載あり</td><td class="ok">○</td></tr>
-        <tr><td>クチコミ企業返信</td><td>あり・<strong style="color:var(--red)">最終更新2018年（8年前）</strong></td><td class="ng">✕</td></tr>
-        <tr><td>更新鮮度</td><td>2026年6月2日（4日前）</td><td class="ok">○</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- 5 軸別診断 -->
-<div class="card">
-  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-head"><div class="cn">4</div><h2>軸別診断</h2></div>
   <div class="card-body">
 
     <div class="ac">
@@ -266,13 +248,13 @@
     <div class="ac">
       <div class="ah"><span class="an">軸②</span><span class="at">詳細コンテンツ力</span><span class="as B">15 / 20</span></div>
       <div class="ab">
-        <div class="ar"><label>ルーブリック評価（存在＋質の2段階）</label>
+        <div class="ar"><label>ルーブリック評価</label>
           <div class="rm">
-            <div><span class="ok">○</span> プロ取材あり<span class="qtag s">存在○</span>＋固有要素はあるが一般論混在<span class="qtag q">質△→3点</span>（+6点）</div>
-            <div><span class="ok">○</span> 写真3枚<span class="qtag s">存在○</span>＋職場・業務シーン含む<span class="qtag s">質○</span>（+4点）</div>
-            <div><span class="ok">○</span> 動画あり<span class="qtag s">存在○</span>＋内容確認不可<span class="qtag q">質不明</span>（+2点）</div>
-            <div><span class="ok">○</span> やりがい・厳しさあり<span class="qtag s">存在○</span>＋一般論にとどまる（固有エピソードなし）<span class="qtag q">質✕</span>（+2点）</div>
-            <div><span class="ok">○</span> 向き不向きあり<span class="qtag s">存在○</span>＋スキル・状況条件（価値観条件なし）<span class="qtag q">質✕</span>（+1点）</div>
+            <div><span class="tr">△</span> プロ取材：固有要素はあるが一般論も混在（+6点中の一部）</div>
+            <div><span class="ok">○</span> 写真3枚：職場・業務シーン含む（+4点）</div>
+            <div><span class="tr">△</span> 動画：掲載あり・内容確認不可（+2点）</div>
+            <div><span class="tr">△</span> やりがい・厳しさ：記載はあるが一般論にとどまる（+2点）</div>
+            <div><span class="tr">△</span> 向き不向き：記載はあるがスキル条件表現（価値観条件なし）（+1点）</div>
           </div>
         </div>
         <div class="ar"><label>課題</label><p>「やりがい・厳しさ」「向き・不向き」ともに存在はするが質チェックが✕。やりがいの「大手メーカーのプロジェクトでスケール大きな仕事」は多くの同業他社も同じ表現をしており固有性がない。向き不向きは「大手メーカーで働きたい方が向いている」というスキル条件表現で、価値観訴求になっていない。社員の体験談3つは質が高く評価できる（具体的なビフォーアフターあり）。</p></div>
@@ -334,9 +316,9 @@
   </div>
 </div>
 
-<!-- 6 TOP3 -->
+<!-- 5 TOP3 -->
 <div class="card">
-  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-head"><div class="cn">5</div><h2>優先改善テーマ TOP3</h2></div>
   <div class="card-body">
 
     <div class="ti">
