@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>エン転職求人診断レポート｜日本ピザハット株式会社</title>
+<style>
+  :root{--red:#AE1C3B;--orange:#E65100;--green:#2E7D32;--blue:#1565C0;--bg:#F5F5F5;--card:#fff;--text:#212121;--sub:#757575;--border:#E0E0E0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  /* score */
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  /* funnel */
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{padding:3px 11px;border-radius:20px;border:2px solid var(--red);color:var(--red);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;letter-spacing:.5px}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:170px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  /* tables */
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  /* kuchi */
+  .ks{margin-top:14px}
+  .kh{font-size:13px;font-weight:700;margin-bottom:8px}
+  .ksc{display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+  .kb{font-size:36px;font-weight:700;color:var(--orange)}
+  .km{font-size:12px;color:var(--sub)}
+  .rr{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .rl2{font-size:11px;width:145px;flex-shrink:0;color:var(--sub)}
+  .rb{flex:1;height:7px;background:#EEE;border-radius:4px;overflow:hidden}
+  .rbi{height:100%;border-radius:4px}
+  .rv{font-size:11px;font-weight:700;width:28px;text-align:right}
+  .warn{background:#FFFDE7;border:1px solid #F9A825;border-radius:6px;padding:10px 14px;font-size:12px;color:#5D4037;margin-top:10px}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-top:10px}
+  /* logic */
+  .li{background:#E3F2FD;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--blue)}
+  /* axis */
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  /* top3 */
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg{grid-template-columns:1fr}.sa{flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>エン転職 求人診断レポート</h1>
+  <p>診断日：2026年6月6日｜対象：日本ピザハット株式会社</p>
+</div>
+<div class="container">
+
+<!-- ― -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>日本ピザハット株式会社</span></div>
+      <div><label>求人タイトル</label><span>ピザハットの店長候補（未経験歓迎）◆昨年賞与4ヶ月分／月最大10日休／住宅手当あり／独立支援制度あり</span></div>
+      <div><label>職種カテゴリ</label><span>店長・店長候補（飲食・フード）</span></div>
+      <div><label>雇用形態</label><span>正社員</span></div>
+      <div><label>給与</label><span>月給22万9,000円〜27万7,000円＋賞与年2回（昨年度4ヶ月分）</span></div>
+      <div><label>勤務地</label><span>全国直営店舗（地域限定職あり）</span></div>
+      <div><label>掲載期間</label><span>2026年5月21日〜7月15日</span></div>
+      <div><label>最終更新日</label><span>2026年5月22日（診断日より15日前）</span></div>
+    </div>
+    <div class="badge-row"><span class="badge">正社員</span><span class="badge">職種未経験OK</span><span class="badge">業種未経験OK</span><span class="badge">学歴不問</span><span class="badge">転勤なし</span></div>
+    <div class="badge-row" style="margin-top:8px"><span style="font-size:12px;color:var(--sub)">企業ページ：</span><span class="badge g">プロ取材あり</span><span class="badge g">クチコミ53件</span><span class="badge g">写真3枚・動画あり</span><span class="badge s">企業コメント確認不可</span></div>
+  </div>
+</div>
+
+<!-- 1 -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業ページから確認できる事実の積み上げで算出。存在チェックと質チェックの2段階で評価しています。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <!-- 82/100 → 339.292*0.82=278.2, offset=61.09 -->
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="61.09" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">82</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① マッチ度・クリック訴求</span><span><strong>13</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:65%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 詳細コンテンツ力</span><span><strong>19</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:95%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 条件・待遇の透明性</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ 企業ページの信頼性</span><span><strong>10</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:50%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 差別化・競争優位性</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+      </div>
+    </div>
+    <div class="sb">
+      コンテンツ・待遇透明性・差別化の3軸が高水準。「文化祭的な働き方」「Q&A形式のリード」等、候補者目線の表現が際立っており、求人票の質としては同カテゴリ内でも上位。課題は2点のみ：タイトルに給与数値がなく一覧での訴求が不完全な点と、クチコミ評点3.1（3.5未満）・企業コメント不明が企業ページの信頼性を下げている点。
+    </div>
+  </div>
+</div>
+
+<!-- 2 ファネル -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>エン転職 ファネル診断</h2><span class="sub-title">STEP1〜3の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">STEP 1</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・給与・バッジの訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">職種名の明確さ</div><div class="cd">「ピザハットの店長候補」はブランド名＋職種で一般的な検索語として機能。「ピザハット」という認知度の高いブランド名がタイトルに入っている点は一覧での視認性を高める。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルへの給与記載</div><div class="cd">「昨年賞与4ヶ月分」は記載されているが月給・年収の数値がタイトルにない。飲食・サービス系は給与水準への不安が応募障壁になりやすく、「月給22万9,000円〜」等の数値追加がクリック率向上に直結する。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">ベネフィットの世界観表現</div><div class="cd">「昨年賞与4ヶ月分／月最大10日休／住宅手当あり／独立支援制度あり」は条件の列挙にとどまる。「独立支援制度あり」で将来像の示唆はあるが、「1年で店長・3年でFC独立を目指せる」等の未来像がタイトルで伝わらない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">バッジ（5個）</div><div class="cd"><div class="tl"><span class="tg">正社員</span><span class="tg">職種未経験OK</span><span class="tg">業種未経験OK</span><span class="tg">学歴不問</span><span class="tg">転勤なし</span></div></div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">冒頭リードの引き込み</div><div class="cd">「Q：免許もないし、未経験だけど本当に大丈夫？」「Q：早期キャリアアップが叶うって本当？」「Q：プライベートも大切にできる？」というQ&A形式で候補者の具体的な不安・疑問から始まる。「わかる、その不安」と感じさせる構成として秀逸。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">1求人1職種</div><div class="cd">「店長候補」として一貫。業務内容（マネジメント・運営・お客様対応）はすべて店長候補の範囲内で役割混在なし。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">STEP 2</div><div class="st">詳細ページで離脱されないか</div><span class="ss">存在と内容の質を統合評価</span></div>
+      <div class="sb2">
+        <p style="font-size:11px;color:var(--sub);margin-bottom:10px">評価基準：○＝存在し内容も具体的、△＝存在するが内容が一般論・汎用表現、✕＝記載なし</p>
+        <table class="t">
+          <thead><tr><th>セクション</th><th style="width:50px;text-align:center">評価</th><th>判定理由</th></tr></thead>
+          <tbody>
+            <tr><td>仕事内容</td><td style="text-align:center" class="ok">○</td><td>「チームを勝たせる司令塔」「文化祭的な働き方」等、3つのPOINT形式で役割の面白さを具体的に記述。キャリアパス（シニア店長・FC独立・本部）まで記載。</td></tr>
+            <tr><td>研修制度</td><td style="text-align:center" class="ok">○</td><td>専用セクションあり。ピザハットアカデミー（全国3拠点）・OJTシート・交換店舗研修という具体的なプログラム名と期間（1.5〜3ヶ月）が記載されている。</td></tr>
+            <tr><td>募集背景</td><td style="text-align:center" class="ok">○</td><td>「世界100か国・1.9万店超のブランドが成長中」「毎月10名以上を積極採用」と事業拡大の文脈と規模感あり。</td></tr>
+            <tr><td>やりがい・厳しさ<br><small style="color:var(--red)">エン転職独自</small></td><td style="text-align:center" class="ok">○</td><td>やりがい：「自分の采配でリソース最適化→チームを勝利に導く」「お客様のSNSの感謝の声をチームで共有」→具体的な場面・行動あり。厳しさ：「天候・季節イベント・テレビ特番で売上が大きく変動。先を読んで行動が必要」→状況の具体性あり。</td></tr>
+            <tr><td>向き・不向き<br><small style="color:var(--red)">エン転職独自</small></td><td style="text-align:center" class="ok">○</td><td>「チームで目標を達成することに喜びを感じる方」「明確な基準に向かって着実に努力できる方」→マインドセット・価値観条件で記述。「指示待ちで自らアクションできない方は不向き」と具体的に絞り込んでいる。</td></tr>
+            <tr><td>社員の声・体験談</td><td style="text-align:center" class="ok">○</td><td>冒頭Q&Aが「先輩の声」として機能。「入社半年で代行→1年で店長→3年半でシニア店長。次はFC独立が目標」という具体的なキャリア事例あり。</td></tr>
+            <tr><td>写真（3枚）・動画</td><td style="text-align:center" class="ok">○</td><td>写真：「笑顔」「安心して働ける環境」「カジュアル面談」の3枚で職場の雰囲気が伝わる。動画：掲載あり。</td></tr>
+            <tr><td>プロ取材<br><small style="color:var(--red)">エン転職標準機能</small></td><td style="text-align:center" class="ok">○</td><td>上之原担当者が伊勢佐木長者町店を取材。「エリア協力体制・管理者3〜7名体制・育英手当月1.5万円」という具体的な仕組みが記述されており、固有制度の根拠が示されている。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">STEP 3</div><div class="st">企業ページで応募を決断できるか</div><span class="ss">若手の約90%がクチコミを参照（エン転職公式調査）</span></div>
+      <div class="sb2">
+        <div class="warn">⚠️ 注意点：求人票には「残業は月平均20〜30時間程度」と記載されているが、クチコミの平均残業は38時間（納得度61%）。候補者がクチコミを参照した場合にギャップを感じる可能性がある。</div>
+        <div class="ks">
+          <div class="kh">エン カイシャの評判（53件平均）</div>
+          <div class="ksc">
+            <div class="kb">3.1</div>
+            <div class="km">53件の回答より<br>平均年収411万円（納得度64%）<br>平均残業38時間（納得度61%）<br>企業コメント：確認不可</div>
+          </div>
+          <div class="rr"><span class="rl2">20代成長環境</span><div class="rb"><div class="rbi" style="width:78%;background:var(--green)"></div></div><span class="rv">3.9</span></div>
+          <div class="rr"><span class="rl2">実力主義</span><div class="rb"><div class="rbi" style="width:72%;background:var(--green)"></div></div><span class="rv">3.6</span></div>
+          <div class="rr"><span class="rl2">活気のある風土</span><div class="rb"><div class="rbi" style="width:68%;background:var(--orange)"></div></div><span class="rv">3.4</span></div>
+          <div class="rr"><span class="rl2">社会貢献</span><div class="rb"><div class="rbi" style="width:70%;background:var(--orange)"></div></div><span class="rv">3.5</span></div>
+          <div class="rr"><span class="rl2">事業の優位性・独自性</span><div class="rb"><div class="rbi" style="width:60%;background:var(--orange)"></div></div><span class="rv">3.0</span></div>
+          <div class="rr"><span class="rl2">会社の成長性・将来性</span><div class="rb"><div class="rbi" style="width:58%;background:var(--orange)"></div></div><span class="rv">2.9</span></div>
+          <div class="rr"><span class="rl2">イノベーションへの挑戦</span><div class="rb"><div class="rbi" style="width:58%;background:var(--orange)"></div></div><span class="rv">2.9</span></div>
+          <div class="rr"><span class="rl2">経営陣の手腕</span><div class="rb"><div class="rbi" style="width:50%;background:var(--red)"></div></div><span class="rv">2.5</span></div>
+          <div class="info" style="margin-top:10px">💡 「20代成長環境3.9」「実力主義3.6」は高評価。求人票の「早期キャリアアップ・評価の明快さ」という訴求とクチコミが一致しており、この点はむしろ信頼性の補強になる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 表示ロジック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>エン転職 表示ロジック適合チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>エン転職の表示ロジック（公式）：「料金プラン × 求職者とのマッチ度」</strong><br>料金を上げなくてもマッチ度を上げることで上位表示のチャンスが生まれる。職種・条件が明確なほど、その条件を求める候補者へのマッチ度が上がる。</div>
+    <table class="t">
+      <thead><tr><th>チェック項目</th><th>評価</th><th>コメント</th></tr></thead>
+      <tbody>
+        <tr><td>職種名が検索語と一致しているか</td><td class="ok">○</td><td>「店長候補」「飲食」「ピザハット」はいずれも検索されやすい語。ブランド名を職種名に含む点は検索マッチの幅を広げる</td></tr>
+        <tr><td>1求人1職種の原則への対応</td><td class="ok">○</td><td>店長候補として一貫。複数職種の混在なし</td></tr>
+        <tr><td>バッジ・タグが検索フィルターに対応しているか</td><td class="ok">○</td><td>「職種・業種未経験OK・学歴不問」は未経験者の絞り込みフィルターに対応。ただし「転勤なし」バッジは地域限定職を選んだ場合のみ正確</td></tr>
+        <tr><td>希望条件と求人記載が一致しているか</td><td class="tr">△</td><td>求人票「残業月20〜30時間」に対してクチコミ平均38時間の乖離がある。候補者が希望する残業時間と実態に差が生じる可能性がある</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 4 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸①</span><span class="at">マッチ度・クリック訴求</span><span class="as B">13 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 職種名「ピザハットの店長候補」（+3点）</div>
+            <div><span class="ng">✕</span> タイトルに給与数値なし（0点）</div>
+            <div><span class="ng">✕</span> ベネフィットが世界観・未来像：「賞与4ヶ月分／月最大10日休／住宅手当」は条件列挙（0点）</div>
+            <div><span class="ok">○</span> バッジ5個（+2点）</div>
+            <div><span class="ok">○</span> 冒頭Q&Aが候補者の不安・疑問から入る（+4点）</div>
+            <div><span class="ok">○</span> 1求人1職種（+4点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>タイトルの2箇所が✕。給与数値がなく飲食・サービス系では応募への心理的ハードルが上がりやすい。ベネフィット表現も条件列挙にとどまっており、「大手ブランドで1年後に店長を目指せる」という未来像がタイトルで伝わらない。冒頭Q&A形式は優れているため、タイトルさえ改善すれば①は大幅に上がる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>タイトルに「月給22.9万円〜」または「初年度年収422万円〜」を追加する。ベネフィットも「1年で店長・将来はFC独立も」のような未来像表現を1つ加えることで、一覧クリック率の向上が期待できる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸②</span><span class="at">詳細コンテンツ力</span><span class="as A">19 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> プロ取材：固有制度（エリア協力体制・管理者3〜7名・育英手当）を具体的に記述（+6点）</div>
+            <div><span class="ok">○</span> 写真3枚：職場の雰囲気・笑顔・面談シーンで実態が伝わる（+4点）</div>
+            <div><span class="tr">△</span> 動画：掲載あり・内容確認不可（+2点）</div>
+            <div><span class="ok">○</span> やりがい・厳しさ：具体的な場面（売上変動の要因・お客様のSNS感謝）で記述（+4点）</div>
+            <div><span class="ok">○</span> 向き・不向き：価値観条件（チームで目標達成・指示待ちは不向き）で記述（+3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>動画の内容確認ができなかった点のみが減点要因。STEP2全セクションで○が揃っており、この求人の最大の強み。特にQ&A形式の冒頭リード・「文化祭的な働き方」という独自の言語化・向き不向きの価値観条件記述は、同業他社求人と比較して質が高い。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>動画の内容確認のみ。職場の日常・スタッフとのリアルな様子を映した動画であれば満点。現状でも19/20と高水準のため、このセクションの維持が最優先。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸③</span><span class="at">条件・待遇の透明性</span><span class="as A">20 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 月給下限・上限明示（22万9,000〜27万7,000円）（+4点）</div>
+            <div><span class="ok">○</span> 年収例4パターン（422万・476万・489万・510万）（+3点）</div>
+            <div><span class="ok">○</span> 賞与：昨年度4ヶ月分の実績記載（+2点）</div>
+            <div><span class="ok">○</span> 年間休日118日（コース別に明示）・有給・各種休暇（+3点）</div>
+            <div><span class="ok">○</span> 残業代1分単位全額支給を明記（+3点）</div>
+            <div><span class="ok">○</span> 努力の可視化：OJTシートで「次へ進む条件を可視化」・月次で上長と振り返り・「入社半年で代行→1年で店長」という具体的な昇格モデルがある（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>全項目満点。特に「努力の可視化」が充実しており、「OJTシートで条件を可視化」「月次で上長と確認」という評価の仕組みが明記されている点は、Z世代が重視する「頑張りが見える化されるか」に正面から応えている。唯一の潜在リスクは「求人票の残業20〜30時間」とクチコミ平均38時間の乖離で、実態との差が応募後の離脱につながりうる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>残業時間の乖離については、求人票に「店舗・季節によって幅があります」等の補足を追加することで候補者の期待値を適切に管理できる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸④</span><span class="at">企業ページの信頼性</span><span class="as C">10 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> クチコミ53件（+5点）</div>
+            <div><span class="ng">✕</span> 評点3.1（3.5未満）（0点）</div>
+            <div><span class="ng">✕</span> 企業コメント：確認不可（0点）</div>
+            <div><span class="ok">○</span> 企業概要充実（設立・従業員数・事業内容・世界規模の記載）（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>クチコミ評点3.1は3.5未満で④軸の足を引っ張っている。ただしクチコミの中身を見ると「20代成長環境3.9・実力主義3.6」は高く、求人票の「早期キャリアアップ・評価の明快さ」という訴求と一致している。弱いのは「会社の成長性2.9・経営陣の手腕2.5」で、宅配競合の増加による事業展望への懸念が出ている。企業コメントが確認できなかった点も課題。また残業時間のクチコミ平均38時間と求人票20〜30時間の乖離が、応募後の期待ギャップリスクになる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>企業コメントを設定・更新することを最優先に。クチコミで指摘される「残業時間の実態」と「成長性への不安」に対して、会社として取り組んでいる事実を記述することで候補者の信頼を高められる。「20代成長環境3.9・実力主義3.6」という好評価の軸は積極的に求人票に引用してもよい。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸⑤</span><span class="at">差別化・競争優位性</span><span class="as A">20 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 数値化実績：「先輩9割が未経験スタート」「入社1年で店長」「昨年賞与4ヶ月」「育英手当月1.5万円」「世界1.9万店超」（+3点）</div>
+            <div><span class="ok">○</span> タイトルに自社固有訴求：「独立支援制度あり」（+3点）</div>
+            <div><span class="ok">○</span> 「なぜここか」が共感・価値観軸：「文化祭的な働き方」「この笑顔が、ウチの働きやすさの何よりの証拠」「チームの一体感」→ 文化・雰囲気の価値観訴求あり（+5点）</div>
+            <div><span class="ok">○</span> 採用文のトーンがフラット：Q&A形式で候補者目線。「一緒に〜」「ご相談ください」等、選ぶ側の目線が少ない（+4点）</div>
+            <div><span class="ok">○</span> 同社他求人との差別化：現在の掲載はこの求人1件のみ（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>全項目満点。この求人の最も評価できる軸。特に「文化祭的な働き方」という独自の言語化は、飲食業界の中で差別化された価値観訴求として機能している。Q&A形式のリードは候補者の疑問に先回りして答える構成で、「選ばれる側より選びたい候補者」に向けたフラットなアプローチが実現できている。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>現状で満点。強いて言えば「文化祭的な働き方」という言語化をタイトルまたはバッジに取り込むことで、一覧表示の段階からも世界観が伝わるようになる。</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5 TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <h4>企業コメントを設定・更新し、残業時間の乖離に正面から向き合う</h4>
+        <span class="ft">確認事実：企業コメント確認不可・クチコミ平均残業38時間 vs 求人票20〜30時間</span>
+        <p>若手の約90%がクチコミを参照する（公式調査）中で、企業コメントが設定されていない状態は機会損失。特に残業時間の乖離（求人票20〜30時間 vs クチコミ平均38時間）は候補者の信頼を下げるリスクがある。「繁忙期は増えることがあるが、通常期は○時間以内を目標に改善中」等の誠実な記述が信頼を生む。</p>
+        <div class="wy">▶ ④軸10→20点。担当営業に相談するだけで実行でき、他の施策と組み合わせれば82→92点が視野に入る。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <h4>タイトルに給与数値と未来像を追加する</h4>
+        <span class="ft">確認事実：タイトルに月給・年収の数値なし・ベネフィットが条件列挙</span>
+        <p>飲食・サービス系は給与水準への不安が応募障壁として最も大きい業種の一つ。「月給22.9万円〜」等の数値をタイトルに追加するだけで①軸が大幅改善する。さらに「1年で店長・将来はFC独立も」のような1フレーズの未来像追加で、同カテゴリの競合求人と一覧での差別化が生まれる。</p>
+        <div class="wy">▶ ①軸13→20点の可能性。タイトルの文字を追加するだけで実行できる。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <h4>クチコミの強みを求人票内に活用する</h4>
+        <span class="ft">確認事実：「20代成長環境3.9・実力主義3.6」はクチコミで高評価・企業概要に活用されていない</span>
+        <p>クチコミの総合評点3.1は低いが、「20代成長環境3.9」「実力主義3.6」は業界平均を上回る高評価。この数値は求人票の「早期キャリアアップ・評価の明快さ」という訴求を裏付けており、プロ取材コメントや福利厚生セクションで引用することで「クチコミが証明する環境の良さ」として活用できる。</p>
+        <div class="wy">▶ 追加コストなし。既存のクチコミ資産を求人票の信頼性補強に活用するだけで応募率向上が期待できる。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px">本レポートはスクレイピングにより取得したデータをもとに生成しています。診断日：2026年6月6日</p>
+</div>
+</body>
+</html>
