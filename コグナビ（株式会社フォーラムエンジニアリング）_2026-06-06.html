@@ -9,140 +9,144 @@
     --red: #AE1C3B;
     --orange: #E65100;
     --green: #2E7D32;
+    --blue: #1565C0;
     --bg: #F5F5F5;
     --card: #FFFFFF;
     --text: #212121;
-    --sub: #616161;
+    --sub: #757575;
     --border: #E0E0E0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.65; }
+
+  /* ── ヘッダー ── */
   .header { background: var(--red); color: #fff; padding: 24px 32px; }
   .header h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
   .header p { font-size: 13px; opacity: 0.85; }
-  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
-  .card { background: var(--card); border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.10); margin-bottom: 24px; overflow: hidden; }
+
+  /* ── コンテナ ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 56px; }
+
+  /* ── カード ── */
+  .card { background: var(--card); border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.09); margin-bottom: 24px; overflow: hidden; }
   .card-head { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); }
   .cn { width: 28px; height: 28px; border-radius: 50%; background: var(--red); color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .card-head h2 { font-size: 16px; font-weight: 700; }
+  .card-head .sub-title { font-size: 12px; color: var(--sub); margin-left: 4px; }
   .card-body { padding: 20px; }
 
-  /* profile */
-  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .profile-item label { font-size: 11px; color: var(--sub); display: block; margin-bottom: 2px; }
-  .profile-item span { font-size: 14px; font-weight: 600; }
-  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-  .badge { font-size: 11px; padding: 3px 8px; border-radius: 12px; border: 1px solid var(--red); color: var(--red); }
+  /* ── バッジ・タグ ── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .badge { font-size: 11px; padding: 3px 9px; border-radius: 12px; border: 1px solid var(--red); color: var(--red); }
   .badge.green { border-color: var(--green); color: var(--green); }
   .badge.orange { border-color: var(--orange); color: var(--orange); }
+  .badge.blue { border-color: var(--blue); color: var(--blue); }
 
-  /* score */
-  .score-wrap { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  /* ── プロフィールグリッド ── */
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .profile-item label { font-size: 11px; color: var(--sub); display: block; margin-bottom: 2px; }
+  .profile-item span { font-size: 14px; font-weight: 600; }
+
+  /* ── スコア ── */
+  .score-area { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; margin-bottom: 16px; }
   .ring-wrap { flex-shrink: 0; text-align: center; }
   .ring-label { font-size: 11px; color: var(--sub); margin-top: 4px; }
   .bars-wrap { flex: 1; min-width: 240px; }
-  .bar-row { margin-bottom: 12px; }
-  .bar-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-  .bar-label span { font-size: 12px; }
-  .grade { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+  .bar-row { margin-bottom: 11px; }
+  .bar-lbl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; font-size: 12px; }
+  .grade { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 4px; }
   .grade.A { background: #E8F5E9; color: var(--green); }
   .grade.B { background: #FFF3E0; color: var(--orange); }
   .grade.C { background: #FFEBEE; color: var(--red); }
-  .bar-bg { height: 10px; background: #EEE; border-radius: 5px; overflow: hidden; }
+  .bar-bg { height: 9px; background: #EEE; border-radius: 5px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 5px; }
   .fill-A { background: var(--green); }
   .fill-B { background: var(--orange); }
   .fill-C { background: var(--red); }
-  .summary-box { margin-top: 16px; background: #FAFAFA; border-left: 3px solid var(--red); padding: 12px 14px; border-radius: 0 4px 4px 0; font-size: 13px; line-height: 1.7; }
+  .note { font-size: 11px; color: var(--sub); background: #FAFAFA; border-left: 3px solid var(--border); padding: 8px 12px; border-radius: 0 4px 4px 0; margin-bottom: 12px; }
+  .summary-box { background: #FAFAFA; border-left: 3px solid var(--red); padding: 12px 14px; border-radius: 0 4px 4px 0; font-size: 13px; line-height: 1.75; margin-top: 4px; }
 
-  /* rubric table */
-  .rubric-note { font-size: 11px; color: var(--sub); margin-bottom: 12px; }
-  .rubric-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 6px; }
-  .rubric-table th { background: #F5F5F5; font-weight: 600; font-size: 11px; text-align: left; padding: 7px 10px; border-bottom: 2px solid var(--border); }
-  .rubric-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  .rubric-table tr:last-child td { border-bottom: none; }
-  .ok { color: var(--green); font-weight: 700; font-size: 15px; }
-  .ng { color: var(--red); font-weight: 700; font-size: 15px; }
-  .tri { color: var(--orange); font-weight: 700; font-size: 15px; }
-  .pt { font-weight: 700; color: var(--text); }
-  .axis-total { text-align: right; font-size: 12px; color: var(--sub); margin-top: 4px; }
-
-  /* competitor */
-  .no-data-box { background: #FFFDE7; border: 1px solid #F9A825; border-radius: 6px; padding: 12px 14px; font-size: 13px; color: #5D4037; margin-bottom: 16px; }
-  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .compare-table th, .compare-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
-  .compare-table th { background: #F5F5F5; font-weight: 600; font-size: 11px; }
-  .compare-table td.target { font-weight: 600; }
-  .win { color: var(--green); font-weight: 700; }
-  .lose { color: var(--red); }
-  .str-weak { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-  .str-card { background: #E8F5E9; padding: 12px 14px; border-radius: 6px; }
-  .weak-card { background: #FFEBEE; padding: 12px 14px; border-radius: 6px; }
-  .str-card h4 { color: var(--green); font-size: 13px; margin-bottom: 6px; }
-  .weak-card h4 { color: var(--red); font-size: 13px; margin-bottom: 6px; }
-  .str-card ul, .weak-card ul { padding-left: 16px; font-size: 12px; line-height: 1.8; }
-
-  /* content check */
-  .content-block { margin-bottom: 20px; }
-  .content-block h3 { font-size: 13px; font-weight: 700; color: var(--sub); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  /* ── ファネル ── */
+  .funnel-step { margin-bottom: 20px; }
+  .funnel-step:last-child { margin-bottom: 0; }
+  .step-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #F5F5F5; border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 14px; font-weight: 700; }
+  .step-sub { font-size: 12px; color: var(--sub); margin-left: 4px; }
+  .step-body { border: 1px solid var(--border); border-radius: 0 0 6px 6px; padding: 14px; }
   .check-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F5F5F5; }
   .check-row:last-child { border-bottom: none; }
-  .check-icon { font-size: 16px; width: 22px; flex-shrink: 0; padding-top: 1px; }
-  .check-label { font-size: 13px; font-weight: 600; width: 180px; flex-shrink: 0; }
-  .check-detail { font-size: 12px; color: var(--sub); flex: 1; line-height: 1.6; }
-  .tag-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
-  .tag { font-size: 11px; padding: 2px 7px; border-radius: 10px; background: #F5F5F5; color: var(--text); }
+  .ci { font-size: 16px; width: 22px; flex-shrink: 0; }
+  .ci.ok { color: var(--green); }
+  .ci.ng { color: var(--red); }
+  .ci.tri { color: var(--orange); }
+  .cl { font-size: 13px; font-weight: 600; width: 175px; flex-shrink: 0; line-height: 1.4; }
+  .cd { font-size: 12px; color: var(--sub); flex: 1; line-height: 1.65; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  .tg { font-size: 11px; padding: 2px 7px; border-radius: 10px; background: #F5F5F5; }
 
-  /* media check */
+  /* ── セクション表 ── */
+  .sec-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 4px; }
+  .sec-table th { background: #F5F5F5; font-size: 11px; font-weight: 600; text-align: left; padding: 7px 10px; border-bottom: 2px solid var(--border); }
+  .sec-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .sec-table tr:last-child td { border-bottom: none; }
+  .ok { color: var(--green); font-weight: 700; }
+  .ng { color: var(--red); font-weight: 700; }
+  .tri-t { color: var(--orange); font-weight: 700; }
+
+  /* クチコミバー */
+  .kuchi-section { margin-top: 14px; }
+  .kuchi-head { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .kuchi-score { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .kuchi-big { font-size: 36px; font-weight: 700; color: var(--red); }
+  .kuchi-meta { font-size: 12px; color: var(--sub); }
+  .r-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .r-lbl { font-size: 11px; width: 145px; flex-shrink: 0; color: var(--sub); }
+  .r-bar-bg { flex: 1; height: 7px; background: #EEE; border-radius: 4px; overflow: hidden; }
+  .r-bar { height: 100%; border-radius: 4px; }
+  .r-val { font-size: 11px; font-weight: 700; width: 28px; text-align: right; }
+  .warn-box { background: #FFFDE7; border: 1px solid #F9A825; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #5D4037; margin-top: 10px; }
+
+  /* ── 表示ロジックチェック ── */
+  .logic-intro { background: #E3F2FD; border-radius: 6px; padding: 12px 14px; font-size: 13px; line-height: 1.75; margin-bottom: 16px; }
+  .logic-intro strong { color: var(--blue); }
+
+  /* ── 媒体チェック ── */
   .media-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .media-table th { background: #F5F5F5; font-weight: 600; font-size: 11px; text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); }
+  .media-table th { background: #F5F5F5; font-size: 11px; font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 2px solid var(--border); }
   .media-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
   .media-table tr:last-child td { border-bottom: none; }
 
-  /* axis */
+  /* ── 軸別診断 ── */
   .axis-card { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; overflow: hidden; }
   .axis-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #FAFAFA; }
-  .axis-num { font-size: 11px; font-weight: 700; color: var(--sub); }
+  .axis-num { font-size: 11px; color: var(--sub); font-weight: 700; }
   .axis-title { font-size: 14px; font-weight: 700; flex: 1; }
-  .axis-score-val { font-size: 18px; font-weight: 700; }
-  .axis-score-val.A { color: var(--green); }
-  .axis-score-val.B { color: var(--orange); }
-  .axis-score-val.C { color: var(--red); }
-  .axis-body { padding: 12px 14px; }
-  .axis-row { margin-bottom: 10px; }
-  .axis-row:last-child { margin-bottom: 0; }
-  .axis-row label { font-size: 11px; font-weight: 700; color: var(--sub); display: block; margin-bottom: 3px; letter-spacing: 0.3px; }
-  .axis-row p { font-size: 13px; line-height: 1.65; }
-  .fact-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #E3F2FD; color: #1565C0; font-weight: 600; margin-right: 4px; vertical-align: middle; }
+  .axis-score { font-size: 18px; font-weight: 700; }
+  .axis-score.A { color: var(--green); }
+  .axis-score.B { color: var(--orange); }
+  .axis-score.C { color: var(--red); }
+  .axis-body { padding: 13px 14px; }
+  .arow { margin-bottom: 10px; }
+  .arow:last-child { margin-bottom: 0; }
+  .arow label { font-size: 11px; font-weight: 700; color: var(--sub); display: block; margin-bottom: 3px; letter-spacing: 0.3px; }
+  .arow p { font-size: 13px; line-height: 1.7; }
+  .rubric-mini { font-size: 12px; line-height: 1.8; }
+  .rubric-mini span { margin-right: 6px; }
 
-  /* company page */
-  .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .company-item { border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
-  .company-item h4 { font-size: 12px; font-weight: 700; color: var(--sub); margin-bottom: 6px; }
-  .company-item .val { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-  .company-item .val.ok { color: var(--green); }
-  .company-item .val.warn { color: var(--orange); }
-  .company-item .val.ng { color: var(--red); }
-  .company-item p { font-size: 12px; color: var(--sub); line-height: 1.6; }
-  .r-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-  .r-label { font-size: 11px; width: 140px; flex-shrink: 0; color: var(--sub); }
-  .r-bar-bg { flex: 1; height: 7px; background: #EEE; border-radius: 4px; overflow: hidden; }
-  .r-bar { height: 100%; border-radius: 4px; background: var(--orange); }
-  .r-val { font-size: 11px; font-weight: 700; width: 28px; text-align: right; }
-
-  /* top3 */
+  /* ── TOP3 ── */
   .top3-item { display: flex; gap: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 10px; }
   .top3-item:last-child { margin-bottom: 0; }
-  .top3-num { font-size: 28px; font-weight: 700; color: var(--red); width: 32px; flex-shrink: 0; line-height: 1; }
-  .top3-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .top3-content .fact { font-size: 12px; color: #1565C0; background: #E3F2FD; padding: 2px 6px; border-radius: 4px; margin-bottom: 6px; display: inline-block; }
-  .top3-content p { font-size: 13px; line-height: 1.65; color: var(--sub); }
-  .top3-content .why { font-size: 12px; color: var(--orange); font-weight: 600; margin-top: 6px; }
+  .top3-n { font-size: 30px; font-weight: 700; color: var(--red); width: 32px; flex-shrink: 0; line-height: 1; }
+  .top3-c h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .fact-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #E3F2FD; color: var(--blue); font-weight: 600; margin-bottom: 6px; }
+  .top3-c p { font-size: 13px; line-height: 1.7; color: var(--sub); }
+  .why { font-size: 12px; color: var(--orange); font-weight: 600; margin-top: 6px; }
 
   @media (max-width: 600px) {
-    .profile-grid, .str-weak, .company-grid { grid-template-columns: 1fr; }
-    .score-wrap { flex-direction: column; align-items: flex-start; }
-    .check-label { width: 120px; }
+    .profile-grid { grid-template-columns: 1fr; }
+    .score-area { flex-direction: column; align-items: flex-start; }
+    .cl { width: 120px; }
   }
 </style>
 </head>
@@ -155,590 +159,424 @@
 
 <div class="container">
 
-  <!-- ― プロフィール -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn" style="font-size:16px;">―</div>
-      <h2>診断対象プロフィール</h2>
+<!-- ─── ― プロフィール ─── -->
+<div class="card">
+  <div class="card-head">
+    <div class="cn" style="font-size:16px">―</div>
+    <h2>診断対象プロフィール</h2>
+  </div>
+  <div class="card-body">
+    <div class="profile-grid">
+      <div class="profile-item"><label>会社名</label><span>コグナビ（株式会社フォーラムエンジニアリング）</span></div>
+      <div class="profile-item"><label>求人タイトル</label><span>機電系エンジニア◆月給30万円〜／入社者98%給与UP／転勤なし／残業月平均9.1h／土日祝休み</span></div>
+      <div class="profile-item"><label>職種カテゴリ</label><span>機械・機構設計（精密機器・医療機器）</span></div>
+      <div class="profile-item"><label>雇用形態</label><span>正社員（無期雇用派遣）</span></div>
+      <div class="profile-item"><label>給与</label><span>月給30万円〜55万円＋残業代全額支給＋賞与</span></div>
+      <div class="profile-item"><label>勤務地</label><span>全国24都府県（転勤なし）</span></div>
+      <div class="profile-item"><label>掲載期間</label><span>2026年6月1日〜6月28日</span></div>
+      <div class="profile-item"><label>最終更新日</label><span>2026年6月2日（診断日より4日前）</span></div>
     </div>
-    <div class="card-body">
-      <div class="profile-grid">
-        <div class="profile-item">
-          <label>会社名</label>
-          <span>コグナビ（株式会社フォーラムエンジニアリング）</span>
-        </div>
-        <div class="profile-item">
-          <label>求人タイトル</label>
-          <span>機電系エンジニア◆月給30万円〜／入社者98%給与UP／転勤なし／残業月平均9.1h／土日祝休み</span>
-        </div>
-        <div class="profile-item">
-          <label>職種カテゴリ</label>
-          <span>機械・機構設計（精密機器・医療機器）</span>
-        </div>
-        <div class="profile-item">
-          <label>雇用形態</label>
-          <span>正社員（無期雇用派遣）</span>
-        </div>
-        <div class="profile-item">
-          <label>給与</label>
-          <span>月給30万円〜55万円＋残業代全額支給＋賞与</span>
-        </div>
-        <div class="profile-item">
-          <label>勤務地</label>
-          <span>全国24都府県（転勤なし）</span>
-        </div>
-        <div class="profile-item">
-          <label>掲載期間</label>
-          <span>2026年6月1日〜6月28日</span>
-        </div>
-        <div class="profile-item">
-          <label>最終更新日</label>
-          <span>2026年6月2日（診断日より4日前）</span>
-        </div>
-      </div>
-      <div class="badge-row">
-        <span class="badge">正社員（無期雇用派遣）</span>
-        <span class="badge">職種未経験OK</span>
-        <span class="badge">業種未経験OK</span>
-        <span class="badge">完全週休2日</span>
-        <span class="badge">残業月20h以内</span>
-        <span class="badge">内定まで2週間</span>
-        <span class="badge">面接1回のみ</span>
-        <span class="badge">転勤なし</span>
-      </div>
-      <div class="badge-row" style="margin-top:8px;">
-        <span style="font-size:12px;color:var(--sub);">企業ページ：</span>
-        <span class="badge green">プロ取材あり</span>
-        <span class="badge green">クチコミ457件</span>
-        <span class="badge green">写真3枚</span>
-        <span class="badge orange">動画・再生エラーあり</span>
-      </div>
+    <div class="badge-row">
+      <span class="badge">正社員（無期雇用派遣）</span><span class="badge">職種未経験OK</span><span class="badge">業種未経験OK</span><span class="badge">完全週休2日</span><span class="badge">残業月20h以内</span><span class="badge">内定まで2週間</span><span class="badge">面接1回のみ</span><span class="badge">転勤なし</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">企業ページ：</span>
+      <span class="badge green">プロ取材あり</span>
+      <span class="badge green">クチコミ457件</span>
+      <span class="badge green">写真3枚</span>
+      <span class="badge orange">動画エラーあり</span>
     </div>
   </div>
+</div>
 
-  <!-- 1 スコアサマリー -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">1</div>
-      <h2>診断スコアサマリー</h2>
+<!-- ─── 1 スコアサマリー ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは「求人票・企業ページから確認できる事実」の積み上げで算出しています。確認できなかった項目は0点として扱います。</p>
+    <div class="score-area">
+      <div class="ring-wrap">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <!-- 78/100 → 339.292 * 0.78 = 264.65, offset = 74.64 -->
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14"
+            stroke-dasharray="339.292" stroke-dashoffset="74.64"
+            stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">78</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="ring-label">総合スコア</div>
+      </div>
+      <div class="bars-wrap">
+        <div class="bar-row">
+          <div class="bar-lbl"><span>① マッチ度・クリック訴求</span><span><strong>16</strong>/20<span class="grade A">A</span></span></div>
+          <div class="bar-bg"><div class="bar-fill fill-A" style="width:80%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl"><span>② 詳細コンテンツ力</span><span><strong>17</strong>/20<span class="grade A">A</span></span></div>
+          <div class="bar-bg"><div class="bar-fill fill-A" style="width:85%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl"><span>③ 条件・待遇の透明性</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div>
+          <div class="bar-bg"><div class="bar-fill fill-A" style="width:100%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl"><span>④ 企業ページの信頼性</span><span><strong>10</strong>/20<span class="grade C">C</span></span></div>
+          <div class="bar-bg"><div class="bar-fill fill-C" style="width:50%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lbl"><span>⑤ 差別化・競争優位性</span><span><strong>15</strong>/20<span class="grade B">B</span></span></div>
+          <div class="bar-bg"><div class="bar-fill fill-B" style="width:75%"></div></div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <p class="rubric-note">※ 各軸のスコアは「求人票・企業ページから確認できる事実」の積み上げで算出しています。確認できなかった項目は0点として扱います。</p>
-      <div class="score-wrap">
-        <div class="ring-wrap">
-          <svg width="130" height="130" viewBox="0 0 130 130">
-            <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
-            <!-- 82/100 → 339.292 * 0.82 = 278.2, offset = 339.292 - 278.2 = 61.09 -->
-            <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14"
-              stroke-dasharray="339.292" stroke-dashoffset="61.09"
-              stroke-linecap="round" transform="rotate(-90 65 65)"/>
-            <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">82</text>
-            <text x="65" y="78" text-anchor="middle" font-size="12" fill="#616161">/ 100</text>
-          </svg>
-          <div class="ring-label">総合スコア</div>
-        </div>
-        <div class="bars-wrap">
-          <div class="bar-row">
-            <div class="bar-label">
-              <span>① 一覧での訴求力</span>
-              <span><strong>20</strong>/20&nbsp;<span class="grade A">A</span></span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill fill-A" style="width:100%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">
-              <span>② 条件・待遇の透明性</span>
-              <span><strong>20</strong>/20&nbsp;<span class="grade A">A</span></span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill fill-A" style="width:100%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">
-              <span>③ 詳細コンテンツ力</span>
-              <span><strong>17</strong>/20&nbsp;<span class="grade A">A</span></span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill fill-A" style="width:85%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">
-              <span>④ 企業ページの信頼性</span>
-              <span><strong>10</strong>/20&nbsp;<span class="grade C">C</span></span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill fill-C" style="width:50%"></div></div>
-          </div>
-          <div class="bar-row">
-            <div class="bar-label">
-              <span>⑤ 差別化・競争優位性</span>
-              <span><strong>15</strong>/20&nbsp;<span class="grade B">B</span></span>
-            </div>
-            <div class="bar-bg"><div class="bar-fill fill-B" style="width:75%"></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="summary-box">
-        求人票・企業ページのコンテンツ活用はエン転職内でもトップクラス（①②③で満点近く）。一方、企業ページの信頼性が最大のボトルネックで、クチコミ評点2.7・企業コメント8年未更新という2点が候補者の応募意欲を削ぐリスクになっている。求人票だけでなく企業ページ側の整備が優先課題。
-      </div>
+    <div class="summary-box">
+      条件透明性・詳細コンテンツはエン転職内でもトップクラスの充実度。一方で「企業ページの信頼性（④）」が最大のボトルネックで、若手の90%が参照するクチコミの評点2.7と企業コメント8年未更新が応募の意思決定を阻んでいる。求人票ではなく企業ページ側の整備が最優先課題。
     </div>
   </div>
+</div>
 
-  <!-- 2 競合比較 -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">2</div>
-      <h2>競合比較サマリー</h2>
-    </div>
-    <div class="card-body">
-      <div class="no-data-box">
-        ⚠️ 同カテゴリ（機械・機構設計）の他社求人はエン転職の検索ページのJS制限により取得できませんでした。以下は同社が同期間に並列掲載している他求人との比較です。
+<!-- ─── 2 ファネル診断 ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>エン転職 ファネル診断</h2><span class="sub-title">求職者の行動フロー（STEP1〜3）に沿って評価</span></div>
+  <div class="card-body">
+
+    <!-- STEP1 -->
+    <div class="funnel-step">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <div class="step-title">一覧でクリックされるか</div>
+        <span class="step-sub">タイトル・給与・バッジの訴求力</span>
       </div>
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>求人タイトル</th>
-            <th>給与下限</th>
-            <th>バッジ数</th>
-            <th>対象求人との差別化</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="target" style="color:var(--red);">【対象】機電系エンジニア◆月給30万円〜</td>
-            <td class="target">30万円〜</td>
-            <td class="target">8個</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td>自動車開発エンジニア◆大手自動車メーカー勤務可</td>
-            <td>30万円〜</td>
-            <td>8個</td>
-            <td class="lose">「自動車」に絞る</td>
-          </tr>
-          <tr>
-            <td>設計補助（CAD）◆大手メーカーで活躍</td>
-            <td>30万円〜</td>
-            <td>8個</td>
-            <td class="lose">「CAD」に絞る</td>
-          </tr>
-          <tr>
-            <td>製品開発エンジニア◆残業月平均9.1h</td>
-            <td>30万円〜</td>
-            <td>8個</td>
-            <td class="lose">「製品開発」に絞る</td>
-          </tr>
-          <tr>
-            <td>設計開発◆希望や経験を考慮／月給35万円〜</td>
-            <td class="win">35万円〜</td>
-            <td>7個</td>
-            <td class="win">給与下限が高い</td>
-          </tr>
-          <tr>
-            <td>ものづくりサポート◆月給27万円〜</td>
-            <td>27万円〜</td>
-            <td>8個</td>
-            <td class="lose">給与下限が低い</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="str-weak" style="margin-top:16px;">
-        <div class="str-card">
-          <h4>▲ この求人の強み</h4>
-          <ul>
-            <li>プロ取材・写真・バッジ8個と媒体機能を完全活用</li>
-            <li>「98%給与UP」「年間100名転籍実績」という数値訴求</li>
-            <li>年収例3パターンで入社後イメージが具体的</li>
-            <li>「向き不向き」「やりがい厳しさ」セクションが充実</li>
-          </ul>
-        </div>
-        <div class="weak-card">
-          <h4>▼ 課題</h4>
-          <ul>
-            <li>同社他求人6件と訴求メッセージがほぼ同一</li>
-            <li>「機電系エンジニア」が最も幅広く、刺さるターゲットが最も曖昧</li>
-            <li>クチコミ評点2.7・企業コメント8年未更新が信頼を下げている</li>
-            <li>動画コンテンツに再生エラーが発生中</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3 コンテンツ構成チェック -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">3</div>
-      <h2>エン転職 コンテンツ構成チェック</h2>
-    </div>
-    <div class="card-body">
-      <p style="font-size:12px;color:var(--sub);margin-bottom:16px;">エン転職はブラウジング型メディアです。求職者の行動は「一覧でクリック → 詳細を読む → 企業ページで確認」の3ステップ。それぞれのステップで情報が揃っているかを確認します。</p>
-
-      <div class="content-block">
-        <h3>STEP 1｜一覧でクリックされるか（タイトル・バッジ・給与）</h3>
+      <div class="step-body">
         <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">タイトルの情報密度</div>
-          <div class="check-detail">「機電系エンジニア（職種）◆月給30万円〜（給与）／入社者98%給与UP（独自実績）／転勤なし・残業9.1h・土日祝休み（働き方）」と一覧表示で伝わる情報が凝縮されている。</div>
+          <div class="ci ok">○</div>
+          <div class="cl">タイトルの情報密度</div>
+          <div class="cd">「機電系エンジニア（職種）◆月給30万円〜（給与）／98%給与UP（独自実績）／転勤なし・残業9.1h・土日祝休（働き方）」と一覧で伝わる情報が凝縮されている。公式推奨の「職種名＋給与＋ベネフィット」構成を満たす。</div>
         </div>
         <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">バッジの内容</div>
-          <div class="check-detail">8個使用。求職者の応募ハードルを下げる「職種未経験OK」「面接1回のみ」「内定まで2週間」「転勤なし」が揃っている。
+          <div class="ci ok">○</div>
+          <div class="cl">バッジの内容</div>
+          <div class="cd">8個使用。「職種未経験OK・面接1回のみ・内定2週間・転勤なし」と応募ハードルを下げるバッジが揃っている。
             <div class="tag-list">
-              <span class="tag">正社員（無期雇用派遣）</span><span class="tag">職種未経験OK</span><span class="tag">業種未経験OK</span><span class="tag">完全週休2日</span><span class="tag">残業月20h以内</span><span class="tag">内定まで2週間</span><span class="tag">面接1回のみ</span><span class="tag">転勤なし</span>
+              <span class="tg">職種未経験OK</span><span class="tg">業種未経験OK</span><span class="tg">完全週休2日</span><span class="tg">残業月20h以内</span><span class="tg">内定まで2週間</span><span class="tg">面接1回のみ</span><span class="tg">転勤なし</span>
             </div>
           </div>
         </div>
         <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">給与の表示</div>
-          <div class="check-detail">月給30〜55万円（下限・上限を明示）＋年収例3パターン（29歳506万・34歳624万・39歳689万）。一覧表示でも上限・下限が見えるため応募前に年収イメージが持てる。</div>
-        </div>
-      </div>
-
-      <div class="content-block">
-        <h3>STEP 2｜詳細ページで離脱されないか（コンテンツ充実度）</h3>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">仕事内容</div>
-          <div class="check-detail">充実。9分類の業務内容・プロジェクト例（自動車HV/EV・精密機器等）・対象ツール（AutoCAD・CATIA等）まで詳細に記載。推定1,500文字超。</div>
+          <div class="ci ok">○</div>
+          <div class="cl">給与の表示</div>
+          <div class="cd">月給30〜55万円（下限・上限明示）＋年収例3パターン（29歳506万・34歳624万・39歳689万）。一覧でも年収イメージが持てる。</div>
         </div>
         <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">募集背景</div>
-          <div class="check-detail">「6月・7月入社歓迎！転勤なし・残業月平均9.1h。採用予定人数50名以上」と記載あり。採用の緊急性と規模感が伝わる。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">やりがい・厳しさ<br><small style="color:var(--red);">エン転職独自</small></div>
-          <div class="check-detail">プロ取材セクション内に「この仕事のやりがい＆厳しさ」として記載あり。やりがい（大手メーカーでスケール大きい仕事）・厳しさ（コツコツ技術習得が必要）を具体的に記述。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">向き・不向き<br><small style="color:var(--red);">エン転職独自</small></div>
-          <div class="check-detail">「向いている人（大手メーカーで働きたい・技術集中したい）」「向いていない人（積極チャレンジが苦手な方）」を明記。自己判断しやすい構成になっている。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">社員の声・体験談</div>
-          <div class="check-detail">「現場出身の先輩が選んだ3つの理由」として20代・30代製造班長・30代整備経験者の体験談を掲載。転職候補者が自分と重ねやすい構成。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">選考プロセス</div>
-          <div class="check-detail">書類選考→面接1回→内定の3ステップ。「2週間以内に内定・1ヶ月以内に入社可能」と期間を明示。応募の心理的ハードルが低い。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">写真</div>
-          <div class="check-detail">3枚掲載（職場・業務シーン）。エン転職のプロ取材バッジが表示されており、信頼性を補強している。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon tri">△</div>
-          <div class="check-label">動画</div>
-          <div class="check-detail">動画コンテンツは掲載されているが、<strong style="color:var(--red);">再生エラー（code5902）が発生</strong>しており閲覧不可の状態。候補者が視聴できない。</div>
-        </div>
-        <div class="check-row">
-          <div class="check-icon ok">○</div>
-          <div class="check-label">プロ取材記事<br><small style="color:var(--red);">エン転職独自</small></div>
-          <div class="check-detail">エン転職担当者（黒木）が東京・虎ノ門の本社を取材。「取材から受けた印象・やりがい・厳しさ・向き不向き」を第三者視点で記述。広告ではなくコンテンツとして機能している。</div>
+          <div class="ci ng">✕</div>
+          <div class="cl">1求人1職種の原則<br><small style="color:var(--red);font-size:10px">公式NG</small></div>
+          <div class="cd">「機電系エンジニア」という1タイトルの中に実験評価・品質保証・機械設計・CAD・生産技術等9分類の業務が混在。エンジャパン公式ブログ「複数の職種を1求人で募集するのはNG」に抵触。ターゲットが絞られないため表示ロジックのマッチ度も下がる要因になる。</div>
         </div>
       </div>
     </div>
+
+    <!-- STEP2 -->
+    <div class="funnel-step">
+      <div class="step-head">
+        <div class="step-num">2</div>
+        <div class="step-title">詳細ページで離脱されないか</div>
+        <span class="step-sub">エン転職固有セクション含むコンテンツ充実度</span>
+      </div>
+      <div class="step-body">
+        <table class="sec-table">
+          <thead><tr><th>セクション</th><th>役割</th><th>状況</th><th>評価</th></tr></thead>
+          <tbody>
+            <tr><td>仕事内容</td><td>業務イメージ形成</td><td>9分類の業務・プロジェクト例・使用ツールまで詳細記載（推定1,500文字超）</td><td class="ok">充実</td></tr>
+            <tr><td>募集背景</td><td>採用する理由・緊急性</td><td>「6月・7月入社歓迎、採用予定50名以上」と記載あり</td><td class="ok">あり</td></tr>
+            <tr><td style="white-space:nowrap">やりがい・厳しさ<br><small style="color:var(--red)">エン転職独自</small></td><td>採用ミスマッチ防止<br>（公式機能）</td><td>プロ取材内に「この仕事のやりがい＆厳しさ」として記述あり</td><td class="ok">あり</td></tr>
+            <tr><td style="white-space:nowrap">向き・不向き<br><small style="color:var(--red)">エン転職独自</small></td><td>採用ミスマッチ防止<br>（公式機能）</td><td>「向いている人・向いていない人」を明記。自己判断しやすい構成</td><td class="ok">あり</td></tr>
+            <tr><td>社員の声・体験談</td><td>リアルな働く姿</td><td>20代・30代製造班長・30代整備経験者の体験談3つ</td><td class="ok">あり</td></tr>
+            <tr><td>選考プロセス</td><td>応募ハードル低減</td><td>3ステップ・2週間以内を明示</td><td class="ok">あり</td></tr>
+            <tr><td>写真</td><td>職場のビジュアル訴求</td><td>3枚掲載（職場・業務シーン）</td><td class="ok">3枚</td></tr>
+            <tr><td>動画</td><td>職場のビジュアル訴求</td><td>掲載あり・<strong style="color:var(--red)">再生エラー（code5902）発生中</strong></td><td class="tri-t">△</td></tr>
+            <tr><td style="white-space:nowrap">プロ取材記事<br><small style="color:var(--red)">エン転職標準機能</small></td><td>第三者の客観的評価</td><td>エン転職担当者（黒木）が本社取材。やりがい・厳しさ・向き不向きを第三者視点で記述</td><td class="ok">あり</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STEP3 -->
+    <div class="funnel-step">
+      <div class="step-head">
+        <div class="step-num">3</div>
+        <div class="step-title">企業ページで応募を決断できるか</div>
+        <span class="step-sub">若手の約90%が転職活動中にクチコミを参照（エン転職公式調査）</span>
+      </div>
+      <div class="step-body">
+        <div class="warn-box">⚠️ エン転職の公式調査では、Z世代を中心とする若手人材の約90%が「転職活動中に社員クチコミを閲覧する」と回答。STEP3は候補者が最終的な応募判断を下す重要なステップ。求人票の訴求がどれだけ優れていても、ここで不安を感じれば応募されない。</div>
+        <div class="kuchi-section">
+          <div class="kuchi-head">エン カイシャの評判（457件平均）</div>
+          <div class="kuchi-score">
+            <div class="kuchi-big">2.7</div>
+            <div class="kuchi-meta">457件の回答より<br>平均年収381万円（納得度49%）<br>企業コメント最終更新：<strong style="color:var(--red)">2018年（8年前）</strong></div>
+          </div>
+          <div class="r-row"><span class="r-lbl">会社の成長性・将来性</span><div class="r-bar-bg"><div class="r-bar" style="width:54%;background:var(--orange)"></div></div><span class="r-val">2.7</span></div>
+          <div class="r-row"><span class="r-lbl">事業の優位性・独自性</span><div class="r-bar-bg"><div class="r-bar" style="width:52%;background:var(--orange)"></div></div><span class="r-val">2.6</span></div>
+          <div class="r-row"><span class="r-lbl">実力主義</span><div class="r-bar-bg"><div class="r-bar" style="width:50%;background:var(--orange)"></div></div><span class="r-val">2.5</span></div>
+          <div class="r-row"><span class="r-lbl">活気のある風土</span><div class="r-bar-bg"><div class="r-bar" style="width:48%;background:var(--red)"></div></div><span class="r-val">2.4</span></div>
+          <div class="r-row"><span class="r-lbl">20代成長環境</span><div class="r-bar-bg"><div class="r-bar" style="width:50%;background:var(--orange)"></div></div><span class="r-val">2.5</span></div>
+          <div class="r-row"><span class="r-lbl">イノベーションへの挑戦</span><div class="r-bar-bg"><div class="r-bar" style="width:52%;background:var(--orange)"></div></div><span class="r-val">2.6</span></div>
+          <div class="r-row"><span class="r-lbl">経営陣の手腕</span><div class="r-bar-bg"><div class="r-bar" style="width:44%;background:var(--red)"></div></div><span class="r-val">2.2</span></div>
+          <p style="font-size:12px;color:var(--sub);margin-top:8px">全軸3.0未満。求人票の「98%給与UP・働きやすい環境」という訴求と、クチコミの「平均年収381万・納得度49%」との乖離が最大のボトルネック。採用担当者コメントが2018年のまま更新されていないため「問題を放置している会社」という印象を与えるリスクがある。</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <!-- 4 媒体活用度チェック -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">4</div>
-      <h2>エン転職 媒体活用度チェック</h2>
+<!-- ─── 3 表示ロジック適合チェック ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>エン転職 表示ロジック適合チェック</h2></div>
+  <div class="card-body">
+    <div class="logic-intro">
+      <strong>エン転職の表示ロジック（公式）：「料金プラン × 求職者とのマッチ度」</strong><br>
+      一般的な求人サイトが料金プランのみで表示順を決めるのに対し、エン転職は求職者一人ひとりの希望条件・適性に合わせて表示順が変わる。つまり<strong>料金を上げなくても、マッチ度を上げることで上位表示のチャンスが生まれる</strong>。ターゲットが絞られていない求人はマッチ度が下がり、表示回数も落ちる。
     </div>
-    <div class="card-body">
-      <p class="rubric-note">※ エン転職の求人票・企業ページが提供する機能の活用状況を確認します。数値閾値ではなく「使っているか否か」で評価します。</p>
-      <table class="media-table">
-        <thead>
-          <tr><th>機能</th><th>確認内容</th><th>状況</th><th>評価</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>プロ取材</td>
-            <td>エン転職のプロ取材サービスを利用しているか</td>
-            <td>利用あり（黒木担当者が本社取材）</td>
-            <td class="ok">○</td>
-          </tr>
-          <tr>
-            <td>求人タグ</td>
-            <td>エン転職の求人タグを使用しているか</td>
-            <td>8個使用（正社員・職種未経験OK・完全週休2日・転勤なし等）</td>
-            <td><strong>8個</strong></td>
-          </tr>
-          <tr>
-            <td>特長バッジ</td>
-            <td>職種未経験OK・転勤なし等の特長バッジを使用しているか</td>
-            <td>7種類使用（職種未経験OK・業種未経験OK・完全週休2日・残業月20h以内・内定まで2週間・面接1回のみ・転勤なし）</td>
-            <td class="ok">○</td>
-          </tr>
-          <tr>
-            <td>写真掲載</td>
-            <td>求人票に写真を掲載しているか</td>
-            <td>3枚掲載（職場・業務シーン）</td>
-            <td><strong>3枚</strong></td>
-          </tr>
-          <tr>
-            <td>動画掲載</td>
-            <td>動画コンテンツが掲載されており再生可能か</td>
-            <td>掲載あり・<strong style="color:var(--red);">再生エラー（code5902）発生中</strong></td>
-            <td class="tri">△</td>
-          </tr>
-          <tr>
-            <td>クチコミへの返信</td>
-            <td>採用担当者がクチコミに返信しているか（最終更新年）</td>
-            <td>返信あり・<strong style="color:var(--red);">最終更新2018年（8年前）</strong></td>
-            <td class="ng">✕</td>
-          </tr>
-          <tr>
-            <td>更新鮮度</td>
-            <td>直近30日以内に求人票が更新されているか</td>
-            <td>最終更新2026年6月2日（診断日より4日前）</td>
-            <td class="ok">○</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="sec-table">
+      <thead><tr><th>チェック項目</th><th>評価</th><th>確認事実・コメント</th><th>根拠</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>職種名が求職者の検索語と一致しているか</td>
+          <td class="ok">○</td>
+          <td>「機電系エンジニア」は機電系の転職希望者が検索で使う一般的な語</td>
+          <td>公式「職種名の書き方」</td>
+        </tr>
+        <tr>
+          <td>1求人1職種の原則への対応</td>
+          <td class="ng">✕</td>
+          <td>仕事内容に実験評価・品質保証・機械設計・CAD・生産技術等9分類が混在。複数職種を1求人で募集するのはNG（公式）。マッチ度計算でどの職種希望者にも「半マッチ」になり上位表示されにくい</td>
+          <td>公式「職種名の注意点」</td>
+        </tr>
+        <tr>
+          <td>バッジ・タグが求職者の検索フィルターに対応しているか</td>
+          <td class="ok">○</td>
+          <td>「転勤なし・完全週休2日・残業月20h以内・職種未経験OK」等、求職者がフィルターに使う条件を網羅</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>求職者の希望条件と求人記載が一致しているか</td>
+          <td class="ok">○</td>
+          <td>給与・休日・残業・転勤なし等の希望条件と合致する情報が具体的に記載されている</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:var(--sub);margin-top:10px">「1求人1職種の原則」に反していることが、表示ロジック上の最大のマイナス要因。「機電系エンジニア（9分類）」を「設計志向のエンジニア向け」に絞り込むだけで、マッチ度が上がり表示回数の改善が期待できる。</p>
   </div>
+</div>
 
-  <!-- 5 軸別診断 -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">5</div>
-      <h2>軸別診断</h2>
-    </div>
-    <div class="card-body">
-
-      <div class="axis-card">
-        <div class="axis-head">
-          <span class="axis-num">軸①</span>
-          <span class="axis-title">一覧での訴求力</span>
-          <span class="axis-score-val A">20 / 20</span>
-        </div>
-        <div class="axis-body">
-          <div class="axis-row">
-            <label>ルーブリック評価</label>
-            <p>
-              <span class="ok">○</span> タイトルに「機電系エンジニア」（職種名）<br>
-              <span class="ok">○</span> タイトルに「月給30万円〜」（給与数値）<br>
-              <span class="ok">○</span> タイトルに「転勤なし・残業9.1h・土日祝休」（ベネフィット）<br>
-              <span class="ok">○</span> バッジ8個（3個以上）<br>
-              <span class="ok">○</span> 冒頭リード文あり（「現場出身の先輩が選んだ3つの理由」）
-            </p>
-          </div>
-          <div class="axis-row">
-            <label>課題</label>
-            <p>一覧での訴求力は満点だが、同社が同期間に掲載する6件の他求人も同じタイトル構成・バッジ・訴求を使っている。候補者が一覧で複数見たとき「どれも似ている」と感じるリスクがあり、この求人単体の問題ではなく掲載設計全体の課題。</p>
-          </div>
-          <div class="axis-row">
-            <label>改善の方向性</label>
-            <p>この求人に特定のターゲット（例：「製造・整備経験から設計職へのキャリアチェンジ」）を割り当てることで、同社他求人と一覧上で差別化できる。タイトルに「〇〇経験者歓迎」等のターゲット絞り込み語を加えることを検討する。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="axis-card">
-        <div class="axis-head">
-          <span class="axis-num">軸②</span>
-          <span class="axis-title">条件・待遇の透明性</span>
-          <span class="axis-score-val A">20 / 20</span>
-        </div>
-        <div class="axis-body">
-          <div class="axis-row">
-            <label>ルーブリック評価</label>
-            <p>
-              <span class="ok">○</span> 月給30〜55万円（下限・上限を数値で明示）<br>
-              <span class="ok">○</span> 年収例3パターン記載（29歳506万・34歳624万・39歳689万）<br>
-              <span class="ok">○</span> 賞与：「年2回（7月・12月）※昨年度支給実績2回」と実績記載あり<br>
-              <span class="ok">○</span> 年間休日122日・有給取得16.1日（2024年度実績）と実数値記載あり<br>
-              <span class="ok">○</span> 「残業手当全額支給・サービス残業なし・1分単位で計測」と明記
-            </p>
-          </div>
-          <div class="axis-row">
-            <label>課題</label>
-            <p>退職金制度の有無が未記載。また「無期雇用派遣」という雇用形態への候補者の疑問（「一般派遣と何が違うのか」）に対する説明はあるが、入社後の転籍・直接雇用の可能性についてより具体的な条件の記載があると安心感が増す。</p>
-          </div>
-          <div class="axis-row">
-            <label>改善の方向性</label>
-            <p>退職金制度の有無を明示する（確定拠出年金で代替している場合はその旨を記載）。転籍実績「年間100名」はすでに記載されているが、転籍後の待遇変化（給与・福利厚生）についても触れると候補者の安心感が高まる。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="axis-card">
-        <div class="axis-head">
-          <span class="axis-num">軸③</span>
-          <span class="axis-title">詳細ページのコンテンツ力</span>
-          <span class="axis-score-val A">17 / 20</span>
-        </div>
-        <div class="axis-body">
-          <div class="axis-row">
-            <label>ルーブリック評価</label>
-            <p>
-              <span class="ok">○</span> プロ取材コンテンツあり（+6点）<br>
-              <span class="ok">○</span> 写真3枚（+4点）<br>
-              <span class="ng">✕</span> 動画：掲載あり・<strong style="color:var(--red);">再生エラー（code5902）のため0点</strong><br>
-              <span class="ok">○</span> やりがい・厳しさセクションあり（+4点）<br>
-              <span class="ok">○</span> 向き・不向きあり（+3点）
-            </p>
-          </div>
-          <div class="axis-row">
-            <label>課題</label>
-            <p>動画コンテンツの再生エラーが唯一の減点要因。動画は候補者の滞在時間を延ばし、働く職場のリアルな雰囲気を伝える効果が高いコンテンツ。現状では掲載されていながら機能していない状態。</p>
-          </div>
-          <div class="axis-row">
-            <label>改善の方向性</label>
-            <p>エン転職の担当営業に連絡して動画ファイルの再アップロードを依頼する。修正のついでに、動画の内容が「社員の日常・職場の雰囲気」を中心にしたものになっているかを確認する（採用広告的な動画より職場リアル系の方が信頼性が高い）。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="axis-card">
-        <div class="axis-head">
-          <span class="axis-num">軸④</span>
-          <span class="axis-title">企業ページの信頼性</span>
-          <span class="axis-score-val C">10 / 20</span>
-        </div>
-        <div class="axis-body">
-          <div class="axis-row">
-            <label>ルーブリック評価</label>
-            <p>
-              <span class="ok">○</span> クチコミ457件掲載あり（+5点）<br>
-              <span class="ng">✕</span> クチコミ総合評点：<strong style="color:var(--red);">2.7（3.5未満）</strong>（0点）<br>
-              <span class="ng">✕</span> 企業コメント最終更新：<strong style="color:var(--red);">2018年8月（8年前）</strong>（0点）<br>
-              <span class="ok">○</span> 企業概要充実（設立・従業員数・主要取引先等）（+5点）
-            </p>
-          </div>
-          <div class="axis-row">
-            <label>課題</label>
-            <p>クチコミ評点2.7は全軸で3.0未満（最低は経営陣の手腕2.2）。候補者が詳細ページを見た後に企業ページのクチコミを確認した際に、求人票の訴求（「働きやすい環境」「給与UP」）とクチコミの内容（平均年収381万・納得度49%）の落差を感じるリスクがある。加えて採用担当者のコメントが2018年のまま更新されておらず、「問題を放置している会社」という印象を与える可能性がある。</p>
-          </div>
-          <div class="axis-row">
-            <label>改善の方向性</label>
-            <p>採用担当者コメントを最新内容（2024〜2025年の給与テーブル改定・職場環境改善の実績など）に更新する。クチコミで指摘される給与水準への不満に対して、「○年に初任給を引き上げた」「確定拠出年金を導入した」等の具体的な改善事実を記述することで信頼性が高まる。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="axis-card">
-        <div class="axis-head">
-          <span class="axis-num">軸⑤</span>
-          <span class="axis-title">差別化・競争優位性</span>
-          <span class="axis-score-val B">15 / 20</span>
-        </div>
-        <div class="axis-body">
-          <div class="axis-row">
-            <label>ルーブリック評価</label>
-            <p>
-              <span class="ok">○</span> 数値化実績あり：「98%給与UP」「案件9,897件」「年間100名転籍」「残業月平均9.1h」（+5点）<br>
-              <span class="ok">○</span> タイトルに自社固有訴求：「入社者98%給与UP」（+5点）<br>
-              <span class="ok">○</span> 「なぜここか」の独自要素：体験談3つ・AIマッチング・スキルツリー（+5点）<br>
-              <span class="ng">✕</span> 同社他求人との差別化：6件の類似求人と訴求メッセージがほぼ同一（0点）
-            </p>
-          </div>
-          <div class="axis-row">
-            <label>課題</label>
-            <p>同社が掲載する6件の求人すべてが「98%給与UP」「転勤なし」「残業9.1h」を共通訴求として使用している。候補者が複数の求人を見た場合、どれを選べばよいか判断できない状態。この求人「機電系エンジニア」は職種定義が最も広く、逆に「誰でもどうぞ」という印象になっている。</p>
-          </div>
-          <div class="axis-row">
-            <label>改善の方向性</label>
-            <p>同社の複数求人に役割を持たせる設計が根本的な解決策。この求人に割り当てるターゲット（例：「現場経験者で設計・開発に挑戦したい人」）を決め、タイトル・冒頭リード・体験談の主人公をそのターゲットに統一する。他求人（自動車開発・CAD・実験評価等）は既に職種で絞られているため、「機電系エンジニア」を「設計転職志望者向け」に特化することが最も自然な役割分担。</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
+<!-- ─── 4 媒体機能チェック ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>媒体機能 活用チェック</h2></div>
+  <div class="card-body">
+    <p class="note">エン転職の求人票・企業ページが提供する機能の活用有無を確認。数値閾値ではなく「使っているか否か」で評価します。</p>
+    <table class="media-table">
+      <thead><tr><th>機能</th><th>確認内容</th><th>状況</th><th>評価</th></tr></thead>
+      <tbody>
+        <tr><td>プロ取材</td><td>エン転職のプロ取材サービスを利用しているか</td><td>利用あり（黒木担当者が本社取材）</td><td class="ok">○</td></tr>
+        <tr><td>求人タグ</td><td>エン転職の求人タグを使用しているか</td><td>8個使用</td><td><strong>8個</strong></td></tr>
+        <tr><td>特長バッジ</td><td>求職者の絞り込みに使われるバッジを使用しているか</td><td>7種類（職種未経験OK・業種未経験OK・完全週休2日・残業月20h以内・内定まで2週間・面接1回のみ・転勤なし）</td><td class="ok">○</td></tr>
+        <tr><td>写真掲載</td><td>求人票に写真を掲載しているか</td><td>3枚掲載</td><td><strong>3枚</strong></td></tr>
+        <tr><td>動画掲載</td><td>動画コンテンツが掲載されており再生可能か</td><td>掲載あり・<strong style="color:var(--red)">再生エラー（code5902）発生中</strong></td><td class="tri-t">△</td></tr>
+        <tr><td>クチコミへの企業返信</td><td>採用担当者がクチコミに返信しているか（最終更新年）</td><td>返信あり・<strong style="color:var(--red)">最終更新2018年（8年前）</strong></td><td class="ng">✕</td></tr>
+        <tr><td>更新鮮度</td><td>直近30日以内に求人票が更新されているか</td><td>最終更新2026年6月2日（診断日より4日前）</td><td class="ok">○</td></tr>
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <!-- 6 企業ページ診断 -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">6</div>
-      <h2>企業ページ診断</h2>
-    </div>
-    <div class="card-body">
-      <div class="company-grid">
-        <div class="company-item">
-          <h4>プロ取材記事</h4>
-          <div class="val ok">あり</div>
-          <p>黒木担当者が本社（東京・虎ノ門）を取材。やりがい・厳しさ・向き不向きを客観的に記述しており、候補者の「入社後に後悔しないか」という不安を先回りする内容になっている。</p>
+<!-- ─── 5 軸別診断 ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="axis-card">
+      <div class="axis-head">
+        <span class="axis-num">軸①</span>
+        <span class="axis-title">マッチ度・クリック訴求</span>
+        <span class="axis-score A">16 / 20</span>
+      </div>
+      <div class="axis-body">
+        <div class="arow">
+          <label>ルーブリック評価</label>
+          <div class="rubric-mini">
+            <div><span class="ok">○</span> 職種名がシンプル・具体的（+4点）</div>
+            <div><span class="ok">○</span> タイトルに給与数値「月給30万円〜」（+4点）</div>
+            <div><span class="ok">○</span> タイトルにベネフィット「転勤なし・残業9.1h・土日祝休」（+4点）</div>
+            <div><span class="ok">○</span> バッジ3個以上（8個）（+4点）</div>
+            <div><span class="ng">✕</span> 1求人1職種の原則：9分類の業務が混在（0点）</div>
+          </div>
         </div>
-        <div class="company-item">
-          <h4>社員クチコミ総合評点</h4>
-          <div class="val ng">2.7 / 5.0</div>
-          <p>457件と件数は多い。全軸で3.0未満。平均年収381万（納得度49%）・経営陣の手腕2.2が特に低い。求人票訴求との乖離が最大のリスク。</p>
+        <div class="arow">
+          <label>課題</label>
+          <p>「機電系エンジニア」という1タイトルの下に実験評価・品質保証・CAD・機械設計等9分類が混在しており、エンジャパン公式の「複数職種を1求人で募集するのはNG」に該当する。エン転職の表示ロジック（料金×マッチ度）では、職種が絞られていない求人はいずれの職種希望者に対しても「完全マッチ」にならず、表示回数が下がる可能性がある。</p>
         </div>
-        <div class="company-item">
-          <h4>企業コメント（採用担当者の返信）</h4>
-          <div class="val ng">2018年（8年前）</div>
-          <p>「フォーラムエンジニアリング採用担当です。弊社のモットーは…」という返信が存在するが、最終更新が8年前。現在の状況と乖離している可能性がある。</p>
-        </div>
-        <div class="company-item">
-          <h4>企業概要</h4>
-          <div class="val ok">充実</div>
-          <p>設立1981年・従業員5,098名・売上377億円・主要取引先（トヨタ・日立・三菱電機等）を明記。「大手メーカーで実際に働ける」という信頼性を企業概要が補強している。</p>
+        <div class="arow">
+          <label>改善の方向性</label>
+          <p>この求人を「設計・開発への転職を希望する製造・整備経験者向け」に特化し、仕事内容・体験談・ターゲット記述を設計職志望者に絞る。他の8分類（実験評価・品質保証等）は別求人で役割分担するか、この求人では「代表的な案件例」として引用する程度に抑える。</p>
         </div>
       </div>
+    </div>
 
-      <div style="margin-top:16px;">
-        <h4 style="font-size:13px;font-weight:700;margin-bottom:10px;">クチコミ各軸評点（457件平均）</h4>
-        <div class="r-row"><span class="r-label">会社の成長性・将来性</span><div class="r-bar-bg"><div class="r-bar" style="width:54%"></div></div><span class="r-val">2.7</span></div>
-        <div class="r-row"><span class="r-label">事業の優位性・独自性</span><div class="r-bar-bg"><div class="r-bar" style="width:52%"></div></div><span class="r-val">2.6</span></div>
-        <div class="r-row"><span class="r-label">実力主義</span><div class="r-bar-bg"><div class="r-bar" style="width:50%"></div></div><span class="r-val">2.5</span></div>
-        <div class="r-row"><span class="r-label">活気のある風土</span><div class="r-bar-bg"><div class="r-bar" style="width:48%;background:var(--red)"></div></div><span class="r-val">2.4</span></div>
-        <div class="r-row"><span class="r-label">20代成長環境</span><div class="r-bar-bg"><div class="r-bar" style="width:50%"></div></div><span class="r-val">2.5</span></div>
-        <div class="r-row"><span class="r-label">イノベーションへの挑戦</span><div class="r-bar-bg"><div class="r-bar" style="width:52%"></div></div><span class="r-val">2.6</span></div>
-        <div class="r-row"><span class="r-label">経営陣の手腕</span><div class="r-bar-bg"><div class="r-bar" style="width:44%;background:var(--red)"></div></div><span class="r-val">2.2</span></div>
+    <div class="axis-card">
+      <div class="axis-head">
+        <span class="axis-num">軸②</span>
+        <span class="axis-title">詳細コンテンツ力</span>
+        <span class="axis-score A">17 / 20</span>
+      </div>
+      <div class="axis-body">
+        <div class="arow">
+          <label>ルーブリック評価</label>
+          <div class="rubric-mini">
+            <div><span class="ok">○</span> プロ取材コンテンツあり（+6点）</div>
+            <div><span class="ok">○</span> 写真3枚（+4点）</div>
+            <div><span class="ng">✕</span> 動画：掲載あり・<strong style="color:var(--red)">再生エラー（code5902）のため0点</strong></div>
+            <div><span class="ok">○</span> やりがい・厳しさあり（エン転職独自・+4点）</div>
+            <div><span class="ok">○</span> 向き・不向きあり（エン転職独自・+3点）</div>
+          </div>
+        </div>
+        <div class="arow">
+          <label>課題</label>
+          <p>動画コンテンツの再生エラー（code5902）のみが減点要因。エン転職の標準機能である「やりがい・厳しさ」「向き・不向き」は採用ミスマッチ防止のためにエンジャパンが意図的に設けた独自セクション（公式）であり、両方記載されている点は評価できる。</p>
+        </div>
+        <div class="arow">
+          <label>改善の方向性</label>
+          <p>エン転職の担当営業に動画ファイルの再アップロードを依頼する（コスト・工数が最も小さく確実な改善）。修正のついでに動画の内容を「社員の日常・職場の雰囲気を伝えるリアル系」にアップデートすることも検討する。</p>
+        </div>
       </div>
     </div>
+
+    <div class="axis-card">
+      <div class="axis-head">
+        <span class="axis-num">軸③</span>
+        <span class="axis-title">条件・待遇の透明性</span>
+        <span class="axis-score A">20 / 20</span>
+      </div>
+      <div class="axis-body">
+        <div class="arow">
+          <label>ルーブリック評価</label>
+          <div class="rubric-mini">
+            <div><span class="ok">○</span> 月給30〜55万円（下限・上限明示）（+5点）</div>
+            <div><span class="ok">○</span> 年収例3パターン（29歳506万・34歳624万・39歳689万）（+4点）</div>
+            <div><span class="ok">○</span> 賞与：「年2回（7月・12月）昨年度支給実績2回」（+3点）</div>
+            <div><span class="ok">○</span> 年間休日122日・有給取得16.1日（2024年度実績）（+4点）</div>
+            <div><span class="ok">○</span> 「残業手当全額支給・サービス残業なし・1分単位計測」（+4点）</div>
+          </div>
+        </div>
+        <div class="arow">
+          <label>課題</label>
+          <p>全項目○で満点。退職金制度の有無が未記載という点はあるが、確定拠出年金・財形貯蓄を明記しており代替制度の提示はされている。「無期雇用派遣」という雇用形態の説明は記載があるが、転籍後の待遇変化（給与・福利厚生）についてより踏み込んだ説明があると候補者の安心感が増す。</p>
+        </div>
+        <div class="arow">
+          <label>改善の方向性</label>
+          <p>退職金制度の有無を明示する（なければ確定拠出年金で代替している旨を説明）。年間100名の転籍実績はすでに記載されているため、「転籍後に給与は上がるケースが多い」等の転籍後イメージを補足できるとさらに効果的。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="axis-card">
+      <div class="axis-head">
+        <span class="axis-num">軸④</span>
+        <span class="axis-title">企業ページの信頼性</span>
+        <span class="axis-score C">10 / 20</span>
+      </div>
+      <div class="axis-body">
+        <div class="arow">
+          <label>ルーブリック評価</label>
+          <div class="rubric-mini">
+            <div><span class="ok">○</span> クチコミ457件（+5点）</div>
+            <div><span class="ng">✕</span> クチコミ総合評点：2.7（3.5未満）（0点）</div>
+            <div><span class="ng">✕</span> 企業コメント最終更新：2018年（2年超）（0点）</div>
+            <div><span class="ok">○</span> 企業概要充実（設立・従業員数・主要取引先等）（+5点）</div>
+          </div>
+        </div>
+        <div class="arow">
+          <label>課題</label>
+          <p>エン転職公式調査で若手の約90%が参照するクチコミが全軸3.0未満（最低は経営陣の手腕2.2）。求人票の「98%給与UP・働きやすい環境」とクチコミの「平均年収381万・納得度49%」の落差が最大の応募阻害要因。加えて採用担当者コメントが8年間未更新のため「問題を認識しているが何もしていない」という印象になっている。</p>
+        </div>
+        <div class="arow">
+          <label>改善の方向性</label>
+          <p>採用担当者コメントを直近の改善内容（給与テーブル改定・制度変更等の具体的な施策）に更新する。公式ブログにも「ネガティブなクチコミにも誠実に返信すれば求職者を安心させることができる」と記載されており、更新だけで候補者の印象は大きく変わる可能性がある。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="axis-card">
+      <div class="axis-head">
+        <span class="axis-num">軸⑤</span>
+        <span class="axis-title">差別化・競争優位性</span>
+        <span class="axis-score B">15 / 20</span>
+      </div>
+      <div class="axis-body">
+        <div class="arow">
+          <label>ルーブリック評価</label>
+          <div class="rubric-mini">
+            <div><span class="ok">○</span> 数値化実績：「98%給与UP・案件9,897件・年間100名転籍」（+5点）</div>
+            <div><span class="ok">○</span> タイトルに自社固有訴求：「入社者98%給与UP」（+5点）</div>
+            <div><span class="ok">○</span> 「なぜここか」の独自要素：体験談3つ・AIマッチング・スキルツリー（+5点）</div>
+            <div><span class="ng">✕</span> 同社他求人との差別化：6件の類似求人と訴求ほぼ同一（0点）</div>
+          </div>
+        </div>
+        <div class="arow">
+          <label>課題</label>
+          <p>「98%給与UP」「転勤なし」「残業9.1h」等の訴求が同社の6件すべての求人で共通。候補者が複数見たとき「どれも同じ」と感じる状態で、この求人固有の理由がない。軸①の「1求人1職種」問題と連動しており、ターゲットを絞ることで差別化も自然に解消される。</p>
+        </div>
+        <div class="arow">
+          <label>改善の方向性</label>
+          <p>同社の他求人（自動車開発・CAD・設計補助・実験評価等）と明確な役割分担を設計する。この求人を「製造・整備経験者が設計・開発にキャリアチェンジするための入口」と位置づけ、それに合わせた体験談の主人公選定・リードコピーの書き換えを行う。</p>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <!-- 7 TOP3 -->
-  <div class="card">
-    <div class="card-head">
-      <div class="cn">7</div>
-      <h2>優先改善テーマ TOP3</h2>
+<!-- ─── 6 TOP3 ─── -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="top3-item">
+      <div class="top3-n">1</div>
+      <div class="top3-c">
+        <h4>企業コメントを最新内容に更新する</h4>
+        <span class="fact-tag">確認事実：企業コメント最終更新2018年（8年前）</span>
+        <p>若手の約90%が応募前にクチコミを参照する（エン転職公式調査）中で、採用担当者のコメントが8年間未更新というのは「問題を放置している」という印象を与える。給与・評価制度に関するクチコミの不満に対して、直近で取り組んだ改善事実を具体的に記述することで候補者の安心感が変わる。エンジャパン公式ブログも「ネガティブなクチコミへの誠実な返信が候補者を安心させる」と明記している。</p>
+        <div class="why">▶ 求人票の改修なしで実行できる。④軸を10→20点にできる最大インパクトの施策。</div>
+      </div>
     </div>
-    <div class="card-body">
 
-      <div class="top3-item">
-        <div class="top3-num">1</div>
-        <div class="top3-content">
-          <h4>企業コメントを最新内容に更新する</h4>
-          <div class="fact">確認事実：採用担当者コメントの最終更新が2018年（8年前）</div>
-          <p>クチコミ件数457件・評点2.7という状況で、採用担当者のコメントが8年前のままというのは「問題を放置している」という印象を与える。クチコミで指摘される給与・評価への不満に対して、直近で取り組んだ改善事実（給与テーブル改定・制度変更等）を具体的に記述することで候補者の印象が変わる。</p>
-          <div class="why">▶ 求人票をどれだけ磨いても、企業ページで候補者が離脱すれば応募にならない。最も費用対効果の高い一手。</div>
-        </div>
+    <div class="top3-item">
+      <div class="top3-n">2</div>
+      <div class="top3-c">
+        <h4>求人のターゲットを1職種に絞り込む</h4>
+        <span class="fact-tag">確認事実：9分類の業務が1求人に混在・同社内に類似求人6件並列掲載</span>
+        <p>エン転職の表示ロジック（料金×マッチ度）において、複数職種が混在する求人はいずれの職種希望者にも「完全マッチ」とならず表示回数が落ちる。同時に公式ブログ「複数の職種を1求人で募集するのはNG」にも抵触している。この求人を「製造・整備経験者の設計職転職向け」に特化することで、①軸・⑤軸が改善し表示マッチ度も上がる。</p>
+        <div class="why">▶ タイトル・冒頭リード・体験談の絞り込みで実行可能。①を16→20点、⑤を15→20点にできる可能性がある。</div>
       </div>
-
-      <div class="top3-item">
-        <div class="top3-num">2</div>
-        <div class="top3-content">
-          <h4>動画コンテンツの再生エラーを修正する</h4>
-          <div class="fact">確認事実：動画に再生エラー（code5902）が発生中</div>
-          <p>動画コンテンツは候補者の滞在時間を延ばし、職場の雰囲気を伝える効果が高いコンテンツとしてエン転職の媒体特性上も重要。現在は掲載されているにもかかわらず機能していない状態。エン転職の担当営業に再アップロードを依頼するだけで解決できる。修正のタイミングで、動画の内容（社員の日常・職場環境のリアル）も見直すことを推奨する。</p>
-          <div class="why">▶ 工数が小さく確実に候補者体験を改善できる。③軸を17→20点にできる。</div>
-        </div>
-      </div>
-
-      <div class="top3-item">
-        <div class="top3-num">3</div>
-        <div class="top3-content">
-          <h4>同社内掲載求人の役割を分け、この求人のターゲットを絞る</h4>
-          <div class="fact">確認事実：同期間に同社の類似求人が6件並列掲載</div>
-          <p>現状、同社の6件の求人がほぼ同一の訴求（98%給与UP・転勤なし・残業9.1h）を使っており、一覧で見た候補者は「どれに応募すればいいかわからない」状態になっている。「機電系エンジニア」は職種定義が最も広いため、「製造・整備経験から設計・開発職へのキャリアチェンジを希望する人」に特化することが自然な役割分担になる。タイトル冒頭の訴求やリードコピーを修正するだけで実行できる。</p>
-          <div class="why">▶ 求人票の全面書き換えが不要。タイトル・冒頭数行の修正で⑤軸を15→20点にできる可能性がある。</div>
-        </div>
-      </div>
-
     </div>
+
+    <div class="top3-item">
+      <div class="top3-n">3</div>
+      <div class="top3-c">
+        <h4>動画コンテンツの再生エラーを修正する</h4>
+        <span class="fact-tag">確認事実：動画に再生エラー（code5902）が発生中</span>
+        <p>掲載されているが機能していない状態。動画は詳細ページの滞在時間を延ばし、職場のリアルな雰囲気を伝える効果が高いコンテンツ。エン転職の担当営業に再アップロードを依頼するだけで解決できる。</p>
+        <div class="why">▶ 工数が最も小さく確実に改善できる。②軸を17→20点にできる。</div>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px;">本レポートはスクレイピングにより取得したデータをもとに生成しています。掲載情報は診断日（2026年6月6日）時点のものです。</p>
+<p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px">本レポートはスクレイピングにより取得したデータをもとに生成しています。掲載情報は診断日（2026年6月6日）時点のものです。</p>
 
 </div>
 </body>
