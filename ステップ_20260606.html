@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイナビ転職 求人診断レポート｜株式会社ステップ</title>
+<style>
+  :root { --red:#AE1C3B; --orange:#E65100; --green:#2E7D32; --blue:#1565C0; --bg:#F5F5F5; --card:#fff; --text:#212121; --sub:#757575; --border:#E0E0E0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .badge.b{border-color:var(--blue);color:var(--blue)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  .info-box{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-bottom:14px}
+  /* score */
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  /* funnel */
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:180px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  /* tables */
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  .warn{background:#FFFDE7;border:1px solid #F9A825;border-radius:6px;padding:10px 14px;font-size:12px;color:#5D4037;margin-top:10px}
+  .li{background:#E3F2FD;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--blue)}
+  /* axis cards */
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .rm div{margin-bottom:1px}
+  .qtag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+  .qtag.s{background:#E8F5E9;color:var(--green)}.qtag.q{background:#FFEBEE;color:var(--red)}.qtag.w{background:#FFF3E0;color:var(--orange)}
+  /* top3 */
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg,.sa{grid-template-columns:1fr;flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>マイナビ転職 求人診断レポート</h1>
+  <p>診断日：2026年6月6日｜対象：株式会社ステップ</p>
+</div>
+<div class="container">
+
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="info-box">ℹ️ この求人は「マイナビ転職AGENT キャリアパートナー」による人材紹介案件です。応募はマイナビ転職AGENTを通じて行われます。</div>
+    <div class="pg">
+      <div><label>会社名</label><span>株式会社ステップ</span></div>
+      <div><label>求人タイトル</label><span>オープンポジション【システムエンジニア】＊フレックス勤務</span></div>
+      <div><label>職種カテゴリ</label><span>システムエンジニア（WEB・オープン・モバイル系）</span></div>
+      <div><label>雇用形態</label><span>正社員（試用期間3ヶ月・待遇変更なし）</span></div>
+      <div><label>給与</label><span>月給31万円〜39万円（初年度年収420万〜630万円）</span></div>
+      <div><label>勤務地</label><span>東京都・神奈川県（本社：神奈川県横須賀市）</span></div>
+      <div><label>情報更新日</label><span>2026年5月26日（診断日より11日前）</span></div>
+      <div><label>掲載終了予定日</label><span>2026年7月6日</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">第二新卒歓迎</span><span class="badge">学歴不問</span><span class="badge">リモートワーク可</span><span class="badge">転勤なし</span><span class="badge">完全週休2日制</span><span class="badge">フレックス勤務</span><span class="badge">残業月30h以内</span><span class="badge">退職金制度あり</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">企業コンテンツ：</span>
+      <span class="badge" style="border-color:var(--red);color:var(--red)">社員インタビュー：なし</span>
+      <span class="badge" style="border-color:var(--orange);color:var(--orange)">フォトレポート：PR画像1枚のみ</span>
+      <span class="badge" style="border-color:var(--red);color:var(--red)">経営者メッセージ：なし</span>
+      <span class="badge s">スカウト対応：確認不可</span>
+      <span class="badge b">同社求人：3件</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 スコアサマリー -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業ページから確認できる事実の積み上げで算出。存在チェック（あるか否か）と質チェック（内容が基準を満たすか）の2段階で評価しています。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="183.22" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">46</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① クリック訴求・検索ヒット力</span><span><strong>10</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:50%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 本文コンテンツ力</span><span><strong>8</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:40%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 条件・待遇の透明性</span><span><strong>12</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:60%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ マイナビ媒体機能の活用度</span><span><strong>6</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:30%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 差別化・競争優位性</span><span><strong>10</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:50%"></div></div></div>
+      </div>
+    </div>
+    <div class="sb">給与水準（月給31〜39万・賞与前年度実績4カ月）・残業時間（月平均14.5時間）・離職率（入社3年未満11.5%）といった数値の透明性は評価できる。一方で「オープンポジション」という職種名がマイナビの検索マッチ率を下げており、社員インタビュー・フォトレポート・経営者メッセージ等の媒体独自コンテンツが全て未活用の状態。タイトルの最適化と媒体コンテンツの整備を進めることで60〜70点台への改善が現実的な射程に入る。</div>
+  </div>
+</div>
+
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>マイナビ転職 ファネル診断</h2><span class="sub-title">STEP1〜3の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・タグ・給与の訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">職種名の検索ヒット力</div><div class="cd">「オープンポジション」は求職者が検索で使う語ではない。「システムエンジニア」は含まれているが、競合が「システムエンジニア」「SE（設計・開発）」等で明確に職種を打ち出す中で埋もれるリスクが高い。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルへの給与記載</div><div class="cd">タイトルに給与数値なし。「月給31万〜」等を加えることで一覧でのクリック率向上が期待できる。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">「こだわり条件」キーワード</div><div class="cd">「フレックス勤務」がタイトルに含まれており、こだわり条件フィルターと一致している。競合との差別化要素として機能している。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">こだわり条件タグ（21個）</div><div class="cd"><div class="tl"><span class="tg">第二新卒歓迎</span><span class="tg">学歴不問</span><span class="tg">リモートワーク可</span><span class="tg">転勤なし</span><span class="tg">完全週休2日制</span><span class="tg">フレックス勤務</span><span class="tg">自社内開発</span><span class="tg">固定給25万以上</span><span class="tg">退職金制度あり</span><span class="tg">決算賞与あり</span><span class="tg">書籍購入補助</span><span class="tg">資格取得支援</span>＋9個</div></div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">更新鮮度（11日前）</div><div class="cd">情報更新日：2026/05/26（11日前）。30日以内は達成。ただし新着優遇期間（1週間）はすでに経過しており、次回更新で新着期間をリセットする機会を意識したい。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">1求人1職種</div><div class="cd">「オープンポジション」という表現が複数職種・複数役割を包括している。仕事内容も要件定義〜運用保守・自社製品企画・育成支援と幅広く、ターゲットが絞り込めていない。マイナビの検索マッチ精度低下につながる。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">詳細ページで離脱されないか</div><span class="ss">コンテンツ充実度・存在と質の2段階チェック</span></div>
+      <div class="sb2">
+        <table class="t">
+          <thead><tr><th>セクション</th><th>存在</th><th>質チェック結果</th></tr></thead>
+          <tbody>
+            <tr><td>仕事内容</td><td class="ok">○</td><td>5G基地局・Deep Learning・GPS管理等のプロジェクト例の列挙あり。ただし1日の業務フロー・配属部署の人員構成・具体的なチーム規模の記載なし。</td></tr>
+            <tr><td>必須/歓迎条件の分類</td><td class="ok">○</td><td>必須（半年以上のIT開発経験）と歓迎スキル（Java/Python/C#/AWS等）が明確に分類されており、応募ハードルが伝わる。</td></tr>
+            <tr><td>求める人物像（価値観）</td><td class="tr">△</td><td>「技術志向で成長意欲の高い仲間と互いに切磋琢磨」「社員の声から生まれた表彰制度」という文化訴求の要素は一部あるが、「こんな価値観の人と働きたい」という直接的な表現には至っていない。</td></tr>
+            <tr><td>キャリアパス・成長</td><td class="ng">✕</td><td>「OJTを基本」「意欲ある社員には資格取得支援」の記載のみ。入社1〜3年後のキャリア像・昇格事例なし。若手中心媒体として最も訴求すべき情報が欠如。</td></tr>
+            <tr><td>フォトレポート</td><td class="tr">△ 1枚</td><td>PR画像1枚のみ（専用フォトレポートオプション未利用）。職場・チームの雰囲気が視覚的に伝わらない。</td></tr>
+            <tr><td>社員インタビュー</td><td class="ng">✕</td><td>オプション未利用。35歳以下72%のマイナビユーザーに対して、実際に働く先輩の声がない状態は離脱リスクが高い。</td></tr>
+            <tr><td>入社後フォロー（研修・支援）</td><td class="ok">○</td><td>書籍購入費補助・Udemy/Schoo/eラーニング無料・資格取得奨励金・OJT・階層別研修と充実した記載あり。ただし研修の具体的なカリキュラムや期間の記載なし。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">応募を最終決断できるか</div><span class="ss">企業コンテンツ・スカウトによる応募後押し</span></div>
+      <div class="sb2">
+        <div class="warn">⚠️ マイナビ転職にはエン転職のようなクチコミ機能がない。STEP3で「この会社で大丈夫か」を判断する情報源として、経営者メッセージ・採用の方針・社員インタビューがその代替機能を担うが、いずれも未掲載の状態。</div>
+        <div class="cr" style="margin-top:10px"><div class="ci ng">✕</div><div class="cl">経営者メッセージ</div><div class="cd">未掲載。企業の方向性・経営方針が伝わる情報なし。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">採用の方針</div><div class="cd">未掲載。「なぜ今採用するか」「どんな人材と一緒に働きたいか」が伝わらない。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">企業情報の充実度</div><div class="cd">設立・従業員数・主要取引先（NTTドコモ等）・事業内容・福利厚生の記載はあり。「横須賀に本社を置く独立系IT企業」という会社概要も記載。ただし「なぜここか」に答えるコンテンツは薄い。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">スカウト対応</div><div class="cd">求人票からスカウト受付可否の明示を確認できず。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 表示ロジック適合チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>マイナビ転職 表示ロジック適合チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>マイナビ転職の表示ロジックは「掲載プランランク × 新着1週間優遇 × キーワードマッチ」</strong>（代理店公開資料より）。プランランクを上げずに発見性を高めるには、職種名のキーワード最適化とこだわり条件タグの設定が有効。</div>
+    <div class="cr"><div class="ci ng">✕</div><div class="cl">職種名が検索語と一致</div><div class="cd">「オープンポジション」は検索語として機能しない。「システムエンジニア」が含まれているが「オープンポジション」が優先表示されることで検索マッチ率が低下している可能性がある。「SE（システム開発）」「システムエンジニア（WEB・組込）」等への変更で改善が見込める。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">こだわり条件タグの活用</div><div class="cd">21個以上のタグが設定されており、フィルター検索へのヒット幅は十分。内容も求人の実態と概ね一致している。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">本文のキーワード密度</div><div class="cd">「5G」「LTE」「AI」「IoT」「Deep Learning」「Python」「Java」等の技術キーワードが本文に含まれており、技術系検索へのヒット幅は広い。</div></div>
+    <div class="cr"><div class="ci tr">△</div><div class="cl">更新鮮度（新着優遇）</div><div class="cd">2026/05/26更新（11日前）。新着1週間の優遇期間はすでに経過。次回の原稿更新で新着期間をリセットすることで同プラン内の上位表示機会を回収できる。</div></div>
+    <div class="cr"><div class="ci ng">✕</div><div class="cl">1求人1職種の原則</div><div class="cd">「オープンポジション」が複数の役割・業務を内包しており、検索マッチ精度を下げている。SE・PL・自社開発エンジニア等への職種分割掲載も検討余地あり（同社3件掲載中）。</div></div>
+  </div>
+</div>
+
+<!-- 4 媒体機能活用チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>媒体機能 活用チェック</h2></div>
+  <div class="card-body">
+    <table class="t">
+      <thead><tr><th>機能</th><th>確認内容</th><th style="width:100px">評価</th></tr></thead>
+      <tbody>
+        <tr><td>社員インタビュー</td><td>企業ページ・求人ページともに掲載なし（0件）</td><td class="ng">✕ なし</td></tr>
+        <tr><td>フォトレポート</td><td>PR画像1枚のみ（専用フォトレポートオプション未利用）</td><td class="tr">△ 1枚</td></tr>
+        <tr><td>経営者メッセージ</td><td>未掲載</td><td class="ng">✕ なし</td></tr>
+        <tr><td>採用の方針</td><td>未掲載</td><td class="ng">✕ なし</td></tr>
+        <tr><td>スカウト対応</td><td>求人票からの確認不可</td><td class="tr">確認不可</td></tr>
+        <tr><td>こだわり条件タグ</td><td>21個設定済み・内容は求人実態と一致</td><td class="ok">○ 充実</td></tr>
+        <tr><td>更新鮮度（30日以内）</td><td>2026/05/26更新（11日前）</td><td class="ok">○</td></tr>
+        <tr><td>選考プロセス明示</td><td>書類選考→面接→内定（シンプルな3ステップ明記）</td><td class="ok">○ あり</td></tr>
+        <tr><td>主要取引先の掲載</td><td>NTTドコモ・NTTテクノクロス等の大手名記載あり（信頼性補完）</td><td class="ok">○ あり</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:10px">こだわり条件タグと企業情報の充実が唯一の強み。有料オプションコンテンツ（社員インタビュー・フォトレポート・経営者メッセージ等）は全て未活用。マイナビ転職でのSTEP2・3転換率向上の余地が大きい。</p>
+  </div>
+</div>
+
+<!-- 5 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">①</span><span class="at">クリック訴求・検索ヒット力</span><span class="as C">10 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ng">✕</span> 職種名が求職者の検索語と一致している → 0点｜「オープンポジション」は検索語として機能しない</div>
+            <div><span class="ng">✕</span> タイトルに給与の数値が含まれる → 0点｜給与数値なし</div>
+            <div><span class="ok">○</span> タイトルに「こだわり条件」キーワードが入っている → 4点｜「フレックス勤務」がタイトルに含まれる</div>
+            <div><span class="ok">○</span> こだわり条件タグが3個以上設定されている → 3点｜21個設定済み</div>
+            <div><span class="ok">○</span> 更新鮮度（30日以内更新）→ 3点｜2026/05/26（11日前）</div>
+            <div><span class="ng">✕</span> 1求人1職種（職種が明確に絞られている）→ 0点｜「オープンポジション」が複数業務を包括</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>「オープンポジション」という職種名がマイナビ転職の検索マッチ精度を大幅に低下させている。また給与数値がタイトルに含まれないため、一覧表示での競合との差別化機会を損失している。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>①「オープンポジション」をなくし、実際の職種名（例：「システムエンジニア（通信・社会インフラ系）」）に変更する／②業務内容に応じて複数求人（SE・自社開発・AI開発等）に分割掲載することを検討する／③タイトルに月給下限を追加する</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">②</span><span class="at">本文コンテンツ力</span><span class="as C">8 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 仕事内容の詳細記載（存在）→ 1点｜プロジェクト例の列挙あり</div>
+            <div><span class="ng">✕</span> 仕事内容の詳細記載（質）→ 0点｜1日の業務フロー・人員構成なし</div>
+            <div><span class="ok">○</span> 必須/歓迎条件の分類（存在・質）→ 3点｜必須・歓迎スキルが明確に分類</div>
+            <div><span class="tr">△</span> 求める人物像が価値観・姿勢ベース → 2点｜文化訴求の要素は一部あるが直接的表現なし</div>
+            <div><span class="ng">✕</span> キャリアパス・成長の道筋（存在・質）→ 0点｜具体的なキャリア像・昇格事例なし</div>
+            <div><span class="ok">○</span> 入社後フォロー（存在）→ 1点｜書籍補助・Udemy・資格支援等の充実した記載</div>
+            <div><span class="tr">△</span> 入社後フォロー（質）→ 1点｜リストはあるがカリキュラム期間・詳細なし</div>
+            <div><span class="ng">✕</span> 募集背景・採用理由 → 0点｜記載なし</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>キャリアパスの記載がゼロ。「OJTを基本」「意欲ある社員には資格取得支援」の抽象表現のみで、入社後の成長イメージが伝わらない。マイナビ転職ユーザーは35歳以下が72%であり「自分がここで成長できるか」の情報欠如は離脱に直結する。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>①入社後のキャリアパスを具体的に記載する（「入社1年目：OJTでベース習得→小規模プロジェクトアサイン」「入社3年以内にPL候補」等の実績ベース例）／②「こんな人と働きたい」という価値観ベースの人物像を追加する（「5Gや社会インフラに関わることに面白みを感じる人」等）／③募集背景（5G展開拡大・AIプロジェクト増加等）を明記する</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">③</span><span class="at">条件・待遇の透明性</span><span class="as B">12 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 月給または年収の下限・上限を明示 → 4点｜月給31万〜39万円・初年度年収420万〜630万円（両方明示）</div>
+            <div><span class="ng">✕</span> 年収例または給与モデル1パターン以上 → 0点｜具体的な年収モデル例なし</div>
+            <div><span class="ok">○</span> 賞与の支給回数と過去実績 → 2点｜「前年度実績4カ月分（業績により決算賞与あり）」の実績数値あり</div>
+            <div><span class="ok">○</span> 有給・年間休日の実数値 → 3点｜「年間休日125日」「有給初年度10日・平均取得14日」明記</div>
+            <div><span class="ok">○</span> 残業時間の実態が数値で明記 → 3点｜「月平均14.5時間」明記</div>
+            <div><span class="ng">✕</span> 給与・評価の仕組みが具体的 → 0点｜評価基準・昇給の仕組み・スケジュールの記載なし</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>給与の上下限・賞与実績・残業時間・年間休日と基本的な数値開示は揃っているが、「どんな実績でどう給与が上がるか」の評価制度が不明。年収モデル例（「入社2年目・年収◯万円」等）もなく、将来の収入イメージが伝わらない。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>①年収モデルを1〜2パターン追加する（実績ベース・職位別）／②評価・昇給の仕組みを具体化する（評価サイクル・昇給の基準・スケジュール）</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">④</span><span class="at">マイナビ転職 媒体機能の活用度</span><span class="as C">6 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ng">✕</span> 社員インタビューが掲載されている → 0点｜企業ページ・求人ページともになし</div>
+            <div><span class="tr">△</span> フォトレポートが掲載されている → 2点｜PR画像1枚のみ（3枚未満）</div>
+            <div><span class="ng">✕</span> 経営者メッセージまたは採用の方針 → 0点｜いずれも未掲載</div>
+            <div><span class="ng">✕</span> スカウト対応が設定されている → 0点｜確認不可</div>
+            <div><span class="ok">○</span> こだわり条件タグが3個以上・実態と合致 → 4点｜21個設定・内容も実態と一致</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>マイナビ転職の有料オプションコンテンツ（社員インタビュー・フォトレポート・経営者メッセージ・採用の方針）が全て未活用。エン転職と異なりマイナビ転職にはクチコミ機能がないため、求職者のSTEP3（最終応募判断）を後押しするコンテンツが存在しない状態。こだわり条件タグのみが機能している。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>①社員インタビューを最優先で掲載する（若手エンジニアが「入社前の不安」「実際の業務・成長感」「横須賀という環境」を語る内容が特に有効）／②フォトレポートで職場・チームの雰囲気・横須賀の立地環境を視覚的に伝える（最大12枚）／③採用の方針で「なぜ今採用するか」「どんな人材と一緒に働きたいか」を記載する</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">⑤</span><span class="at">差別化・競争優位性</span><span class="as C">10 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 数値化された実績が1つ以上含まれる → 3点｜「離職率11.5%（入社3年未満）」「残業月平均14.5時間」「賞与前年度4カ月」「有給平均取得14日」等の数値あり</div>
+            <div><span class="tr">△</span> 求人タイトルに競合と異なる差別化要素 → 1点｜「フレックス勤務」はあるが「オープンポジション」という曖昧表現で差別化が弱い</div>
+            <div><span class="tr">△</span> 「なぜここか」が価値観軸で伝わる → 2点｜「社会インフラを支える使命感」「社員の声から生まれた表彰制度」「久里浜の砂浜まで徒歩10分」等のユニーク要素あり。ただしチーム・文化への訴求としては表面的</div>
+            <div><span class="tr">△</span> 採用文のトーンがフラット → 2点｜「技術志向の仲間と切磋琢磨」「多様な人材が活躍できる環境」等のフレンドリーな表現あり。対等感はやや弱め</div>
+            <div><span class="tr">△</span> 若手視点での「成長・挑戦」が具体的に描かれている → 2点｜Udemy/書籍補助/資格支援の制度は具体的。「業務改善賞」「チャレンジ賞」等のモチベーション施策もあり。ただし「入社◯年後にこうなった」という実例なし</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>数値実績（離職率・残業・賞与）は豊富で競合との差別化に活用できるが、タイトルに生かせていない。「5G/AI/社会インフラ系のSIer」という稀少な技術領域の強みが求人の表面から伝わらず、競合の「未経験歓迎SIer」と同質化している。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>①「5G・AI・社会インフラ系システム開発」という技術領域の希少性をタイトル・冒頭リードで前面に出す方向を検討する／②「なぜここか」に答える文章を追加する（NTTドコモ系の取引実績＋横須賀という非都市圏のワークスタイル＋社員の声を反映した制度文化を組み合わせた固有の訴求）</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 6 優先改善テーマ TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <div class="ft">①軸 最大＋10点の余地</div>
+        <h4>タイトルの「オープンポジション」撤廃と職種名最適化</h4>
+        <p>【確認した事実】求人タイトルは「オープンポジション【システムエンジニア】＊フレックス勤務」。「オープンポジション」は求職者が検索で使う語ではなく、マイナビ転職の職種マッチ精度を低下させている。同社3件の掲載求人のうち残り2件（WebAPI・Webアプリ）は明確な職種名で掲載されており、この求人のみ曖昧な職種名となっている。</p>
+        <p class="wy">▶ 職種名を「システムエンジニア（通信・AI・IoT系）」等に変更し、タイトルに月給下限を追加することで①軸C→Bへの改善が現実的。費用追加なしで発見性を向上できる。</p>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <div class="ft">④軸 最大＋14点の余地</div>
+        <h4>媒体オプションコンテンツの活用（社員インタビュー・フォトレポート・採用の方針）</h4>
+        <p>【確認した事実】社員インタビュー（0件）・フォトレポート（PR画像1枚のみ）・経営者メッセージ（なし）・採用の方針（なし）が全て未掲載。マイナビ転職にはクチコミ機能がないため、求職者のSTEP3（最終応募判断）を後押しするコンテンツが存在しない。現状④軸は20点中6点（C）。</p>
+        <p class="wy">▶ 社員インタビューと採用の方針の追加が最優先。特に横須賀勤務・社会インフラ系という独自性は、先輩社員の声を通じて「ここで働く自分」を想像させる強力なコンテンツになり得る。</p>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <div class="ft">②軸＋③軸 最大＋9点の余地</div>
+        <h4>キャリアパスの具体化と給与評価制度の明示</h4>
+        <p>【確認した事実】キャリアパスの記載なし（OJTと資格支援の抽象表現のみ）。評価・昇給の仕組み未記載。年収モデル例もなし。35歳以下72%という若手中心のマイナビユーザーに対して「この会社で自分がどう成長し収入がどう上がるか」が伝わらない状態。②軸8点（C）・③軸12点（B）で合計20点の改善余地がある。</p>
+        <p class="wy">▶ 入社後のキャリア像（1〜3年の実績事例）と評価制度（昇給の基準・スケジュール）の追加でSTEP2の離脱防止と③軸のB→A圏内への改善が見込める。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="text-align:center;font-size:11px;color:var(--sub);padding:16px 0">本レポートはスクレイピングで確認できた事実に基づき作成されています。確認できなかった情報（スカウト対応等）は評価対象外としています。 © EISHIN 2026-06-06</p>
+
+</div>
+</body>
+</html>
