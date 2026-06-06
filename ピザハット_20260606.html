@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイナビ転職 求人診断レポート｜日本ピザハット株式会社</title>
+<style>
+  :root { --red:#AE1C3B; --orange:#E65100; --green:#2E7D32; --blue:#1565C0; --bg:#F5F5F5; --card:#fff; --text:#212121; --sub:#757575; --border:#E0E0E0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .badge.b{border-color:var(--blue);color:var(--blue)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  /* score */
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--green);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  .sb.r{border-left-color:var(--red)}
+  /* funnel */
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:180px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  /* tables */
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-top:10px}
+  .li{background:#E8F5E9;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--green)}
+  /* axis cards */
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .rm div{margin-bottom:1px}
+  .qtag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle}
+  .qtag.s{background:#E8F5E9;color:var(--green)}.qtag.q{background:#FFEBEE;color:var(--red)}.qtag.w{background:#FFF3E0;color:var(--orange)}
+  /* top3 */
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg,.sa{grid-template-columns:1fr;flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>マイナビ転職 求人診断レポート</h1>
+  <p>診断日：2026年6月6日｜対象：日本ピザハット株式会社</p>
+</div>
+<div class="container">
+
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>日本ピザハット株式会社</span></div>
+      <div><label>求人タイトル</label><span>休日重視・収入重視の働き方を選べる！ピザハットの【店長候補】</span></div>
+      <div><label>職種カテゴリ</label><span>店長・店長候補（フード・アミューズメント系）</span></div>
+      <div><label>雇用形態</label><span>正社員（試用期間最長6ヶ月・待遇変更なし）</span></div>
+      <div><label>給与</label><span>月給219,300〜277,400円（コースにより異なる）<br><small style="color:var(--orange);font-size:11px">初年度年収400〜520万円／モデル年収650万（32歳SV）</small></span></div>
+      <div><label>勤務地</label><span>全国（東北〜九州・沖縄）</span></div>
+      <div><label>情報更新日</label><span>2026年6月5日（<strong style="color:var(--green)">診断日より1日前・新着期間中</strong>）</span></div>
+      <div><label>掲載終了予定日</label><span>2026年7月30日</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">職種・業種未経験OK</span><span class="badge">第二新卒歓迎</span><span class="badge">学歴不問</span><span class="badge">転勤なし（コース選択可）</span><span class="badge">フレックス勤務</span><span class="badge">有給消化率8割以上</span><span class="badge">インセンティブあり</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">企業コンテンツ：</span>
+      <span class="badge g">社員インタビュー：2件確認</span>
+      <span class="badge g">会社・仕事の魅力（写真3枚以上）</span>
+      <span class="badge g">マイナビ編集部取材あり</span>
+      <span class="badge o">経営者メッセージ：追加ページ要確認</span>
+      <span class="badge b">同社求人：1件掲載中</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 スコアサマリー -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業ページから確認できる事実の積み上げで算出。存在チェック（あるか否か）と質チェック（内容が基準を満たすか）の2段階で評価しています。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#2E7D32" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="44.11" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">87</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① クリック訴求・検索ヒット力</span><span><strong>17</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:85%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 本文コンテンツ力</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 条件・待遇の透明性</span><span><strong>17</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:85%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ マイナビ媒体機能の活用度</span><span><strong>13</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:65%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 差別化・競争優位性</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+      </div>
+    </div>
+    <div class="sb">求人票の完成度は非常に高い。「休日重視・収入重視・転勤なし」から選べる3コース制、フルフレックス（飲食業でレア）、「平均半年で副店長」という具体的なキャリアパス、役職・年齢別のモデル年収例、「文化祭のような雰囲気」という文化訴求まで揃っている。社員インタビュー2件・写真3枚以上・編集部取材ありと媒体コンテンツも充実。不足しているのは「タイトルへの給与数値追加」と「経営者メッセージ・採用の方針」セクションの明示のみで、追加することで90点台が視野に入る。</div>
+  </div>
+</div>
+
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>マイナビ転職 ファネル診断</h2><span class="sub-title">STEP1〜3の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・タグ・給与の訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">職種名の検索ヒット力</div><div class="cd">「店長候補」は飲食業界で求職者が一般的に使う検索語。フード・アミューズメント系の一覧に的確に表示される。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルへの給与記載</div><div class="cd">タイトルに給与数値なし。「月給21.9万〜」等を加えることで一覧での訴求力が増す。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">「こだわり条件」キーワード</div><div class="cd">「転勤なし」「フルフレックス」「年休118日」「賞与年4カ月」がタイトル・キャッチコピーに含まれており、主要なフィルター対象ワードをカバー。特に飲食業界での「フルフレックス」は希少で差別化ワードとして機能している。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">こだわり条件タグ（30件以上）</div><div class="cd"><div class="tl"><span class="tg">職種・業種未経験OK</span><span class="tg">第二新卒歓迎</span><span class="tg">学歴不問</span><span class="tg">転勤なし</span><span class="tg">フレックス勤務</span><span class="tg">有給消化率8割以上</span><span class="tg">5日以上連続休暇可</span><span class="tg">インセンティブあり</span><span class="tg">退職金制度あり</span><span class="tg">社内見学可</span>＋20件以上</div></div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">更新鮮度（新着期間中）</div><div class="cd">情報更新日：2026/06/05（1日前）。新着優遇期間（1週間）真っ只中であり、同プラン内での最上位表示が得られている状態。最もコストパフォーマンスの高い露出フェーズ。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">1求人1職種</div><div class="cd">「店長候補」に一貫。キャリアパス先（SV・商品開発・人事）の記載はあるが、応募職種は店長候補に明確に絞られており混在なし。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">詳細ページで離脱されないか</div><span class="ss">存在チェック＋質チェックで評価</span></div>
+      <div class="sb2">
+        <table class="t">
+          <thead><tr><th>セクション</th><th>存在</th><th>質チェック結果</th></tr></thead>
+          <tbody>
+            <tr><td>仕事内容</td><td class="ok">○</td><td>業務内容（ピザ作成・注文対応・アルバイト育成・デリバリー等）の記載あり。配属先の人員構成（社員+アルバイト約20名）も明記。</td></tr>
+            <tr><td>入社後の流れ</td><td class="ok">○ <span class="qtag s">質○</span></td><td>「ピザハットアカデミー：本社研修1.5カ月→交換店舗研修1.5カ月→本配属」という具体的なフローが明記。「いきなり配属店でOJTはなし」という不安解消の一言も効果的。</td></tr>
+            <tr><td>必須/歓迎条件の分類</td><td class="ok">○</td><td>必須（39歳以下・人柄重視）と歓迎スキル（免許・飲食経験・接客経験）が明確に分類されており、ハードルが分かりやすい。</td></tr>
+            <tr><td>求める人物像（価値観）</td><td class="ok">○ <span class="qtag s">質○</span></td><td>「チームプレーを楽しめる人」「文化祭のようにチームで働くのが合っている人」という価値観ベースの表現。「向いていない人：指示待ちの姿勢」という逆張り表現も自己判断の材料として機能している。</td></tr>
+            <tr><td>キャリアパス</td><td class="ok">○ <span class="qtag s">質○</span></td><td>「平均半年で副店長」「約2年で店長」「SV・商品開発・人事・フランチャイズ独立も可能」という具体的な数値と多様なキャリア分岐を明示。「転勤なし」コースでも店長昇進可能という重要情報も明記。</td></tr>
+            <tr><td>募集背景</td><td class="ok">○</td><td>「800店舗体制に向け出店加速・積極採用中」という具体的な事業理由が明記。</td></tr>
+            <tr><td>写真・会社の魅力</td><td class="ok">○ <span class="qtag s">質○</span></td><td>「会社・仕事の魅力」セクションに2枚の画像+詳細コンテンツ（先輩の声・文化・福利厚生）あり。PR画像を含め3枚以上確認。</td></tr>
+            <tr><td>マイナビ編集部取材</td><td class="ok">○</td><td>「マイナビ転職 編集部より」セクションあり。「取材では…先輩の声をうかがいました」という取材コンテンツの存在が確認できる。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">応募を最終決断できるか</div><span class="ss">企業コンテンツ・スカウトによる応募後押し</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">社員インタビュー（2件）</div><div class="cd">企業ページに社員インタビュー2件を確認。「アパレル業界→店長1年で昇進」「工場スタッフ→20代でチャレンジ」という具体的な前職と転職理由・仕事のやりがい・職場の雰囲気評価（9軸レーダー）まで掲載。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">会社ブランドの信頼性</div><div class="cd">「上場企業グループ会社（ヤム・ブランズ）」「3年連続売上UP」「3年連続ベースアップ」「売上299億円（2024年度）」等のブランドバッジが豊富で企業の安定性・成長性が伝わる。</td></div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">経営者メッセージ・採用の方針</div><div class="cd">求人票の「メッセージ」タブ（/adv2/）に追加コンテンツが存在する可能性があるが、今回の診断では未確認。独立した専用セクションとしては確認できず。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">スカウト対応</div><div class="cd">求人票からスカウト受付可否の明示を確認できず。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">選考プロセスの透明性</div><div class="cd">書類選考→面接2回→内定の3ステップを明記。カジュアル面談・説明会の実施も案内あり。「30代の人事担当がカジュアル面談」という人間味のある情報が応募ハードルを下げている。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 表示ロジック適合チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>マイナビ転職 表示ロジック適合チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>総評：表示ロジックへの対応は非常に優秀。</strong> 新着期間中（更新1日後）で同プラン内最上位表示を獲得。こだわり条件タグ30件以上でフィルター検索への広いヒット幅を確保。大手ブランド認知と高品質なコンテンツの組み合わせで、露出→クリック→詳細閲覧の全フェーズで強い。</div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">職種名が検索語と一致</div><div class="cd">「店長候補」は飲食業界の一般的な検索語。職種カテゴリ（フード・アミューズメント系）とも一致している。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">こだわり条件タグの活用</div><div class="cd">30件以上のタグが設定されており、求職者の多様な条件フィルターに対応。「転勤なし」「フレックス勤務」「有給消化率8割以上」「5日以上連続休暇可」等、飲食業界で希少なタグが揃っている。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">本文のキーワード密度</div><div class="cd">「フルフレックス」「転勤なし」「賞与年4カ月」「ピザハットアカデミー」「店長候補」「副店長」「未経験歓迎」等が本文に自然に含まれている。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">更新鮮度（新着優遇期間中）</div><div class="cd">2026/06/05更新（1日前）。新着1週間の優遇期間が始まったばかりで同プラン内上位表示が得られている最も有利な状態。</div></div>
+    <div class="cr"><div class="ci ok">○</div><div class="cl">1求人1職種の原則</div><div class="cd">「店長候補」に一貫。全国複数箇所の勤務地を1求人でカバーしているが、職種は一つに絞られており検索マッチ精度を維持している。</div></div>
+  </div>
+</div>
+
+<!-- 4 媒体機能活用チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>媒体機能 活用チェック</h2></div>
+  <div class="card-body">
+    <table class="t">
+      <thead><tr><th>機能</th><th>確認内容</th><th style="width:120px">評価</th></tr></thead>
+      <tbody>
+        <tr><td>社員インタビュー</td><td>企業ページに2件確認（アパレル→店長、工場スタッフ→店長）。職場の雰囲気9軸評価も掲載。</td><td class="ok">○ 2件</td></tr>
+        <tr><td>フォトレポート／会社の魅力</td><td>PR画像1枚＋「会社・仕事の魅力」セクションに2枚の画像=計3枚以上確認</td><td class="ok">○ 3枚以上</td></tr>
+        <tr><td>マイナビ転職 編集部取材</td><td>「マイナビ転職 編集部より」セクションあり（取材コンテンツ存在を確認）</td><td class="ok">○ あり</td></tr>
+        <tr><td>経営者メッセージ・採用の方針</td><td>「メッセージ」タブ（/adv2/）あり。専用ページに掲載の可能性があるが今回未確認。</td><td class="tr">△ 要確認</td></tr>
+        <tr><td>スカウト対応</td><td>求人票からの確認不可</td><td class="tr">確認不可</td></tr>
+        <tr><td>こだわり条件タグ</td><td>30件以上設定済み。内容も求人の実態と一致している。</td><td class="ok">○ 充実</td></tr>
+        <tr><td>更新鮮度（30日以内）</td><td>2026/06/05更新（1日前）。新着期間中。</td><td class="ok">○</td></tr>
+        <tr><td>選考プロセス明示</td><td>書類選考→面接2回→内定の3ステップ。カジュアル面談・説明会の案内も記載。</td><td class="ok">○ あり</td></tr>
+      </tbody>
+    </table>
+    <div class="info" style="margin-top:10px">ℹ️ 求人票に「メッセージ」タブ（/adv2/）が存在しており、経営者メッセージや採用の方針が掲載されている可能性があります。確認して診断スコアに反映することを推奨します（確認できた場合、④軸は最大+4点で17/20点・Aグレードになります）。</div>
+  </div>
+</div>
+
+<!-- 5 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">①</span><span class="at">クリック訴求・検索ヒット力</span><span class="as A">17 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 職種名が求職者の検索語と一致 → 4点｜「店長候補」は飲食業界の一般的検索語</div>
+            <div><span class="ng">✕</span> タイトルに給与の数値が含まれる → 0点｜給与数値なし</div>
+            <div><span class="ok">○</span> タイトルに「こだわり条件」キーワードが入っている → 4点｜「転勤なしもOK」「フルフレックス」「年休118日」「賞与年4カ月」がタイトル・キャッチコピーに含まれる</div>
+            <div><span class="ok">○</span> こだわり条件タグが3個以上設定されている → 3点｜30件以上設定済み</div>
+            <div><span class="ok">○</span> 更新鮮度（30日以内更新）→ 3点｜2026/06/05（1日前・新着期間中）</div>
+            <div><span class="ok">○</span> 1求人1職種（職種が明確に絞られている）→ 3点｜「店長候補」に一貫</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>タイトルに給与数値が含まれていない点のみが未達成。3コース制という複雑な給与体系のため一律表示が難しいが、「月給21.9万〜」（最低限の下限）または「初年度年収400万〜」の追加で競合との一覧差別化につながる。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>タイトルまたはキャッチコピー内に給与下限の数値を追加する（例：「月給21.9万〜」「初年度年収400万〜520万」等）。タイトルに入れにくければキャッチコピーの先頭に追加する形でも一覧表示での訴求強化が見込める。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">②</span><span class="at">本文コンテンツ力</span><span class="as A">20 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 仕事内容の詳細記載（存在・質）→ 4点｜業務内容・配属先の人員構成（約20名）・フルフレックスの活用実態まで記載</div>
+            <div><span class="ok">○</span> 必須/歓迎条件の分類（存在・質）→ 3点｜必須（39歳以下・人柄重視）と歓迎（免許・飲食経験）が明確に分類</div>
+            <div><span class="ok">○</span> 求める人物像が価値観・姿勢ベース → 4点｜「チームプレーを楽しめる人」「文化祭のように働くのが合っている人」「向いていない人：指示待ちの姿勢」という具体的な価値観表現</div>
+            <div><span class="ok">○</span> キャリアパス・成長の道筋（存在・質）→ 4点｜「平均半年で副店長」「約2年で店長」「SV・商品開発・人事・フランチャイズ独立制度」「転勤なしコースでも店長昇進可能」という数値と分岐を持つ詳細なキャリアパス</div>
+            <div><span class="ok">○</span> 入社後フォロー（存在・質）→ 3点｜「ピザハットアカデミー：本社研修1.5カ月+交換店舗研修1.5カ月」という期間・内容付きの研修制度</div>
+            <div><span class="ok">○</span> 募集背景・採用理由（存在・質）→ 2点｜「800店舗体制に向け出店加速」という具体的な事業背景</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>評価コメント</label>
+          <p>②軸は全項目達成の満点。「平均半年で副店長」という具体的な数値、「文化祭のような雰囲気」という独自の文化表現、「向いていない人」まで書き切る誠実さ、「転勤なしコースでも店長昇進可能」という重要な補足情報まで、候補者の意思決定に必要な情報が漏れなく整備されている。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">③</span><span class="at">条件・待遇の透明性</span><span class="as A">17 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 月給または年収の下限・上限を明示 → 4点｜3コース別に月給下限・上限（例：収入重視245,400〜277,400円）と初年度年収（400〜520万円）を明示</div>
+            <div><span class="ok">○</span> 年収例または給与モデルが1パターン以上 → 3点｜「32歳SV職650万」「30歳店長職553万」「28歳店長職400万」の3パターン記載</div>
+            <div><span class="ok">○</span> 賞与の支給回数と過去実績 → 2点｜年2回・昨年度実績4カ月分の記載あり</div>
+            <div><span class="ok">○</span> 有給・年間休日の実数値 → 3点｜年休118日・休日重視コース月9〜10日・有給消化率8割以上・5日以上の連続休暇可能</div>
+            <div><span class="ok">○</span> 残業時間の実態が数値で明記 → 3点｜「月平均20時間程度（繁忙期12〜1月は30時間程度）」と通常期・繁忙期を分けて明記</div>
+            <div><span class="tr">△</span> 給与・評価の仕組みが具体的 → 2点｜「昇給あり」「3年連続ベースアップ」「コース別給与体系」は示されるが、評価基準・昇給スケジュールの具体的な記載なし</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>課題（確認した事実）</label>
+          <p>「3年連続ベースアップ」という実績は記載されているが、どのような評価基準でいつ昇給するか（評価サイクル・昇給額の目安）は未記載。コース別の給与体系という独自制度の特性上、評価制度の透明性を高める追記があると③軸が満点に近づく。</p>
+        </div>
+        <div class="ar">
+          <label>改善の方向性（方針）</label>
+          <p>評価・昇給の仕組みを追記する（年次評価の頻度・昇給の目安額・「3年連続ベースアップ」の実績額等）。特に「副店長→店長昇進時の給与変化」をモデルとして示せると③軸で満点が見込める。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">④</span><span class="at">マイナビ転職 媒体機能の活用度</span><span class="as B">13 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 社員インタビューが掲載されている → 5点｜企業ページに2件確認（店長×2名：アパレル業界出身・工場スタッフ出身）。職場の雰囲気9軸レーダーも掲載。</div>
+            <div><span class="ok">○</span> フォトレポートが掲載されている（3枚以上）→ 4点｜PR画像1枚+「会社・仕事の魅力」セクションに2枚=計3枚以上確認</div>
+            <div><span class="tr">△</span> 経営者メッセージまたは採用の方針 → 0点｜独立セクションとして今回の診断では確認できず。「メッセージ」タブ（/adv2/）に掲載の可能性あり（確認推奨）</div>
+            <div><span class="ng">✕</span> スカウト対応が設定されている → 0点｜確認不可</div>
+            <div><span class="ok">○</span> こだわり条件タグが3個以上・実態と合致 → 4点｜30件以上設定済み・内容も実態と一致</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>評価コメント</label>
+          <p>社員インタビュー・フォトレポートは整備されており、STEP2・3の転換率向上施策が機能している状態。スカウト対応と経営者メッセージ・採用の方針の確認・追加で満点（A）に到達できる。求人票に「メッセージ」タブが存在しており、そのページに採用の方針コンテンツが既に掲載されている可能性がある。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">⑤</span><span class="at">差別化・競争優位性</span><span class="as A">20 / 20点</span></div>
+      <div class="ab">
+        <div class="ar">
+          <label>RUBRIC ○✕</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 数値化された実績が1つ以上含まれる → 3点｜「平均半年で副店長」「約2年で店長」「3年連続ベースアップ」「賞与昨年度4カ月」「売上299億円（2024年度）」「中途入社5割以上」「未経験入社5割以上」等の数値が豊富</div>
+            <div><span class="ok">○</span> 求人タイトルに競合と異なる差別化要素 → 3点｜「休日重視・収入重視の働き方を選べる！」という3コース選択制は飲食業界の店長候補求人としてユニーク。競合は「正社員」「未経験OK」の訴求が多い中で明確に差別化</div>
+            <div><span class="ok">○</span> 「なぜここか」が価値観軸で伝わる → 5点｜「文化祭のような雰囲気」「タイパよく働きプライベートと両立」「自分らしく働いて成長できる環境」という独自の文化表現。飲食業界では稀な「フルフレックス」という価値観が一貫している</div>
+            <div><span class="ok">○</span> 採用文のトーンがフラット → 4点｜「一緒に働けることを楽しみにしています！」「緊張せずに話せます」「中途の方もすぐ溶け込めます！」「☆がんばれ！」等のフレンドリーで対等なトーンが一貫</div>
+            <div><span class="ok">○</span> 若手視点での「成長・挑戦」が具体的に描かれている → 5点｜「平均半年で副店長」「約2年で店長」「SV・商品開発・人事・フランチャイズ独立」「800店舗体制でポストのチャンス豊富」「20代の管理職登用実績あり」等の具体的な成長・昇進事例</div>
+          </div>
+        </div>
+        <div class="ar">
+          <label>評価コメント</label>
+          <p>⑤軸は全項目達成の満点。「休日重視or収入重視or転勤なし」という3コース選択の独自性、飲食業界でのフルフレックスという希少価値、「文化祭」という印象的なチーム文化表現、具体的な昇進スピードの数値化が組み合わさり、同カテゴリの競合と並んだとき明確に選ばれる根拠が揃っている。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 6 優先改善テーマ TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <div class="ft">④軸 最大＋4点（13点→17点・Bの最上位）</div>
+        <h4>「メッセージ」タブ（/adv2/）の内容確認と経営者メッセージ・採用の方針の整備</h4>
+        <p>【確認した事実】求人票に「メッセージ」タブ（/adv2/ URL）が存在している。このページにスペシャル情報・経営者メッセージ・採用の方針のいずれかが掲載されている可能性がある。今回の診断では当該ページの内容未確認のため、④軸の経営者メッセージ・採用の方針項目は0点としている。</p>
+        <p class="wy">▶ 当該ページを確認し、掲載されている場合は④軸が13点→17点（B→AギリギリのB）に改善。未掲載の場合は採用の方針セクションの追加を検討する。全項目整備で④軸17点→Aグレードとなり総合スコアは91点に到達。</p>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <div class="ft">①軸 ＋3点（17点→20点・満点）</div>
+        <h4>タイトルまたはキャッチコピーへの給与数値追加</h4>
+        <p>【確認した事実】求人タイトルに給与の数値が含まれていない（「転勤なしもOK/未経験歓迎/賞与年4カ月/フルフレックス/年休118日」と条件ワードは豊富だが給与数値なし）。3コース制という複雑な給与構造があるため、単純な金額表示が難しい状況はあるが、初年度年収の下限（400万円〜）や月給下限はどのコースも共通の部分がある。</p>
+        <p class="wy">▶ タイトル末尾またはキャッチコピーに「初年度400万〜」を追加することで①軸が17点→20点の満点に到達。総合スコアは90点に改善。コストは原稿修正のみで追加費用なし。</p>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <div class="ft">③軸 ＋3点（17点→20点・満点）</div>
+        <h4>評価・昇給制度の具体化</h4>
+        <p>【確認した事実】「3年連続ベースアップ」「昇給あり」の記載はあるが、評価基準・評価サイクル・昇給の目安額の記載なし。コース制という独自制度の透明性が高い一方で「どんな実績でどう給与が上がるか」が分からない状態。</p>
+        <p class="wy">▶ 「評価は半期ごと・副店長昇進時に月給+◯万円」等の具体的な記載を追加することで③軸が17点→20点の満点に到達。1〜3の改善を全て実施することで総合94点（全軸A）の達成が現実的な射程に入る。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="text-align:center;font-size:11px;color:var(--sub);padding:16px 0">本レポートはスクレイピングで確認できた事実に基づき作成されています。「メッセージ」タブ（/adv2/）は今回未取得のため、該当項目は保守的に評価しています。 © EISHIN 2026-06-06</p>
+
+</div>
+</body>
+</html>
