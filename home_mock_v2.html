@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>採用CXクラウド - ホーム（全機能版）</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #F4F5F7; color: #333; }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 224px; background: #fff;
+      border-right: 1px solid #E5E7EB;
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; height: 100vh;
+    }
+    .sidebar-logo {
+      padding: 18px 20px; border-bottom: 1px solid #E5E7EB;
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #B44D66, #9A1132);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .logo-text { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+    .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+    .nav-top { padding: 4px 12px 8px; }
+    .nav-item-main {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 12px; border-radius: 8px; font-size: 13px;
+      color: #555; cursor: pointer; margin-bottom: 2px;
+    }
+    .nav-item-main:hover { background: #F3F4F6; }
+    .nav-item-main.active { background: #FBEBEE; color: #AE1C3B; font-weight: 700; }
+    .nav-section { padding: 14px 16px 4px; font-size: 11px; font-weight: 500; color: #9CA3AF; }
+    .nav-item-sub {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 6px; font-size: 12px;
+      color: #6B7280; cursor: pointer; margin-bottom: 1px;
+    }
+    .nav-item-sub:hover { background: #F3F4F6; color: #374151; }
+    .nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .sidebar-user {
+      padding: 14px 16px; border-top: 1px solid #E5E7EB;
+      display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+    }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #B44D66, #9A1132);
+      color: #fff; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .user-name { font-size: 12px; font-weight: 700; color: #1A1A1A; }
+    .user-email { font-size: 10px; color: #9CA3AF; }
+
+    /* ── Main ── */
+    .main { margin-left: 224px; flex: 1; padding: 32px 40px 80px; }
+    .page-header { margin-bottom: 28px; }
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .page-subtitle { font-size: 13px; color: #6B7280; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 40px; }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .section-badge { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+    .badge-diag { background: #FEF3C7; color: #92400E; }
+    .badge-flow { background: #EDE9FE; color: #5B21B6; }
+    .section-title { font-size: 16px; font-weight: 700; }
+    .section-note { margin-left: auto; font-size: 12px; color: #9CA3AF; }
+    .free-notice {
+      display: inline-flex; align-items: center;
+      margin-top: 10px; padding: 5px 14px;
+      background: #F0FDF4; border: 1px solid #86EFAC;
+      border-radius: 20px; font-size: 12px; font-weight: 500; color: #16A34A;
+    }
+
+    /* ── Diagnosis grid ── */
+    .diag-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .diag-card {
+      background: #fff; border-radius: 12px; padding: 18px;
+      border: 1px solid #E5E7EB; cursor: pointer;
+      transition: box-shadow 0.18s, transform 0.18s; display: flex; flex-direction: column;
+    }
+    .diag-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 6px; }
+    .card-tag {
+      display: inline-block; font-size: 10px; font-weight: 500;
+      padding: 2px 7px; border-radius: 4px; flex-shrink: 0; border: 1px solid;
+    }
+    .tag-diag { background: #EFF6FF; color: #3B82F6; border-color: #BFDBFE; }
+    .card-title { font-size: 13px; font-weight: 700; line-height: 1.4; flex: 1; min-width: 0; }
+    .card-desc { font-size: 11px; color: #6B7280; line-height: 1.65; flex: 1; margin-bottom: 14px; }
+    .card-btn {
+      width: 100%; padding: 9px 0; border-radius: 8px; border: none;
+      font-size: 12px; font-weight: 700; font-family: inherit;
+      cursor: pointer; color: #fff; transition: opacity 0.15s;
+    }
+    .card-btn:hover { opacity: 0.86; }
+
+    /* ── Workflow wrap ── */
+    .workflow-wrap { background: #fff; border-radius: 16px; padding: 32px; border: 1px solid #E5E7EB; }
+    .workflow-intro { text-align: center; margin-bottom: 28px; }
+    .wf-intro-label {
+      display: inline-block; background: #FBEBEE; border: 1px solid #F3C0CB;
+      color: #AE1C3B; font-size: 10px; font-weight: 700;
+      padding: 3px 12px; border-radius: 20px; margin-bottom: 8px;
+    }
+    .wf-intro-title { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+    .wf-intro-desc { font-size: 12px; color: #6B7280; }
+
+    /* ── Phase block ── */
+    .phase-block { margin-bottom: 8px; }
+    .phase-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .phase-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0; color: #fff;
+    }
+    .phase-name { font-size: 14px; font-weight: 700; color: #1A1A1A; }
+    .phase-hint { margin-left: auto; font-size: 11px; color: #9CA3AF; }
+    .must-badge {
+      display: inline-flex; align-items: center;
+      background: #FBEBEE; border: 1px solid #F3C0CB;
+      color: #AE1C3B; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px; margin-left: 6px;
+    }
+
+    /* ── Phase cards ── */
+    .phase-cards { display: grid; gap: 10px; }
+    .cols-2 { grid-template-columns: 1fr 1fr; }
+    .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    /* Active card */
+    .wf-card {
+      background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 10px;
+      padding: 16px; cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column;
+    }
+    .wf-card:hover { background: #F3F4F6; border-color: #D1D5DB; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .wf-card.foundation { background: #FBEBEE; border-color: #F3C0CB; }
+    .wf-card.foundation:hover { background: #F8D7DE; border-color: #AE1C3B; }
+
+
+    .wf-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; gap: 6px; }
+    .wf-card-tag {
+      display: inline-block; font-size: 10px; font-weight: 500;
+      padding: 2px 7px; border-radius: 4px; flex-shrink: 0; border: 1px solid;
+    }
+    .tag-gen { background: #F0FDF4; color: #16A34A; border-color: #BBF7D0; }
+    .tag-analysis { background: #F5F3FF; color: #7C3AED; border-color: #DDD6FE; }
+
+    .wf-card-title { font-size: 13px; font-weight: 700; color: #1A1A1A; flex: 1; min-width: 0; }
+    .wf-card-desc { font-size: 11px; color: #6B7280; line-height: 1.6; flex: 1; margin-top: 4px; }
+    .wf-card-btn {
+      display: block; width: 100%; margin-top: 12px;
+      padding: 8px 0; border-radius: 7px; border: none; font-family: inherit;
+      font-size: 12px; font-weight: 700; cursor: pointer; color: #fff; transition: opacity 0.15s;
+    }
+    .wf-card-btn:hover { opacity: 0.86; }
+
+    /* Connector */
+    .connector { display: flex; align-items: center; padding: 12px 0; }
+    .conn-line { flex: 1; height: 1px; background: #E5E7EB; }
+    .conn-center { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 0 16px; }
+    .conn-arrow { color: #9CA3AF; font-size: 16px; line-height: 1; }
+    .conn-text { font-size: 11px; color: #9CA3AF; white-space: nowrap; }
+    .phase-divider { border: none; border-top: 1px solid #F3F4F6; margin: 20px 0 16px; }
+
+    /* ── Mobile header (hidden on desktop) ── */
+    .mobile-header { display: none; }
+
+    /* ── Tablet (max 1024px) ── */
+    @media (max-width: 1024px) {
+      .diag-grid { grid-template-columns: repeat(3, 1fr); }
+      .cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .conn-text { display: none; }
+    }
+
+    /* ── Mobile (max 768px) ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+
+      .mobile-header {
+        display: flex; align-items: center; gap: 10px;
+        padding: 14px 16px; background: #fff;
+        border-bottom: 1px solid #E5E7EB;
+        position: sticky; top: 0; z-index: 100;
+      }
+      .mobile-header .logo-icon {
+        width: 28px; height: 28px; border-radius: 7px;
+        background: linear-gradient(135deg, #B44D66, #9A1132);
+        display: flex; align-items: center; justify-content: center; font-size: 14px;
+      }
+      .mobile-header .logo-text { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+
+      .main { margin-left: 0; padding: 20px 16px 60px; }
+      .page-title { font-size: 18px; }
+      .page-subtitle { font-size: 12px; }
+      .page-header { margin-bottom: 20px; }
+
+      .section { margin-bottom: 28px; }
+      .section-header { flex-wrap: wrap; gap: 6px; }
+      .section-note { margin-left: 0; width: 100%; }
+      .section-title { font-size: 14px; }
+
+      .diag-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .diag-card { padding: 14px; }
+      .card-title { font-size: 12px; }
+      .card-desc { font-size: 11px; }
+      .card-btn { font-size: 11px; padding: 8px 0; }
+
+      .workflow-wrap { padding: 20px 14px; border-radius: 12px; }
+      .wf-intro-title { font-size: 13px; }
+      .wf-intro-desc { font-size: 11px; }
+      .workflow-intro { margin-bottom: 20px; }
+
+      .phase-header { flex-wrap: wrap; gap: 6px; }
+      .phase-hint { display: none; }
+      .phase-name { font-size: 13px; }
+
+      .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+      .phase-cards { gap: 8px; }
+
+      .wf-card { padding: 14px; }
+      .wf-card-title { font-size: 12px; }
+      .wf-card-desc { font-size: 11px; }
+      .wf-card-btn { font-size: 11px; padding: 7px 0; }
+
+      .connector { padding: 8px 0; }
+      .conn-line { display: none; }
+      .conn-center { padding: 0; }
+      .conn-text { display: none; }
+      .conn-arrow { font-size: 14px; }
+
+      .must-badge { font-size: 9px; padding: 2px 6px; }
+    }
+  </style>
+</head>
+<body>
+<div class="mobile-header">
+  <div class="logo-icon">🐕</div>
+  <div class="logo-text">採用CXクラウド</div>
+</div>
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🐕</div>
+      <div class="logo-text">採用CXクラウド</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-top">
+        <div class="nav-item-main active"><span>⊞</span> ホーム</div>
+        <div class="nav-item-main"><span>🕐</span> 利用履歴</div>
+      </div>
+      <div class="nav-section">診断</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#EF4444;"></span>Indeed 企業ページ診断</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#F97316;"></span>求人原稿診断</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#F59E0B;"></span>採用CX診断</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#3B82F6;"></span>採用広報診断</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#6366F1;"></span>採用ブランド診断</div>
+      <div class="nav-section">戦略・設計</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#64748B;"></span>採用チャネル選定レポート</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#64748B;"></span>採用KPI設定シート生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#64748B;"></span>採用スケジュール生成</div>
+      <div class="nav-section">上流設計</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#AE1C3B;"></span>採用ペルソナ生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#0EA5E9;"></span>採用競合リサーチ</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#AE1C3B;"></span>USP策定</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#AE1C3B;"></span>採用コンセプト設計</div>
+      <div class="nav-section">採用広報・ブランディング</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#8B5CF6;"></span>採用サイトコピー生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#8B5CF6;"></span>採用SNS投稿文生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#8B5CF6;"></span>社員インタビュー原稿生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#8B5CF6;"></span>採用ピッチ資料構成案生成</div>
+      <div class="nav-section">母集団形成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#10B981;"></span>採用メッセージ生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#22C55E;"></span>求人原稿生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#EC4899;"></span>スカウトメッセージ生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#10B981;"></span>DR候補者選定基準生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#10B981;"></span>リファラル採用依頼文生成</div>
+      <div class="nav-section">選考</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#3B82F6;"></span>面接フィードバック</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#3B82F6;"></span>面接質問リスト生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#3B82F6;"></span>選考基準・評価シート生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#3B82F6;"></span>候補者比較レポート生成</div>
+      <div class="nav-section">内定・クロージング</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#F97316;"></span>オファーレター生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#F97316;"></span>内定後クロージングメッセージ生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#F97316;"></span>辞退防止フォロープラン生成</div>
+      <div class="nav-section">オンボーディング</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#14B8A6;"></span>入社案内・ウェルカムメッセージ生成</div>
+      <div class="nav-item-sub"><span class="nav-dot" style="background:#14B8A6;"></span>オンボーディングチェックリスト生成</div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar">杉</div>
+      <div>
+        <div class="user-name">杉谷悠樹</div>
+        <div class="user-email">y.sugitani@on-white.jp</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <h1 class="page-title">ホーム</h1>
+      <p class="page-subtitle">課題に合ったAIサービスを選んでください。</p>
+      <div class="free-notice">月3回まで無料でご利用いただけます</div>
+    </div>
+
+    <!-- 診断セクション -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-badge badge-diag">診断・分析</span>
+        <h2 class="section-title">採用課題を診断する</h2>
+        <span class="section-note">順番の制約なし・単発で使えます</span>
+      </div>
+      <div class="diag-grid">
+        <div class="diag-card">
+          <div class="card-header"><div class="card-title">Indeed 企業ページ診断</div><span class="card-tag tag-diag">診断</span></div>
+          <div class="card-desc">Indeed企業ページの訴求力をAIが分析。改善ポイントをスコアとともにレポートします。</div>
+          <button class="card-btn" style="background:#EF4444;">このサービスを使う →</button>
+        </div>
+        <div class="diag-card">
+          <div class="card-header"><div class="card-title">求人原稿診断</div><span class="card-tag tag-diag">診断</span></div>
+          <div class="card-desc">求人原稿の訴求力・読みやすさ・応募率向上の観点からAIが多角的に診断します。</div>
+          <button class="card-btn" style="background:#F97316;">このサービスを使う →</button>
+        </div>
+        <div class="diag-card">
+          <div class="card-header"><div class="card-title">採用CX診断</div><span class="card-tag tag-diag">診断</span></div>
+          <div class="card-desc">応募から入社までの候補者体験（CX）をAIが診断。ボトルネックを可視化します。</div>
+          <button class="card-btn" style="background:#F59E0B;">このサービスを使う →</button>
+        </div>
+        <div class="diag-card">
+          <div class="card-header"><div class="card-title">採用広報診断</div><span class="card-tag tag-diag">診断</span></div>
+          <div class="card-desc">採用サイト・SNS・noteなどの採用広報コンテンツをAIが分析し、改善提案を行います。</div>
+          <button class="card-btn" style="background:#3B82F6;">このサービスを使う →</button>
+        </div>
+        <div class="diag-card">
+          <div class="card-header"><div class="card-title">採用ブランド診断</div><span class="card-tag tag-diag">診断</span></div>
+          <div class="card-desc">採用ブランドの強度を5軸でスコアリング。競合比較と改善ロードマップをAIが自動生成します。</div>
+          <button class="card-btn" style="background:#6366F1;">このサービスを使う →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ワークフローセクション -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-badge badge-flow">採用支援ワークフロー</span>
+        <h2 class="section-title">採用支援ワークフロー</h2>
+        <span class="section-note">この順番で使うと生成精度が上がります</span>
+      </div>
+
+      <div class="workflow-wrap">
+        <div class="workflow-intro">
+          <div class="wf-intro-label">採用支援の全フェーズをAIでカバー</div>
+          <div class="wf-intro-title">戦略設計から入社後まで、採用の全工程をEISHINがAIで支援します</div>
+          <div class="wf-intro-desc">採用の全フェーズをカバーするAIツール群です</div>
+        </div>
+
+        <!-- フェーズ0: 戦略・設計 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#64748B;">0</div>
+            <div class="phase-name">戦略・設計</div>
+            <div class="phase-hint">採用活動の前提を整える</div>
+          </div>
+          <div class="phase-cards cols-3">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用チャネル選定レポート</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">職種・ターゲット・予算をもとに最適な採用媒体と出稿計画をAIが提案します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用KPI設定シート生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">採用目標から逆算したKPI・管理指標をAIが自動生成。進捗管理の基盤を作ります。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用スケジュール・計画書生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">入社希望日から逆算した採用スケジュールと工程計画書をAIが自動作成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- 上流設計 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#AE1C3B; font-size:9px; letter-spacing:-0.5px;">基盤</div>
+            <div class="phase-name">上流設計 <span class="must-badge">▶ まずここから</span></div>
+            <div class="phase-hint">ペルソナ・競合・USP・コンセプトを確定させる</div>
+          </div>
+          <div class="phase-cards cols-2">
+            <div class="wf-card foundation">
+              <div class="wf-card-header"><div class="wf-card-title">採用ペルソナ生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">採用したい人物像を入力するだけで、詳細な採用ペルソナをAIが自動生成します。</div>
+              <button class="wf-card-btn" style="background:#AE1C3B;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card foundation">
+              <div class="wf-card-header"><div class="wf-card-title">採用競合リサーチ</div><span class="wf-card-tag tag-analysis">分析</span></div>
+              <div class="wf-card-desc">競合他社の採用状況・求人・訴求軸をAIがリサーチし、差別化の起点を作ります。</div>
+              <button class="wf-card-btn" style="background:#0EA5E9;">このサービスを使う →</button>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+          <div class="phase-cards cols-2">
+            <div class="wf-card foundation">
+              <div class="wf-card-header"><div class="wf-card-title">USP策定</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ペルソナ・競合リサーチをもとに「なぜ自社に来るべきか」を一言で表現できる採用独自価値をAIが策定します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+<div class="wf-card foundation">
+              <div class="wf-card-header"><div class="wf-card-title">採用コンセプト設計</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ペルソナ・競合・USPを統合し、採用活動全体を貫くコンセプト・テーマをAIが設計します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div><div class="conn-text">上流設計が固まると、以下の精度が大幅に上がります</div><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- フェーズ1: 採用広報・ブランディング -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#8B5CF6;">1</div>
+            <div class="phase-name">採用広報・ブランディング</div>
+            <div class="phase-hint">コンセプトをコンテンツに落とし込む</div>
+          </div>
+          <div class="phase-cards cols-4">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用ピッチ資料構成案生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">会社の魅力・強みをもとに、候補者に刺さる採用ピッチ資料の構成案をAIが作成します。</div>
+              <button class="wf-card-btn" style="background:#8B5CF6;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用サイトコピー生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ペルソナと競合情報をもとに、採用サイトのキャッチコピーや各セクションの文章をAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#8B5CF6;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用SNS投稿文生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">X・Instagram・LinkedInなど各媒体の特性に合わせた採用広報コンテンツをAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">社員インタビュー原稿生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">インタビュー内容を入力するだけで、採用広報に使える社員インタビュー記事をAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div><div class="conn-text">ペルソナ・競合情報が揃うと、以下の精度が大幅に上がります</div><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- フェーズ2: 母集団形成 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#10B981;">2</div>
+            <div class="phase-name">母集団形成（応募獲得）</div>
+            <div class="phase-hint">ターゲットに届く求人・スカウトを作る</div>
+          </div>
+          <div class="phase-cards cols-3">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">採用メッセージ生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">選考通過・面接案内・内定通知など採用活動で使う各種メッセージをAIが自動生成します。</div>
+              <button class="wf-card-btn" style="background:#10B981;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">求人原稿生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">職種・条件・魅力ポイントを入力するだけで、応募率の高い求人原稿をAIが自動作成します。</div>
+              <button class="wf-card-btn" style="background:#22C55E;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">スカウトメッセージ生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">候補者プロフィールに合わせた、開封率・返信率の高いスカウトメッセージをAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#EC4899;">このサービスを使う →</button>
+            </div>
+          </div>
+          <div style="margin-top:10px;">
+          <div class="phase-cards cols-3">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">DR候補者選定基準生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ダイレクトリクルーティングでターゲットとすべき候補者の選定基準をAIが整理します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">リファラル採用依頼文生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">社員が紹介しやすいリファラル採用の依頼文・紹介カードをAIが自動作成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- フェーズ3: 選考 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#3B82F6;">3</div>
+            <div class="phase-name">選考</div>
+            <div class="phase-hint">面接の質と精度を高める</div>
+          </div>
+          <div class="phase-cards cols-4">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">面接フィードバック</div><span class="wf-card-tag tag-analysis">分析</span></div>
+              <div class="wf-card-desc">面接の文字起こしを入力するだけで、採用担当者向けの構造化フィードバックレポートを生成します。</div>
+              <button class="wf-card-btn" style="background:#8B5CF6;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">面接質問リスト生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ポジション・ペルソナをもとに、見極めポイントを押さえた面接質問リストをAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">選考基準・評価シート生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">ポジションと求める人物像から選考評価シートをAIが自動作成。面接官のばらつきを防ぎます。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">候補者比較レポート生成</div><span class="wf-card-tag tag-gen">分析</span></div>
+              <div class="wf-card-desc">複数候補者の面接情報を入力するだけで、採用可否判断を補助する比較レポートをAIが作成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- フェーズ4: 内定・クロージング -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#F97316;">4</div>
+            <div class="phase-name">内定・クロージング</div>
+            <div class="phase-hint">内定承諾率を高める</div>
+          </div>
+          <div class="phase-cards cols-3">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">オファーレター生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">候補者の志向・強みに合わせた、承諾率の高いオファーレターをAIが自動生成します。</div>
+              <button class="wf-card-btn" style="background:#F97316;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">内定後クロージングメッセージ生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">内定後の不安払拭・承諾率向上を目的としたフォローメッセージをAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">辞退防止フォロープラン生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">内定から入社までの接触計画をAIが設計。辞退リスクを下げるフォロープランを作成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <div class="conn-line"></div>
+          <div class="conn-center"><div class="conn-arrow">↓</div></div>
+          <div class="conn-line"></div>
+        </div>
+
+        <!-- フェーズ5: オンボーディング -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <div class="phase-num" style="background:#14B8A6;">5</div>
+            <div class="phase-name">オンボーディング</div>
+            <div class="phase-hint">入社後の定着率を高める</div>
+          </div>
+          <div class="phase-cards cols-3">
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">入社案内・ウェルカムメッセージ生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">新入社員の不安を解消し、早期活躍を促すウェルカムメッセージ・入社案内をAIが生成します。</div>
+              <button class="wf-card-btn" style="background:#14B8A6;">このサービスを使う →</button>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-header"><div class="wf-card-title">オンボーディングチェックリスト生成</div><span class="wf-card-tag tag-gen">生成</span></div>
+              <div class="wf-card-desc">職種・入社日・チーム情報をもとに、入社後30-60-90日のオンボーディング計画をAIが作成します。</div>
+              <button class="wf-card-btn" style="background:#9CA3AF; cursor:default; pointer-events:none;">コンサルプロジェクトで提供可能</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
