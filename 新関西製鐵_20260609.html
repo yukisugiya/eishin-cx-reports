@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リクナビ新卒求人診断レポート｜新関西製鐵株式会社</title>
+<style>
+  :root {
+    --red: #AE1C3B;
+    --orange: #E65100;
+    --green: #2E7D32;
+    --gray: #546E7A;
+    --bg: #F5F7FA;
+    --white: #FFFFFF;
+    --border: #E0E6ED;
+    --text: #1A2332;
+    --text-light: #546E7A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* Header */
+  .header { background: var(--red); color: white; padding: 32px 24px; border-radius: 12px; margin-bottom: 24px; }
+  .header-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; margin-bottom: 8px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .header-sub { font-size: 14px; opacity: 0.85; margin-bottom: 16px; }
+  .header-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; opacity: 0.8; }
+
+  /* Profile Card */
+  .profile-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid var(--border); }
+  .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .profile-item label { font-size: 11px; color: var(--text-light); display: block; margin-bottom: 2px; }
+  .profile-item span { font-size: 13px; font-weight: 600; }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+  .badge-green { background: #E8F5E9; color: var(--green); }
+  .badge-red { background: #FDECEA; color: var(--red); }
+  .badge-orange { background: #FFF3E0; color: var(--orange); }
+  .badge-gray { background: #ECEFF1; color: var(--gray); }
+  .warn-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 4px 12px; border-radius: 6px; background: #FFF3E0; color: var(--orange); border: 1px solid #FFB74D; font-weight: 600; }
+
+  /* Section */
+  .section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid var(--border); }
+  .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+  .section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--red); color: white; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-num.green { background: var(--green); }
+  .section-num.orange { background: var(--orange); }
+  .section-title { font-size: 16px; font-weight: 700; }
+
+  /* Score Summary */
+  .score-summary { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; margin-bottom: 24px; }
+  .ring-chart { flex-shrink: 0; }
+  .axis-bars { flex: 1; min-width: 260px; }
+  .axis-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .axis-label { font-size: 12px; color: var(--text-light); width: 160px; flex-shrink: 0; }
+  .bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 16px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-fill.grade-a { background: var(--green); }
+  .bar-fill.grade-b { background: var(--orange); }
+  .bar-fill.grade-c { background: var(--red); }
+  .axis-score { font-size: 12px; font-weight: 700; width: 46px; text-align: right; }
+  .axis-grade { font-size: 11px; font-weight: 700; width: 28px; padding: 2px 0; text-align: center; border-radius: 4px; }
+  .grade-a { background: #E8F5E9; color: var(--green); }
+  .grade-b { background: #FFF3E0; color: var(--orange); }
+  .grade-c { background: #FDECEA; color: var(--red); }
+  .total-score { text-align: center; }
+  .total-score .score-num { font-size: 42px; font-weight: 900; color: var(--red); line-height: 1; }
+  .total-score .score-denom { font-size: 16px; color: var(--text-light); }
+  .total-score .score-label { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  .overall-comment { background: #F5F7FA; border-radius: 8px; padding: 14px 16px; font-size: 13px; line-height: 1.8; border-left: 3px solid var(--red); }
+
+  /* Funnel */
+  .funnel-step { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+  .funnel-step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .funnel-num { font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
+  .funnel-num.ok { background: #E8F5E9; color: var(--green); }
+  .funnel-num.ng { background: #FDECEA; color: var(--red); }
+  .funnel-num.warn { background: #FFF3E0; color: var(--orange); }
+  .funnel-title { font-weight: 700; font-size: 14px; }
+  .funnel-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .funnel-table th { background: var(--bg); padding: 6px 10px; text-align: left; font-weight: 600; color: var(--text-light); border-bottom: 1px solid var(--border); }
+  .funnel-table td { padding: 8px 10px; border-bottom: 1px solid #F0F4F8; vertical-align: top; }
+  .funnel-table tr:last-child td { border-bottom: none; }
+  .ok-mark { color: var(--green); font-weight: 700; }
+  .ng-mark { color: var(--red); font-weight: 700; }
+  .warn-mark { color: var(--orange); font-weight: 700; }
+
+  /* Logic Check */
+  .check-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .check-table th { background: var(--bg); padding: 8px 12px; text-align: left; font-weight: 600; color: var(--text-light); border-bottom: 1px solid var(--border); }
+  .check-table td { padding: 10px 12px; border-bottom: 1px solid #F0F4F8; vertical-align: top; }
+  .check-table tr:last-child td { border-bottom: none; }
+
+  /* Axis Detail Cards */
+  .axis-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+  .axis-card-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .axis-card-header.grade-a { background: #E8F5E9; border-bottom: 1px solid #C8E6C9; }
+  .axis-card-header.grade-b { background: #FFF3E0; border-bottom: 1px solid #FFE0B2; }
+  .axis-card-header.grade-c { background: #FDECEA; border-bottom: 1px solid #FFCDD2; }
+  .axis-card-title { font-weight: 700; font-size: 13px; }
+  .axis-card-score { font-size: 18px; font-weight: 900; }
+  .axis-card-score.grade-a { color: var(--green); }
+  .axis-card-score.grade-b { color: var(--orange); }
+  .axis-card-score.grade-c { color: var(--red); }
+  .axis-card-body { padding: 16px; }
+  .rubric-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
+  .rubric-table th { background: var(--bg); padding: 6px 10px; text-align: left; font-weight: 600; color: var(--text-light); border-bottom: 1px solid var(--border); }
+  .rubric-table td { padding: 8px 10px; border-bottom: 1px solid #F0F4F8; vertical-align: top; }
+  .rubric-table tr:last-child td { border-bottom: none; }
+  .improvement { background: #F8F9FA; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: var(--text-light); margin-top: 8px; border-left: 3px solid var(--orange); }
+  .improvement-label { font-weight: 700; color: var(--orange); margin-bottom: 4px; }
+
+  /* Priority */
+  .priority-card { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; display: flex; gap: 14px; }
+  .priority-num { width: 32px; height: 32px; border-radius: 50%; background: var(--red); color: white; font-weight: 900; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .priority-num.p2 { background: var(--orange); }
+  .priority-num.p3 { background: var(--gray); }
+  .priority-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .priority-body p { font-size: 13px; color: var(--text-light); line-height: 1.7; }
+  .priority-impact { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 12px; background: #FDECEA; color: var(--red); }
+  .priority-impact.orange { background: #FFF3E0; color: var(--orange); }
+
+  /* Footer note */
+  .note { font-size: 11px; color: var(--text-light); background: var(--bg); border-radius: 6px; padding: 8px 12px; margin-top: 8px; }
+
+  /* Env data highlight */
+  .env-data-box { background: #E8F5E9; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; border-left: 3px solid var(--green); }
+  .env-data-box h4 { font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+  .env-data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .env-data-item { font-size: 12px; }
+  .env-data-item .val { font-weight: 700; font-size: 15px; color: var(--text); }
+  .env-data-item .lbl { font-size: 11px; color: var(--text-light); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">リクナビ新卒 求人診断レポート</div>
+    <h1>新関西製鐵株式会社</h1>
+    <div class="header-sub">総合職（大阪勤務）｜27年卒 新卒採用</div>
+    <div class="header-meta">
+      <span>診断日：2026年6月9日</span>
+      <span>業種：鉄鋼・金属メーカー</span>
+      <span>勤務地：大阪府堺市 / 大阪府交野市</span>
+      <span>表示開始日：2026年1月8日</span>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <div class="profile-grid">
+      <div class="profile-item"><label>職種</label><span>総合職（複数職種候補）</span></div>
+      <div class="profile-item"><label>初任給</label><span>月給249,550円〜（学歴別）</span></div>
+      <div class="profile-item"><label>年間休日</label><span>127日（2026年実績）</span></div>
+      <div class="profile-item"><label>平均残業</label><span>月11.7時間</span></div>
+      <div class="profile-item"><label>有給取得</label><span>平均18.1日</span></div>
+      <div class="profile-item"><label>採用締切</label><span>2027年1月26日</span></div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="warn-badge">⚠ 更新推奨：表示開始から5ヶ月経過。新着優遇期間の再活用のため更新を検討してください</span>
+    </div>
+    <div class="badge-row">
+      <span class="badge badge-red">先輩社員紹介：なし</span>
+      <span class="badge badge-red">採用担当者メッセージ：なし</span>
+      <span class="badge badge-orange">フォト：4枚</span>
+      <span class="badge badge-red">インターン連携：なし</span>
+      <span class="badge badge-green">職場環境データ：開示あり（5項目）</span>
+    </div>
+  </div>
+
+  <!-- Section 1: Score Summary -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div class="section-title">診断スコアサマリー</div>
+    </div>
+
+    <div class="score-summary">
+      <!-- Ring chart SVG -->
+      <div class="ring-chart">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="56" fill="none" stroke="#E0E6ED" stroke-width="14"/>
+          <circle cx="70" cy="70" r="56" fill="none" stroke="#AE1C3B" stroke-width="14"
+            stroke-dasharray="351.86" stroke-dashoffset="197.04"
+            stroke-linecap="round" transform="rotate(-90 70 70)"/>
+          <text x="70" y="64" text-anchor="middle" font-size="28" font-weight="900" fill="#AE1C3B">44</text>
+          <text x="70" y="82" text-anchor="middle" font-size="13" fill="#546E7A">/100点</text>
+        </svg>
+        <div style="text-align:center;font-size:11px;color:#546E7A;margin-top:-4px;">総合スコア</div>
+      </div>
+
+      <!-- Axis bars -->
+      <div class="axis-bars">
+        <div class="axis-bar-row">
+          <div class="axis-label">① クリック訴求・検索ヒット力</div>
+          <div class="bar-track"><div class="bar-fill grade-c" style="width:30%"></div></div>
+          <div class="axis-score" style="color:var(--red)">6/20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-bar-row">
+          <div class="axis-label">② 本文コンテンツ力</div>
+          <div class="bar-track"><div class="bar-fill grade-c" style="width:40%"></div></div>
+          <div class="axis-score" style="color:var(--red)">8/20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-bar-row">
+          <div class="axis-label">③ 条件・待遇の透明性</div>
+          <div class="bar-track"><div class="bar-fill grade-a" style="width:100%"></div></div>
+          <div class="axis-score" style="color:var(--green)">20/20</div>
+          <div class="axis-grade grade-a">A</div>
+        </div>
+        <div class="axis-bar-row">
+          <div class="axis-label">④ 媒体機能活用度</div>
+          <div class="bar-track"><div class="bar-fill grade-c" style="width:10%"></div></div>
+          <div class="axis-score" style="color:var(--red)">2/20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-bar-row">
+          <div class="axis-label">⑤ Z世代訴求・差別化</div>
+          <div class="bar-track"><div class="bar-fill grade-c" style="width:40%"></div></div>
+          <div class="axis-score" style="color:var(--red)">8/20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overall-comment">
+      待遇・条件の透明性は満点（20/20）で、職場環境データの数値開示が特に充実している。一方、リクナビ新卒の最重要コンテンツである先輩社員紹介・採用担当者メッセージが一切掲載されておらず、媒体機能活用度が2点にとどまった。Z世代が最も信頼する「生の声」が届かない状態で、エントリー意向の形成が困難な構造になっている。社会的意義の訴求は素材として持っているが、心理的安全性・若手活躍の具体事例が不足しており、Z世代の価値観軸で差別化できていない。
+    </div>
+    <div class="note">※ 各軸のスコアはルーブリック項目の○×積み上げで算出しています（印象評価ではありません）</div>
+  </div>
+
+  <!-- Section 2: Funnel -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div class="section-title">リクナビ新卒 ファネル診断</div>
+    </div>
+
+    <!-- STEP1 -->
+    <div class="funnel-step">
+      <div class="funnel-step-header">
+        <span class="funnel-num warn">STEP 1</span>
+        <span class="funnel-title">一覧でクリックされるか — △ 部分的に対応</span>
+      </div>
+      <table class="funnel-table">
+        <tr><th>観点</th><th>評価</th><th>確認内容</th></tr>
+        <tr>
+          <td>キャッチコピーのZ世代訴求</td>
+          <td><span class="ng-mark">✕</span></td>
+          <td>タイトルが「総合職（大阪勤務）」のみ。「働く自分の世界観」も「共感ポイント」も伝わらない。一覧での差別化要素がない</td>
+        </tr>
+        <tr>
+          <td>業種・職種カテゴリ設定</td>
+          <td><span class="ok-mark">○</span></td>
+          <td>鉄鋼・金属メーカー、製造・生産工程、営業、SCM等の複数職種カテゴリを設定済み</td>
+        </tr>
+        <tr>
+          <td>勤務地・働き方フィルター対応</td>
+          <td><span class="ok-mark">○</span></td>
+          <td>「転勤なし、一部リモートOK」が明示されている。フィルター検索でのヒットに貢献</td>
+        </tr>
+        <tr>
+          <td>採用予定人数</td>
+          <td><span class="ng-mark">✕</span></td>
+          <td>採用人数の記載なし。過去3年の採用実績（2024：2名、2023：3名、2022：1名）から少数精鋭と読み取れるが、求職者には伝わらない</td>
+        </tr>
+        <tr>
+          <td>更新鮮度</td>
+          <td><span class="ng-mark">✕</span></td>
+          <td>表示開始日：2026年1月8日（診断時点から5ヶ月経過）。新着優遇期間を活用できていない</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- STEP2 -->
+    <div class="funnel-step">
+      <div class="funnel-step-header">
+        <span class="funnel-num warn">STEP 2</span>
+        <span class="funnel-title">詳細ページで離脱されないか — △ コンテンツに薄さあり</span>
+      </div>
+      <table class="funnel-table">
+        <tr><th>セクション</th><th>充実度</th><th>コメント</th></tr>
+        <tr>
+          <td>仕事内容</td>
+          <td><span class="warn-mark">△ 薄い</span></td>
+          <td>職種一覧と特徴の訴求はあるが、1日の流れ・配属部署・チーム構成等の場面描写がなく、入社後のイメージが掴みにくい</td>
+        </tr>
+        <tr>
+          <td>求める人物像</td>
+          <td><span class="warn-mark">△ 部分的</span></td>
+          <td>「向上心と好奇心」の抽象的価値観訴求あり。「こんな人におすすめ」に環境・エコロジー志向等の共感タグあり。スキル条件はなし（未経験歓迎の記載もなし）</td>
+        </tr>
+        <tr>
+          <td>キャリアパス</td>
+          <td><span class="warn-mark">△ 抽象的</span></td>
+          <td>「幅広い経験から専門性を確立」という方向性の記述あり。入社後の具体的な年次別成長事例・昇格実績はなし</td>
+        </tr>
+        <tr>
+          <td>研修・OJT体制</td>
+          <td><span class="warn-mark">△ 薄い</span></td>
+          <td>「製造各部署研修・ビジネスマナー研修」「OJT制度あり」の記載はあるが、研修期間・内容・スケジュールの詳細なし</td>
+        </tr>
+        <tr>
+          <td>先輩社員紹介</td>
+          <td><span class="ng-mark">✕ なし</span></td>
+          <td>先輩社員インタビュー・先輩の声等のコンテンツ一切なし。Z世代が最も参考にするリアルな声の発信がない</td>
+        </tr>
+        <tr>
+          <td>フォトギャラリー</td>
+          <td><span class="warn-mark">△ 4枚</span></td>
+          <td>写真4枚（工場・製鉄設備と思われる画像）。職場での人物写真・社員の雰囲気が伝わる写真が少ない</td>
+        </tr>
+        <tr>
+          <td>職場環境データ</td>
+          <td><span class="ok-mark">○ 充実</span></td>
+          <td>月平均残業11.7時間・有給取得平均18.1日・育休取得実績（女性3/3名・男性5/7名）・女性管理職比率7%・平均勤続年数20.8年を数値開示。③軸の強みポイント</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- STEP3 -->
+    <div class="funnel-step">
+      <div class="funnel-step-header">
+        <span class="funnel-num ng">STEP 3</span>
+        <span class="funnel-title">エントリーを最終決断できるか — ✕ 信頼形成コンテンツが不足</span>
+      </div>
+      <table class="funnel-table">
+        <tr><th>観点</th><th>評価</th><th>確認内容</th></tr>
+        <tr>
+          <td>採用担当者メッセージ</td>
+          <td><span class="ng-mark">✕</span></td>
+          <td>採用担当者からのメッセージなし。「誰が採用しているか」が伝わらず、企業との心理的距離が縮まらない</td>
+        </tr>
+        <tr>
+          <td>スカウト・「気になる」対応</td>
+          <td><span class="ng-mark">確認不可</span></td>
+          <td>スカウト受付設定の明示なし。企業からの積極的アプローチ意思が学生に伝わっていない</td>
+        </tr>
+        <tr>
+          <td>インターンシップ情報</td>
+          <td><span class="ng-mark">✕</span></td>
+          <td>インターンシップ情報の掲載なし。「技能職（大阪勤務）」という別求人はあるが、インターン→本採用の導線がない</td>
+        </tr>
+        <tr>
+          <td>「入社後の自分」の解像度</td>
+          <td><span class="warn-mark">△ 不明確</span></td>
+          <td>「幅広い経験から専門性を確立」の方向性は示されているが、具体的な年次・事例がなく、入社後の自分の姿が描きにくい</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 3: Logic Check -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div class="section-title">リクナビ新卒 表示ロジック適合チェック</div>
+    </div>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:16px;padding:10px 12px;background:var(--bg);border-radius:6px;line-height:1.8;">
+      <strong>リクナビ新卒の表示ロジック：</strong>「掲載プランランク × 新着優遇期間 × エントリー数・フォロー数」の構造。プラン強化は有効だが、カテゴリ設定・キーワード最適化・更新頻度は追加費用なしで発見性を高める手段。
+    </p>
+    <table class="check-table">
+      <tr><th>チェック項目</th><th style="width:60px">評価</th><th>根拠・コメント</th></tr>
+      <tr>
+        <td>業種・職種カテゴリが求職者の検索行動と一致しているか</td>
+        <td><span class="ok-mark">○</span></td>
+        <td>鉄鋼・金属メーカー、製造・生産工程・営業・SCM等の複数カテゴリを適切に設定している</td>
+      </tr>
+      <tr>
+        <td>本文に検索上位ワードが自然に含まれているか</td>
+        <td><span class="ok-mark">○</span></td>
+        <td>「鉄鋼」「製造管理」「圧延」「設備管理」「品質管理」「大阪」等の検索ヒット語が本文中に自然に含まれている</td>
+      </tr>
+      <tr>
+        <td>勤務形態・転勤等のフィルター訴求情報が明示されているか</td>
+        <td><span class="ok-mark">○</span></td>
+        <td>「転勤なし、一部リモートOK」が明示されており、フィルター検索でのヒットに貢献している</td>
+      </tr>
+      <tr>
+        <td>掲載から30日以内（新着優遇期間・更新推奨）か</td>
+        <td><span class="ng-mark">✕</span></td>
+        <td>表示開始日：2026年1月8日から約5ヶ月経過。新着優遇期間（掲載後一定期間）を過ぎており、同プラン内での上位表示優遇が受けられていない可能性が高い</td>
+      </tr>
+      <tr>
+        <td>募集職種が明確に分かれており検索ヒットの軸が絞られているか</td>
+        <td><span class="ng-mark">✕</span></td>
+        <td>「職種候補が複数あり」で選考後に配属職種が確定する形式。職種ごとの仕事内容が分かれていないため、特定職種を検索する学生へのアプローチが分散している</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 4: Feature Check -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div class="section-title">媒体機能 活用チェック</div>
+    </div>
+    <table class="check-table">
+      <tr><th>機能</th><th style="width:80px">評価</th><th>確認内容</th></tr>
+      <tr>
+        <td>先輩社員紹介</td>
+        <td><span class="ng-mark">✕ なし</span></td>
+        <td>先輩社員インタビュー・先輩の声コンテンツ：0件</td>
+      </tr>
+      <tr>
+        <td>採用担当者メッセージ</td>
+        <td><span class="ng-mark">✕ なし</span></td>
+        <td>採用担当者からのメッセージ：なし</td>
+      </tr>
+      <tr>
+        <td>フォトギャラリー</td>
+        <td><span class="warn-mark">△ 4枚</span></td>
+        <td>写真4枚確認。工場・製鉄設備の写真と推定。社員が写った雰囲気の伝わる写真が少ない可能性あり</td>
+      </tr>
+      <tr>
+        <td>動画コンテンツ</td>
+        <td><span class="ng-mark">✕ なし</span></td>
+        <td>会社説明会動画・先輩インタビュー動画：なし</td>
+      </tr>
+      <tr>
+        <td>インターンシップ情報</td>
+        <td><span class="ng-mark">✕ なし</span></td>
+        <td>インターンシップ募集情報との連携：なし</td>
+      </tr>
+      <tr>
+        <td>スカウト・気になる対応</td>
+        <td><span class="ng-mark">確認不可</span></td>
+        <td>スカウト受付設定の明示なし（確認不可のため0点判定）</td>
+      </tr>
+      <tr>
+        <td>職場環境データ</td>
+        <td><span class="ok-mark">○ 5項目</span></td>
+        <td>月平均残業時間・有給取得平均日数・育休取得者数・女性管理職比率・平均勤続年数を数値開示済み</td>
+      </tr>
+      <tr>
+        <td>更新鮮度（30日以内）</td>
+        <td><span class="ng-mark">✕</span></td>
+        <td>表示開始日：2026年1月8日（5ヶ月経過）</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 5: Axis Detail -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div class="section-title">軸別診断</div>
+    </div>
+
+    <!-- Axis 1 -->
+    <div class="axis-card">
+      <div class="axis-card-header grade-c">
+        <span class="axis-card-title">① クリック訴求・検索ヒット力</span>
+        <span class="axis-card-score grade-c">6 / 20点 ［C］</span>
+      </div>
+      <div class="axis-card-body">
+        <table class="rubric-table">
+          <tr><th>項目</th><th style="width:50px">判定</th><th style="width:60px">得点</th><th>確認した事実</th></tr>
+          <tr>
+            <td>キャッチコピーがZ世代に刺さる共感・価値観訴求</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 5点</td>
+            <td>タイトル：「総合職（大阪勤務）」のみ。職種名と勤務地の記載で、Z世代への共感・価値観の訴求なし</td>
+          </tr>
+          <tr>
+            <td>業種・職種カテゴリが検索行動と一致</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>3 / 3点</td>
+            <td>鉄鋼・金属メーカー業種、製造・生産工程・営業・SCM等7職種カテゴリを設定</td>
+          </tr>
+          <tr>
+            <td>勤務地・働き方のフィルター対応情報が明記</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>3 / 3点</td>
+            <td>「転勤なし、一部リモートOK」が明示されている</td>
+          </tr>
+          <tr>
+            <td>採用予定人数が明記されている</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 3点</td>
+            <td>採用人数の記載なし（過去3年の新卒採用実績は2〜3名規模）</td>
+          </tr>
+          <tr>
+            <td>更新鮮度（30日以内に更新）</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 3点</td>
+            <td>表示開始日：2026年1月8日（5ヶ月経過）</td>
+          </tr>
+          <tr>
+            <td>募集職種が明確で職種ごとの内容が分かれている</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 3点</td>
+            <td>「職種候補が複数あり」で選考・内定後に配属職種確定。職種別の仕事内容が分かれていない</td>
+          </tr>
+        </table>
+        <div class="improvement">
+          <div class="improvement-label">改善の方向性</div>
+          タイトルを「総合職（大阪勤務）」から、「鉄のリサイクルで社会インフラを支える仕事／転勤なし」等、事業の社会的意義と働き方の特徴を1行で伝える表現に変更することを検討。また、掲載を定期的に更新して新着優遇期間を再取得する運用ルールの設定が有効。
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 2 -->
+    <div class="axis-card">
+      <div class="axis-card-header grade-c">
+        <span class="axis-card-title">② 本文コンテンツ力（仕事・職場の解像度）</span>
+        <span class="axis-card-score grade-c">8 / 20点 ［C］</span>
+      </div>
+      <div class="axis-card-body">
+        <table class="rubric-table">
+          <tr><th>項目</th><th style="width:50px">判定</th><th style="width:60px">得点</th><th>確認した事実</th></tr>
+          <tr>
+            <td>仕事内容の詳細記載</td>
+            <td><span class="warn-mark">△</span></td>
+            <td>2 / 4点</td>
+            <td>職種リストと「このポジションの魅力」の訴求あり。1日の流れ・配属部署・チーム構成・人員数等の場面描写なし</td>
+          </tr>
+          <tr>
+            <td>求める人物像が価値観・姿勢ベース</td>
+            <td><span class="warn-mark">△</span></td>
+            <td>2 / 4点</td>
+            <td>「向上心と好奇心を持つ人物」の抽象的価値観訴求あり。「こんな人におすすめ」タグに環境・エコロジー志向等の共感ポイントあり。ただし具体的な働き方・行動の姿勢の描写は薄い</td>
+          </tr>
+          <tr>
+            <td>キャリアパス・成長の道筋</td>
+            <td><span class="warn-mark">△</span></td>
+            <td>2 / 4点</td>
+            <td>「製造から管理・販売・開発まで幅広い経験を積み、専門分野を確立できる」という方向性の記述あり。入社後1〜3年の具体的なキャリア事例・昇格実績なし</td>
+          </tr>
+          <tr>
+            <td>研修・OJT・入社後フォロー体制</td>
+            <td><span class="warn-mark">△</span></td>
+            <td>2 / 4点</td>
+            <td>「製造各部署研修・ビジネスマナー研修」「OJT制度あり」「資格取得支援（ITパスポート等）」の記載あり。研修期間・詳細スケジュール・メンター具体例なし</td>
+          </tr>
+          <tr>
+            <td>募集背景・採用理由</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 4点</td>
+            <td>「なぜ今新卒を採用するか」「新卒に任せたい仕事がある」等の採用背景の記載なし</td>
+          </tr>
+        </table>
+        <div class="improvement">
+          <div class="improvement-label">改善の方向性</div>
+          「入社後3ヶ月：製造各部署ローテーション研修 → 6ヶ月：OJT配属 → 1〜2年目：担当ラインの独り立ち」等の年次別の道筋の記載を追加することで、入社後の解像度を高めることを検討。また、「なぜ今新卒を採用するか」（例：循環型鉄鋼事業の拡大・設備刷新プロジェクト等）の背景記載も有効。
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 3 -->
+    <div class="axis-card">
+      <div class="axis-card-header grade-a">
+        <span class="axis-card-title">③ 条件・待遇の透明性</span>
+        <span class="axis-card-score grade-a">20 / 20点 ［A］</span>
+      </div>
+      <div class="axis-card-body">
+        <div class="env-data-box">
+          <h4>職場環境データ（数値開示済み）</h4>
+          <div class="env-data-grid">
+            <div class="env-data-item"><div class="val">11.7時間</div><div class="lbl">月平均残業時間</div></div>
+            <div class="env-data-item"><div class="val">18.1日</div><div class="lbl">有給取得平均日数</div></div>
+            <div class="env-data-item"><div class="val">100%</div><div class="lbl">女性育休取得率（3/3名）</div></div>
+            <div class="env-data-item"><div class="val">71.4%</div><div class="lbl">男性育休取得率（5/7名）</div></div>
+            <div class="env-data-item"><div class="val">20.8年</div><div class="lbl">平均勤続年数</div></div>
+          </div>
+        </div>
+        <table class="rubric-table">
+          <tr><th>項目</th><th style="width:50px">判定</th><th style="width:60px">得点</th><th>確認した事実</th></tr>
+          <tr>
+            <td>初任給・給与体系が数値で明示</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>5 / 5点</td>
+            <td>高専卒：249,550円、大学卒：274,270円、大学院卒：294,420円（基本給）。賞与年2回、昇給年1回明記</td>
+          </tr>
+          <tr>
+            <td>年間休日・有給の実数値</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>4 / 4点</td>
+            <td>年間休日127日（2026年実績）、有給20〜21日、前年度使用平均18.3日を数値記載</td>
+          </tr>
+          <tr>
+            <td>残業時間の実態を数値で明記</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>4 / 4点</td>
+            <td>月平均所定外労働時間：11.7時間を明記。ノー残業デー（毎週水曜）も記載</td>
+          </tr>
+          <tr>
+            <td>職場環境データの数値開示</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>4 / 4点</td>
+            <td>有給取得平均日数・育休取得実績（男女別）・女性管理職比率・平均勤続年数の5項目を数値開示</td>
+          </tr>
+          <tr>
+            <td>福利厚生が具体的に記載</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>3 / 3点</td>
+            <td>借り上げ独身寮（最大補助月5万円）、社宅（家賃負担月2.8万円）、社員食堂等の金額・内容の具体的記載あり</td>
+          </tr>
+        </table>
+        <div class="improvement">
+          <div class="improvement-label">強みポイント（活用推奨）</div>
+          ③軸は全項目○の満点。特に「育休取得率（女性100%・男性71.4%）」「平均勤続年数20.8年」「月残業11.7時間」は、Z世代の不安軽減に直結する強い訴求ポイント。この数値を①キャッチコピーや⑤Z世代訴求の改善時に積極活用することを推奨。
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 4 -->
+    <div class="axis-card">
+      <div class="axis-card-header grade-c">
+        <span class="axis-card-title">④ リクナビ新卒 媒体機能の活用度</span>
+        <span class="axis-card-score grade-c">2 / 20点 ［C］</span>
+      </div>
+      <div class="axis-card-body">
+        <table class="rubric-table">
+          <tr><th>項目</th><th style="width:50px">判定</th><th style="width:60px">得点</th><th>確認した事実</th></tr>
+          <tr>
+            <td>先輩社員紹介（最重要コンテンツ）</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 6点</td>
+            <td>先輩社員インタビュー・先輩の声：0件。リクナビ新卒でZ世代の意向形成に最も影響するコンテンツが皆無</td>
+          </tr>
+          <tr>
+            <td>採用担当者メッセージ</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 4点</td>
+            <td>採用担当者からのメッセージなし</td>
+          </tr>
+          <tr>
+            <td>フォトギャラリー・職場写真</td>
+            <td><span class="warn-mark">△</span></td>
+            <td>2 / 4点</td>
+            <td>写真4枚確認（基準：5枚以上→4点、1〜4枚→2点）</td>
+          </tr>
+          <tr>
+            <td>インターンシップ情報との連携</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 3点</td>
+            <td>インターンシップ情報：なし</td>
+          </tr>
+          <tr>
+            <td>スカウト・「気になる」対応設定</td>
+            <td><span class="ng-mark">確認不可</span></td>
+            <td>0 / 3点</td>
+            <td>スカウト受付設定の明示なし（確認不可のため0点）</td>
+          </tr>
+        </table>
+        <div class="improvement">
+          <div class="improvement-label">改善の方向性</div>
+          先輩社員紹介の掲載が最優先。「製造現場2年目の社員が語る1日の仕事の流れ」「文系出身者が設備管理を担当するまでの道のり」等、学生が「自分に重ねられる」具体的な人物ストーリーを1〜3件掲載することを検討。採用担当者メッセージも合わせて掲載することで、STEP3の最終決断を後押しできる。
+        </div>
+      </div>
+    </div>
+
+    <!-- Axis 5 -->
+    <div class="axis-card">
+      <div class="axis-card-header grade-c">
+        <span class="axis-card-title">⑤ Z世代訴求・差別化</span>
+        <span class="axis-card-score grade-c">8 / 20点 ［C］</span>
+      </div>
+      <div class="axis-card-body">
+        <table class="rubric-table">
+          <tr><th>項目</th><th style="width:50px">判定</th><th style="width:60px">得点</th><th>確認した事実</th></tr>
+          <tr>
+            <td>事業・仕事の社会的意義が具体的</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>5 / 5点</td>
+            <td>「鉄のリサイクルを通じ、環境保全と資源循環という社会の根幹を支える」「循環型社会への貢献」「環境にやさしいものづくり」が具体的に記載されている</td>
+          </tr>
+          <tr>
+            <td>心理的安全性・フラットな職場文化</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 4点</td>
+            <td>「こんな人におすすめ」に「穏やかで互いのペースを尊重」あり。「プロフェッショナルなものづくり集団」の記述あり。しかし心理的安全性・意見の言いやすさ・失敗への向き合い方等の具体的な事例・制度の記載なし</td>
+          </tr>
+          <tr>
+            <td>若手社員の活躍・裁量の実例</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 4点</td>
+            <td>「若手が裁量を持てる環境」（おすすめタグ）の記載あり。しかし「入社○年目でこの業務を担当した」等の具体的な若手活躍事例なし</td>
+          </tr>
+          <tr>
+            <td>採用文のトーンがフラット・対話的</td>
+            <td><span class="ng-mark">✕</span></td>
+            <td>0 / 4点</td>
+            <td>「我々と一緒に仕事の喜びを分かち合える方をお待ちしています」という対等表現あり。しかし全体的に「当社の特徴・魅力」の説明口調が中心で、対話的・共創的なトーンに乏しい</td>
+          </tr>
+          <tr>
+            <td>数値化された実績</td>
+            <td><span class="ok-mark">○</span></td>
+            <td>3 / 3点</td>
+            <td>「操業80年」「平均勤続年数20.8年」「月残業11.7時間」「育休取得率100%（女性）」等の数値実績が複数含まれる</td>
+          </tr>
+        </table>
+        <div class="improvement">
+          <div class="improvement-label">改善の方向性</div>
+          社会的意義の素材（環境・循環型社会）はある。「心理的安全性の具体例」（例：「提案制度で若手の意見が採用された事例がある」等）と「若手活躍の具体事例」（例：「入社3年目で製造ラインの改善プロジェクトを担当」）を追加することで⑤軸のスコアが大きく改善する。採用文のトーンも「企業が求める人材」説明型から「あなたと一緒に作りたい」対話型に変えることを検討。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Top 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num green">6</div>
+      <div class="section-title">優先改善テーマ TOP 3</div>
+    </div>
+
+    <div class="priority-card">
+      <div class="priority-num">1</div>
+      <div class="priority-body">
+        <h4>先輩社員紹介コンテンツの掲載（④軸 ±6点・⑤軸 改善貢献）</h4>
+        <p>
+          <strong>確認した事実：</strong>先輩社員紹介コンテンツが0件。リクナビ新卒のZ世代ユーザーが最も参考にする「現場の生の声」が一切届いていない状態。<br>
+          <strong>なぜ優先すべきか：</strong>④軸の先輩社員紹介は6点（最大配点）で、現在0点。1〜2件掲載するだけで④軸がCからB〜Aに改善し、総合スコアが50〜58点台に向上する。STEP2の離脱防止にも直結し、エントリー率の改善が期待できる。
+        </p>
+        <span class="priority-impact">④軸 +3〜6点 改善見込み</span>
+      </div>
+    </div>
+
+    <div class="priority-card">
+      <div class="priority-num p2">2</div>
+      <div class="priority-body">
+        <h4>採用担当者メッセージの掲載（④軸 ±4点）</h4>
+        <p>
+          <strong>確認した事実：</strong>採用担当者メッセージが掲載されておらず、「誰が採用しているか」が学生に伝わらない。STEP3（最終エントリー決断）で企業との心理的距離が縮まっていない。<br>
+          <strong>なぜ優先すべきか：</strong>採用担当者の顔と言葉を見せることは、Z世代の「この会社は信頼できるか」の判断に直結する。掲載するだけで④軸に4点加算される。先輩社員紹介と合わせて実施することで④軸がAグレードに到達する。
+        </p>
+        <span class="priority-impact orange">④軸 +4点 改善見込み</span>
+      </div>
+    </div>
+
+    <div class="priority-card">
+      <div class="priority-num p3">3</div>
+      <div class="priority-body">
+        <h4>キャッチコピーのZ世代訴求への刷新（①軸 ±5点）</h4>
+        <p>
+          <strong>確認した事実：</strong>タイトル「総合職（大阪勤務）」は職種名と勤務地のみ。一覧での差別化要素がなく、Z世代への共感訴求がゼロ。<br>
+          <strong>なぜ優先すべきか：</strong>③軸で明らかになった「月残業11.7時間・育休100%・20.8年の平均勤続」という数値の強みをタイトルに活かす余地がある。また、社会的意義（環境・循環型）の素材もある。キャッチコピーの変更は無料でできる施策であり、①軸に5点加算されクリック率の改善も見込める。
+        </p>
+        <span class="priority-impact orange">①軸 +5点 改善見込み</span>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:0">
+      ※ 上記3テーマをすべて実施した場合の改善後スコア試算：44点 → 最大62点程度（①+5、④+10）。媒体機能の活用強化が最もROIの高い施策。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
