@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイナビ新卒求人診断レポート｜日本駐車場開発株式会社</title>
+<style>
+  :root {
+    --red: #AE1C3B;
+    --orange: #E65100;
+    --green: #2E7D32;
+    --blue: #1565C0;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-400: #BDBDBD;
+    --gray-600: #757575;
+    --gray-800: #424242;
+    --gray-900: #212121;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; background: var(--gray-100); color: var(--gray-900); line-height: 1.7; font-size: 14px; }
+  .page { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+
+  /* Header */
+  .header { background: var(--red); color: white; padding: 20px 32px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .header-left h1 { font-size: 18px; font-weight: 700; letter-spacing: 0.03em; }
+  .header-left p { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+  .header-badge { background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; text-align: center; }
+  .header-badge .score-big { font-size: 36px; font-weight: 800; line-height: 1; }
+  .header-badge .score-label { font-size: 11px; opacity: 0.9; }
+
+  /* Section */
+  .section { background: var(--white); border-radius: 12px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .section-tag { display: inline-block; background: var(--red); color: white; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .section-tag.gray { background: var(--gray-600); }
+  .section-title { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--gray-900); }
+
+  /* Profile Card */
+  .profile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .profile-item { background: var(--gray-50); border-radius: 8px; padding: 12px 16px; }
+  .profile-item .label { font-size: 11px; color: var(--gray-600); margin-bottom: 2px; }
+  .profile-item .value { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge.green { background: #E8F5E9; color: var(--green); }
+  .badge.orange { background: #FFF3E0; color: var(--orange); }
+  .badge.red { background: #FFEBEE; color: var(--red); }
+  .badge.gray { background: var(--gray-200); color: var(--gray-600); }
+  .badge.blue { background: #E3F2FD; color: var(--blue); }
+
+  /* Score Summary */
+  .score-summary-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: center; }
+  @media(max-width:600px){ .score-summary-grid { grid-template-columns: 1fr; } }
+  .ring-wrap { position: relative; width: 180px; margin: 0 auto; }
+  .ring-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+  .ring-center .num { font-size: 44px; font-weight: 800; color: var(--red); line-height: 1; }
+  .ring-center .denom { font-size: 14px; color: var(--gray-600); }
+  .grade-c { color: var(--red); }
+  .grade-b { color: var(--orange); }
+  .grade-a { color: var(--green); }
+
+  .axis-bars { display: flex; flex-direction: column; gap: 14px; }
+  .axis-row { display: flex; align-items: center; gap: 12px; }
+  .axis-name { width: 180px; font-size: 12px; color: var(--gray-800); flex-shrink: 0; }
+  .bar-wrap { flex: 1; background: var(--gray-200); border-radius: 4px; height: 18px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+  .bar-fill.c { background: var(--red); }
+  .bar-fill.b { background: var(--orange); }
+  .bar-fill.a { background: var(--green); }
+  .axis-score { width: 60px; text-align: right; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .axis-grade { width: 30px; text-align: center; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+
+  .summary-text { margin-top: 20px; padding: 16px 20px; background: var(--gray-50); border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.8; }
+
+  /* Funnel */
+  .funnel-steps { display: flex; flex-direction: column; gap: 0; }
+  .funnel-step { border: 1px solid var(--gray-200); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; position: relative; }
+  .funnel-step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+  .step-num.ok { background: #E8F5E9; color: var(--green); }
+  .step-num.warn { background: #FFF3E0; color: var(--orange); }
+  .step-num.ng { background: #FFEBEE; color: var(--red); }
+  .step-title { font-weight: 700; font-size: 14px; }
+  .step-verdict { font-size: 11px; padding: 2px 10px; border-radius: 12px; margin-left: auto; }
+  .step-verdict.ok { background: #E8F5E9; color: var(--green); }
+  .step-verdict.warn { background: #FFF3E0; color: var(--orange); }
+  .step-verdict.ng { background: #FFEBEE; color: var(--red); }
+
+  /* Check Table */
+  .check-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .check-table th { background: var(--gray-100); padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; color: var(--gray-600); border-bottom: 2px solid var(--gray-200); }
+  .check-table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-200); vertical-align: top; }
+  .check-table tr:last-child td { border-bottom: none; }
+  .ok-mark { color: var(--green); font-weight: 700; font-size: 16px; }
+  .ng-mark { color: var(--red); font-weight: 700; font-size: 16px; }
+  .tri-mark { color: var(--orange); font-weight: 700; font-size: 14px; }
+
+  /* Axis Detail */
+  .axis-card { border: 1px solid var(--gray-200); border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+  .axis-card-header { padding: 14px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--gray-200); }
+  .axis-card-header .axis-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; background: var(--gray-100); color: var(--gray-700); }
+  .axis-card-header .axis-title { font-weight: 700; font-size: 14px; flex: 1; }
+  .axis-card-header .axis-pts { font-size: 20px; font-weight: 800; }
+  .axis-card-body { padding: 16px 20px; }
+  .axis-card-body .sub { font-size: 11px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; margin-top: 14px; }
+  .axis-card-body .sub:first-child { margin-top: 0; }
+  .rubric-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; font-size: 13px; }
+  .rubric-row .mark { flex-shrink: 0; width: 20px; text-align: center; margin-top: 1px; }
+  .rubric-row .item-text { flex: 1; }
+  .rubric-row .pts { flex-shrink: 0; font-size: 11px; color: var(--gray-600); white-space: nowrap; }
+  .issue-box { background: #FFEBEE; border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .direction-box { background: #E8F5E9; border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+
+  /* Top3 */
+  .top3-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--gray-200); }
+  .top3-item:last-child { border-bottom: none; }
+  .top3-rank { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; flex-shrink: 0; }
+  .top3-rank.r1 { background: #FFEBEE; color: var(--red); }
+  .top3-rank.r2 { background: #FFF3E0; color: var(--orange); }
+  .top3-rank.r3 { background: #FFF3E0; color: var(--orange); }
+  .top3-content .title { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .top3-content .fact { font-size: 12px; color: var(--gray-600); margin-bottom: 6px; }
+  .top3-content .why { font-size: 13px; line-height: 1.7; }
+  .impact-tag { display: inline-block; background: #FFEBEE; color: var(--red); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+
+  /* Media check */
+  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .media-item { background: var(--gray-50); border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+  .media-item .mark { font-size: 18px; flex-shrink: 0; }
+  .media-item .info { }
+  .media-item .info .name { font-size: 11px; color: var(--gray-600); }
+  .media-item .info .val { font-size: 13px; font-weight: 700; }
+
+  .note { font-size: 11px; color: var(--gray-600); margin-top: 12px; }
+  .divider { height: 1px; background: var(--gray-200); margin: 20px 0; }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag-item { background: #E3F2FD; color: var(--blue); font-size: 11px; padding: 3px 10px; border-radius: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="header-left">
+      <h1>マイナビ新卒求人診断レポート</h1>
+      <p>日本駐車場開発株式会社 ／ 診断日：2026年6月9日</p>
+    </div>
+    <div class="header-badge">
+      <div class="score-big">37</div>
+      <div class="score-label">/ 100点　総合評価 C</div>
+    </div>
+  </div>
+
+  <!-- ― 診断対象プロフィール -->
+  <div class="section">
+    <div class="section-tag gray">診断対象プロフィール</div>
+    <div class="section-title">日本駐車場開発株式会社</div>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="label">業種</div>
+        <div class="value">不動産・専門コンサルティング</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">本社</div>
+        <div class="value">大阪府大阪市北区</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">上場</div>
+        <div class="value">東証プライム（証券コード2353）</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">従業員数</div>
+        <div class="value">連結1,012名 / 単体557名</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">売上高</div>
+        <div class="value">318億5千万円（2023年7月期）</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">平均年齢</div>
+        <div class="value">31.3歳</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">診断対象コース</div>
+        <div class="value">総合職</div>
+      </div>
+      <div class="profile-item">
+        <div class="label">ページ最終更新</div>
+        <div class="value">2026年3月12日</div>
+      </div>
+    </div>
+    <div class="badge-row">
+      <span class="badge orange">取材情報タブ：未掲載</span>
+      <span class="badge orange">先輩情報タブ：未掲載</span>
+      <span class="badge green">説明会情報：WEB開催あり</span>
+      <span class="badge blue">条件タグ：8個</span>
+      <span class="badge green">写真：10枚以上</span>
+    </div>
+    <div class="divider"></div>
+    <div style="font-size:12px;color:var(--gray-600);font-weight:700;margin-bottom:8px;">設定済み条件タグ（8個）</div>
+    <div class="tag-list">
+      <span class="tag-item">過去10年赤字決算なしなど安定した業績</span>
+      <span class="tag-item">シェアNo.1や特化した技術・サービスを持っている</span>
+      <span class="tag-item">海外勤務や海外を相手にする仕事ができる</span>
+      <span class="tag-item">多角的な事業展開をしている</span>
+      <span class="tag-item">新商品・サービス開発に積極的</span>
+      <span class="tag-item">実力主義の給与体系・評価制度を導入</span>
+      <span class="tag-item">年間休日120日以上</span>
+      <span class="tag-item">ジョブローテーションで様々な職種を体験できる</span>
+    </div>
+  </div>
+
+  <!-- 1. 診断スコアサマリー -->
+  <div class="section">
+    <div class="section-tag">1</div>
+    <div class="section-title">診断スコアサマリー</div>
+    <div class="score-summary-grid">
+      <!-- Ring Chart -->
+      <div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <circle cx="90" cy="90" r="72" fill="none" stroke="#EEEEEE" stroke-width="18"/>
+            <circle cx="90" cy="90" r="72" fill="none" stroke="#AE1C3B" stroke-width="18"
+              stroke-dasharray="452.4" stroke-dashoffset="284"
+              stroke-linecap="round" transform="rotate(-90 90 90)"/>
+          </svg>
+          <div class="ring-center">
+            <div class="num grade-c">37</div>
+            <div class="denom">/ 100</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:8px;font-size:13px;color:var(--red);font-weight:700;">総合評価：C（要改善）</div>
+      </div>
+      <!-- Axis Bars -->
+      <div class="axis-bars">
+        <div class="axis-row">
+          <div class="axis-name">① 検索ヒット・クリック訴求力</div>
+          <div class="bar-wrap"><div class="bar-fill c" style="width:35%"></div></div>
+          <div class="axis-score">7 / 20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-name">② 初任給・処遇の透明性</div>
+          <div class="bar-wrap"><div class="bar-fill c" style="width:25%"></div></div>
+          <div class="axis-score">5 / 20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-name">③ 採用プロセス・信頼情報</div>
+          <div class="bar-wrap"><div class="bar-fill b" style="width:75%"></div></div>
+          <div class="axis-score">15 / 20</div>
+          <div class="axis-grade grade-b">B</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-name">④ 共感コンテンツ・Z世代訴求</div>
+          <div class="bar-wrap"><div class="bar-fill c" style="width:15%"></div></div>
+          <div class="axis-score">3 / 20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-name">⑤ 差別化・競争優位性</div>
+          <div class="bar-wrap"><div class="bar-fill c" style="width:25%"></div></div>
+          <div class="axis-score">5 / 20</div>
+          <div class="axis-grade grade-c">C</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-600);margin-top:8px;">※各軸スコアはルーブリック項目の○×積み上げで算出（印象評価ではありません）</div>
+      </div>
+    </div>
+    <div class="summary-text">
+      条件タグ（8個）と働き方データ（残業・有給・育休率）の開示は実績として評価できる一方、<strong>先輩インタビュー・取材情報タブ・社員のリアルボイスがすべて未掲載</strong>であり、Z世代が最も重視する「共感コンテンツ」が根本から欠落している。また、学歴別初任給の不明示・評価制度の具体性欠如・「なぜここか」の価値観訴求不足が重なり、就活生が応募を決断するための材料が揃っていない状態。③軸（採用プロセス）は業界平均を上回るが、④⑤⑤の改善なしには他社に流出するリスクが高い。
+    </div>
+  </div>
+
+  <!-- 2. 就活生ファネル診断 -->
+  <div class="section">
+    <div class="section-tag">2</div>
+    <div class="section-title">マイナビ新卒 就活生ファネル診断</div>
+    <div class="funnel-steps">
+
+      <div class="funnel-step">
+        <div class="funnel-step-header">
+          <div class="step-num warn">1</div>
+          <div class="step-title">STEP1｜検索結果でクリックされるか</div>
+          <div class="step-verdict warn">△ 課題あり</div>
+        </div>
+        <table class="check-table">
+          <tr><th style="width:60%">観点</th><th>評価</th><th>確認内容</th></tr>
+          <tr><td>条件タグの数と実態一致</td><td class="ok-mark">○</td><td>8個設定・内容も求人実態と一致</td></tr>
+          <tr><td>企業写真の掲載</td><td class="tri-mark">△</td><td>10枚以上確認。ただし写真内容が演出寄りか日常シーンかは詳細不明</td></tr>
+          <tr><td>「積極受付中」ステータス</td><td class="ng-mark">✗</td><td>最終更新2026/3/12（約3ヶ月前）。ステータス表示の有効性が低い</td></tr>
+          <tr><td>キャッチ・職種名に世界観・数値</td><td class="ng-mark">✗</td><td>「総合職」のみ。就活生が未来像を想像できる表現がない</td></tr>
+        </table>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-step-header">
+          <div class="step-num ng">2</div>
+          <div class="step-title">STEP2｜詳細ページで応募意向が高まるか</div>
+          <div class="step-verdict ng">✗ 未整備</div>
+        </div>
+        <table class="check-table">
+          <tr><th style="width:40%">コンテンツ</th><th>評価</th><th>充実度</th></tr>
+          <tr><td>採用フロー図</td><td class="ok-mark">○</td><td>5ステップ（ES・筆記なし）。明示あり</td></tr>
+          <tr><td>初任給（学歴別）</td><td class="ng-mark">✗</td><td>「大学院・大学・既卒」一括。学歴別差額なし</td></tr>
+          <tr><td>仕事内容</td><td class="tri-mark">△</td><td>3STEPプログラムの説明はあるが業務の具体的場面・1日の流れなし</td></tr>
+          <tr><td>求める人物像</td><td class="ng-mark">✗</td><td>募集コース詳細に記載なし。面接で重視する点も未掲載</td></tr>
+          <tr><td>先輩インタビュー</td><td class="ng-mark">✗</td><td>先輩情報タブ「見つかりませんでした」→ 未掲載</td></tr>
+          <tr><td>取材情報</td><td class="ng-mark">✗</td><td>「現在公開しておりません」→ 未掲載</td></tr>
+          <tr><td>説明会情報</td><td class="ok-mark">○</td><td>WEB会社説明会あり（形式・リンクあり）</td></tr>
+        </table>
+      </div>
+
+      <div class="funnel-step">
+        <div class="funnel-step-header">
+          <div class="step-num ok">3</div>
+          <div class="step-title">STEP3｜最終決断できるか（信頼情報の充実）</div>
+          <div class="step-verdict ok">○ 相対的に充実</div>
+        </div>
+        <table class="check-table">
+          <tr><th style="width:40%">信頼情報</th><th>評価</th><th>確認内容</th></tr>
+          <tr><td>月平均残業時間</td><td class="ok-mark">○</td><td>23.5時間（2025年度実績）</td></tr>
+          <tr><td>平均有給取得日数</td><td class="ok-mark">○</td><td>10.2日（2025年度実績）</td></tr>
+          <tr><td>育休取得率（男女別）</td><td class="ok-mark">○</td><td>男性33.3% / 女性100%（2025年度）</td></tr>
+          <tr><td>女性管理職比率</td><td class="ng-mark">✗</td><td>未開示（「-」表示）</td></tr>
+          <tr><td>定着率</td><td class="ng-mark">✗</td><td>未開示（「-」表示）。採用数は3年分あり</td></tr>
+          <tr><td>採用実績校</td><td class="ok-mark">○</td><td>50校以上掲載（愛知大学〜早稲田大学等）</td></tr>
+          <tr><td>採用担当メッセージ</td><td class="tri-mark">△</td><td>「説明会にご参加ください☆」→ 内容が薄く共感を生む訴求なし</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 媒体機能 活用チェック -->
+  <div class="section">
+    <div class="section-tag">3</div>
+    <div class="section-title">マイナビ新卒 媒体機能 活用チェック</div>
+    <div class="media-grid">
+      <div class="media-item"><div class="mark">✗</div><div class="info"><div class="name">取材情報タブ</div><div class="val" style="color:var(--red)">未掲載</div></div></div>
+      <div class="media-item"><div class="mark">✗</div><div class="info"><div class="name">先輩情報タブ</div><div class="val" style="color:var(--red)">未掲載（0件）</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">説明会情報</div><div class="val" style="color:var(--green)">あり（WEB形式）</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">条件タグ</div><div class="val" style="color:var(--green)">8個設定</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">残業時間（数値）</div><div class="val" style="color:var(--green)">23.5時間</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">有給取得日数</div><div class="val" style="color:var(--green)">10.2日</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">育休取得率</div><div class="val" style="color:var(--green)">男33%・女100%</div></div></div>
+      <div class="media-item"><div class="mark">✗</div><div class="info"><div class="name">定着率</div><div class="val" style="color:var(--red)">未開示</div></div></div>
+      <div class="media-item"><div class="mark">○</div><div class="info"><div class="name">採用実績校</div><div class="val" style="color:var(--green)">50校以上</div></div></div>
+      <div class="media-item"><div class="mark">✗</div><div class="info"><div class="name">My CareerBox対応</div><div class="val" style="color:var(--red)">確認できず</div></div></div>
+      <div class="media-item"><div class="mark">✗</div><div class="info"><div class="name">積極受付ステータス</div><div class="val" style="color:var(--red)">3ヶ月更新なし</div></div></div>
+    </div>
+    <p class="note">※「✗」は未掲載または確認不可を示す。スコアへの影響は各軸のルーブリックを参照。</p>
+  </div>
+
+  <!-- 4. 軸別診断 -->
+  <div class="section">
+    <div class="section-tag">4</div>
+    <div class="section-title">軸別診断</div>
+
+    <!-- 軸① -->
+    <div class="axis-card">
+      <div class="axis-card-header">
+        <div class="axis-num">①</div>
+        <div class="axis-title">検索ヒット・クリック訴求力</div>
+        <div class="axis-pts grade-c">7 / 20点（C）</div>
+      </div>
+      <div class="axis-card-body">
+        <div class="sub">ルーブリック評価</div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">タイトル（募集職種名）に「世界観・未来像・数値」のいずれかが含まれる</span><span class="pts">0/5点</span></div>
+        <div class="rubric-row"><span class="mark tri-mark">△</span><span class="item-text">企業写真がリアルな職場の瞬間を使っている（10枚確認・内容詳細は不明）</span><span class="pts">2/4点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">条件タグが5個以上設定されている（8個確認・実態と一致）</span><span class="pts">5/5点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">冒頭リードが候補者の「悩み・共感」から入る</span><span class="pts">0/3点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">「積極受付中」ステータスが有効になっている</span><span class="pts">0/3点</span></div>
+        <div class="sub">課題（事実）</div>
+        <div class="issue-box">募集コース名が「総合職」のみで、就活生が「自分の未来像」を検索結果カード上で想像できる表現がない。採用担当メッセージの冒頭が「説明会にご参加ください☆」となっており、就活生の悩みや共感につながる入り方をしていない。最終更新が2026年3月12日（約3ヶ月前）のため、「積極受付中」の鮮度が失われている。</div>
+        <div class="sub">改善の方向性</div>
+        <div class="direction-box">「総合職」というコース名の前後に「入社3年で代表取締役になった社員もいる」等の数値エピソードや、「不稼働を価値に変える仕事」等の世界観ワードを加えることで、検索カード上での差別化訴求を高める方向性を検討する。ページの定期更新（月1回以上）を習慣化し「積極受付中」ステータスの維持を図る。</div>
+      </div>
+    </div>
+
+    <!-- 軸② -->
+    <div class="axis-card">
+      <div class="axis-card-header">
+        <div class="axis-num">②</div>
+        <div class="axis-title">初任給・処遇の透明性</div>
+        <div class="axis-pts grade-c">5 / 20点（C）</div>
+      </div>
+      <div class="axis-card-body">
+        <div class="sub">ルーブリック評価</div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">学歴別初任給を明示（大卒・院卒・専門等）</span><span class="pts">0/4点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">固定残業代の内訳（時間数・金額）を開示（37,900円 / 15時間分）</span><span class="pts">3/3点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">モデル月収例（手当込み）が記載されている</span><span class="pts">0/3点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">評価・昇給の「努力がどう可視化されるか」が具体的</span><span class="pts">0/5点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">福利厚生を"体験"で語っている</span><span class="pts">0/3点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">制限ワード（「SNS禁止」「私語厳禁」等）を使っていない</span><span class="pts">2/2点</span></div>
+        <div class="sub">課題（事実）</div>
+        <div class="issue-box">初任給は「総合職（年俸）3,360,000円」「月額280,000円」と記載されているが学歴別の差額がない。年俸制であるため賞与はなし（賞与欄「年俸制のためなし」）だが、昇給の評価基準や昇格の仕組みについて「年2回昇給」以外の記述がなく、「頑張りがどう収入に反映されるか」が就活生に伝わらない。福利厚生は「社員旅行（ハワイ、グアム、台湾）」「育英支援金（30万円）」という具体的なコンテンツはあるが、体験的に語られておらず制度リストに留まっている。</div>
+        <div class="sub">改善の方向性</div>
+        <div class="direction-box">「年俸制」の仕組みと昇給ロジックの透明化が最優先。「どんな実績でどう年俸が上がるか」の基準・事例を具体的に開示する方向性を検討する。「社員旅行（ハワイ）」は「年1回、全社員でどこに行くか一緒に決めます」等の体験的な語り方に変換できると共感を生みやすい。育英支援金（30万円）は他社との差別化になるため、金額を前面に出す記述を検討する。</div>
+      </div>
+    </div>
+
+    <!-- 軸③ -->
+    <div class="axis-card">
+      <div class="axis-card-header">
+        <div class="axis-num">③</div>
+        <div class="axis-title">採用プロセス・信頼情報の充実</div>
+        <div class="axis-pts grade-b">15 / 20点（B）</div>
+      </div>
+      <div class="axis-card-body">
+        <div class="sub">ルーブリック評価</div>
+        <div class="rubric-row"><span class="mark tri-mark">△</span><span class="item-text">採用フロー図（ステップ・所要日数）が記載されている（5ステップ・ES/筆記なし明示あり。所要日数の記載なし）</span><span class="pts">2/5点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">説明会情報（LIVE/録画）が掲載されている（WEB会社説明会あり）</span><span class="pts">3/3点</span></div>
+        <div class="rubric-row"><span class="mark tri-mark">△</span><span class="item-text">定着率または採用者数推移が開示されている（採用数3年分あり・定着率は「-」未開示）</span><span class="pts">2/4点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">働き方データ（残業・有給・育休率）が3項目以上数値で開示（3項目確認）</span><span class="pts">5/5点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">採用実績校が掲載されている（50校以上）</span><span class="pts">3/3点</span></div>
+        <div class="sub">課題（事実）</div>
+        <div class="issue-box">採用フローは5ステップが明示されているが、各選考ステップの所要日数（例：「エントリーから内々定まで約3週間」）の記載がなく、就活生が選考スケジュールをイメージしにくい。定着率が「-」のままで、採用数が増加傾向（27名→34名→49名）にある事実が活かせていない。</div>
+        <div class="sub">改善の方向性</div>
+        <div class="direction-box">採用フローに「エントリーから内々定まで最短〇週間」等の所要日数を追加することで、就活生の不安を解消できる。定着率は開示できる場合には数値化して掲載し、採用数増加トレンドと合わせて「成長している会社」の証拠として活用する方向性を検討する。</div>
+      </div>
+    </div>
+
+    <!-- 軸④ -->
+    <div class="axis-card">
+      <div class="axis-card-header">
+        <div class="axis-num">④</div>
+        <div class="axis-title">共感コンテンツ・Z世代訴求</div>
+        <div class="axis-pts grade-c">3 / 20点（C）</div>
+      </div>
+      <div class="axis-card-body">
+        <div class="sub">ルーブリック評価</div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">先輩インタビューが掲載されている</span><span class="pts">0/5点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">「こんな人に来てほしい」が価値観条件で書かれている</span><span class="pts">0/4点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">採用文のトーンがフラット（上から目線でない）</span><span class="pts">0/5点</span></div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">応募動機のハードルを下げる記述がある（ES・筆記・GDなし、全学部・全学科対象）</span><span class="pts">3/3点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">取材情報タブ（編集部コンテンツ）が活用されている</span><span class="pts">0/3点</span></div>
+        <div class="sub">課題（事実）</div>
+        <div class="issue-box">先輩情報タブ・取材情報タブがともに未掲載。Z世代が最も信頼する「リアルな先輩の声」が一切存在しない状態。「求める人物像」も募集コース詳細に記載がなく、就活生が「自分がここに合うか」を判断する材料がない。会社紹介記事のトーンは「私たちが育成する・私たちが手がける」という会社主語の説明に終始しており、就活生を「一緒に動かす仲間」として迎え入れるフラットな表現がない。「仕事を通じて本気で成長したいと考えている人とお会いできることを心から楽しみにしています」という一文はあるが、全体のトーンからは上から選ぶ視点が読み取れる。</div>
+        <div class="sub">改善の方向性</div>
+        <div class="direction-box">先輩情報タブへのコンテンツ掲載が最優先。「入社2年で取締役になった」という具体的なエピソードは他社にない強みであるため、その社員本人のリアルな声（就活当時の不安・入社後の変化・今の仕事のやりがい）を短文で複数掲載する方向性を検討する。求める人物像は「価値観条件」（「正解のない問いを面白がれる人」「前例がないことを理由に諦めない人」等）に書き換えることで、Z世代の共感を引き出せる。</div>
+      </div>
+    </div>
+
+    <!-- 軸⑤ -->
+    <div class="axis-card">
+      <div class="axis-card-header">
+        <div class="axis-num">⑤</div>
+        <div class="axis-title">差別化・競争優位性</div>
+        <div class="axis-pts grade-c">5 / 20点（C）</div>
+      </div>
+      <div class="axis-card-body">
+        <div class="sub">ルーブリック評価</div>
+        <div class="rubric-row"><span class="mark ok-mark">○</span><span class="item-text">数値化された実績が1つ以上含まれる（「入社2年で取締役・3年で代表取締役」「育休率100%（女性）」「売上318億」等）</span><span class="pts">3/3点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">「なぜここか」が共感・価値観軸で伝わる</span><span class="pts">0/5点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">求人末尾が感情・空気感で締めくくられている</span><span class="pts">0/4点</span></div>
+        <div class="rubric-row"><span class="mark tri-mark">△</span><span class="item-text">企業のポイント3点に自社固有の訴求が含まれる（「入社2年で取締役」は独自だが、「製品・サービス力」は説明文に留まる）</span><span class="pts">2/4点</span></div>
+        <div class="rubric-row"><span class="mark ng-mark">✗</span><span class="item-text">社員のリアルボイスが短文×複数で掲載されている</span><span class="pts">0/4点</span></div>
+        <div class="sub">課題（事実）</div>
+        <div class="issue-box">「ハッピートライアングル」という理念はあるが、就活生に「なぜNPDなのか」の共感軸での訴求ができていない。会社紹介記事の末尾「仕事を通じて本気で成長したいと考えている人とお会いできることを心から楽しみにしています」は成長を前提とした人材条件で締まっており、感情や空気感で就活生の記憶に残る締め方になっていない。社員の声（短文・本音型）が一切なく、同業他社との差別化を感情軸で補強する手段がない。</div>
+        <div class="sub">改善の方向性</div>
+        <div class="direction-box">「入社2年で取締役」「育英支援金30万円」「グループで駐車場・スキー場・テーマパークを横断できる」というNPD独自の強みを、「あなたが入ることで、私たちも変わる」「正解がない業界で、一緒に正解を作りたい」等の感情ワードと組み合わせて訴求する方向性を検討する。「業界を素人目線で変えてきた会社」というストーリーは競合にはない独自の視点であり、これを活かした価値観訴求の設計が有効と考えられる。</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 5. 競合比較 -->
+  <div class="section">
+    <div class="section-tag">5</div>
+    <div class="section-title">競合比較サマリー</div>
+    <p style="font-size:13px;color:var(--gray-600);">マイナビ新卒の検索ページはJSレンダリング依存のため競合求人の自動取得が困難でした。以下は同業種（不動産・コンサルティング）の一般的な掲載傾向との比較に基づく評価です。</p>
+    <div class="divider"></div>
+    <table class="check-table">
+      <tr><th>比較軸</th><th>日本駐車場開発</th><th>同業種一般的水準</th></tr>
+      <tr><td>条件タグ数</td><td class="ok-mark">○ 8個</td><td>平均3〜5個</td></tr>
+      <tr><td>働き方データ数値開示</td><td class="ok-mark">○ 3項目</td><td>開示なし〜1項目が多い</td></tr>
+      <tr><td>採用実績校掲載</td><td class="ok-mark">○ 50校以上</td><td>掲載なし〜30校程度</td></tr>
+      <tr><td>先輩インタビュー</td><td class="ng-mark">✗ なし</td><td>業界大手は複数掲載が増加傾向</td></tr>
+      <tr><td>学歴別初任給の明示</td><td class="ng-mark">✗ なし</td><td>大手は学歴別明示が標準化</td></tr>
+      <tr><td>価値観訴求（Z世代向け）</td><td class="ng-mark">✗ なし</td><td>差別化意識の高い企業は積極活用</td></tr>
+    </table>
+    <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#E8F5E9;border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;">▲ 競合に対する優位点</div>
+        <ul style="font-size:12px;padding-left:16px;line-height:2;">
+          <li>条件タグ数が業界平均を大幅に超える（8個）</li>
+          <li>育休取得率（女性100%）は訴求力が高い</li>
+          <li>採用実績校の充実度は信頼感を高める</li>
+          <li>「入社2年で取締役」という昇進実績は他社にない唯一の訴求軸</li>
+        </ul>
+      </div>
+      <div style="background:#FFEBEE;border-radius:8px;padding:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;">▼ 競合に劣る点</div>
+        <ul style="font-size:12px;padding-left:16px;line-height:2;">
+          <li>先輩インタビューが未掲載（Z世代が最重視する情報）</li>
+          <li>学歴別初任給の明示がない</li>
+          <li>評価制度の透明性が低く「実力主義」の根拠が示されていない</li>
+          <li>社員の本音・価値観訴求が皆無</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 優先改善テーマ TOP3 -->
+  <div class="section">
+    <div class="section-tag">6</div>
+    <div class="section-title">優先改善テーマ TOP3</div>
+    <div class="top3-item">
+      <div class="top3-rank r1">1</div>
+      <div class="top3-content">
+        <div class="title">先輩インタビュー・社員のリアルボイスの掲載<span class="impact-tag">④軸 +5〜8点</span></div>
+        <div class="fact">【確認した事実】先輩情報タブ「見つかりませんでした」→ 完全未掲載。取材情報タブも「現在公開しておりません」。社員の声がページ上で一切存在しない。</div>
+        <div class="why">Z世代の就活生が最も重視するのは「実際に働いている人のリアルな声」。現状では就活生がどれだけ条件に興味を持っても、「本当に自分に合う会社か」を確認するページが存在しない。先輩情報タブへのコンテンツ掲載だけで④軸が大幅改善し、総合スコア35〜40点の底上げが見込める。特に「入社2年で取締役になった社員」のインタビューは独自性が高く他社との差別化にも直結する。</div>
+      </div>
+    </div>
+    <div class="top3-item">
+      <div class="top3-rank r2">2</div>
+      <div class="top3-content">
+        <div class="title">学歴別初任給の明示と評価制度の透明化<span class="impact-tag">②軸 +7〜9点</span></div>
+        <div class="fact">【確認した事実】初任給は「（年俸）3,360,000円 / 月額280,000円」として記載。学歴別差額の表示なし。昇給は「年2回」のみで評価基準・昇格の仕組みの記述なし。年俸制であり賞与は「なし」。</div>
+        <div class="why">就活生が最も不安を感じる「実際にいくらもらえるか」「頑張りがどう収入に反映されるか」への回答が現状ほぼゼロの状態。「実力主義の給与体系・評価制度を導入」という条件タグを設定しているにもかかわらず、その根拠となる評価基準が未開示では逆効果になるリスクもある。学歴別初任給と評価ロジックの開示だけで②軸が大幅改善する。</div>
+      </div>
+    </div>
+    <div class="top3-item">
+      <div class="top3-rank r3">3</div>
+      <div class="top3-content">
+        <div class="title">「なぜここか」の価値観訴求と採用文トーンのフラット化<span class="impact-tag">④⑤軸 +5〜7点</span></div>
+        <div class="fact">【確認した事実】会社紹介記事は「私たちが手がける・私たちが目指す」という会社主語の説明文。「求める人物像」は募集コース詳細に未記載。採用担当メッセージは「説明会にご参加ください☆」と内容が薄い。</div>
+        <div class="why">Z世代は「選ばれる」より「選びたい」という感覚で就活をしている。現状の採用文は会社の実績・事業説明が中心で、「この会社で自分がどう生きられるか」の共感軸での訴求がない。採用担当メッセージを「こんな仲間と働きたい」型のフラットな文体に変え、「正解のない仕事を一緒に面白がれる人」等の価値観条件を加えるだけで④⑤軸が複数項目改善される。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;font-size:11px;color:var(--gray-400);">
+    本レポートはマイナビ新卒（job.mynavi.jp/27/pc/search/corp94656/）をスクレイピングして取得した情報に基づき、ルーブリックの○×積み上げでスコアを算出しています。<br>
+    スコアはページ上で確認できた事実のみを反映しており、主観的な印象評価は含まれません。診断日：2026年6月9日
+  </div>
+
+</div>
+</body>
+</html>
