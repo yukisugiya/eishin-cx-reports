@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイナビ新卒求人診断レポート｜株式会社バイク王＆カンパニー</title>
+<style>
+  :root{--red:#AE1C3B;--orange:#E65100;--green:#2E7D32;--blue:#1565C0;--bg:#F5F5F5;--card:#fff;--text:#212121;--sub:#757575;--border:#E0E0E0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .cn.gray{background:var(--sub)}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.b{border-color:var(--blue);color:var(--blue)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{padding:3px 11px;border-radius:20px;border:2px solid var(--red);color:var(--red);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff;letter-spacing:.5px}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}.ci.pl{color:var(--blue)}
+  .cl{font-size:13px;font-weight:600;width:175px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}.pl{color:var(--blue);font-weight:700}
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  .plan-box{background:#E3F2FD;border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 4px 4px 0;font-size:12px;line-height:1.75;margin-bottom:10px}
+  .plan-box strong{color:var(--blue)}
+  @media(max-width:600px){.pg{grid-template-columns:1fr}.sa{flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🅼 マイナビ新卒 求人診断レポート</h1>
+  <p>診断日：2026年6月11日｜対象：株式会社バイク王＆カンパニー（新卒採用／バイクライフアドバイザー・インフォメーションスタッフ・コーポレートスタッフ）</p>
+</div>
+<div class="container">
+
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>株式会社バイク王＆カンパニー</span></div>
+      <div><label>診断対象コース</label><span>新卒採用（買取販売／受付／コーポレート）</span></div>
+      <div><label>業種</label><span>専門店・商社・整備メンテナンス・損害保険</span></div>
+      <div><label>上場区分</label><span>上場企業（掲載区分）</span></div>
+      <div><label>本社</label><span>東京都世田谷区若林（大阪サテライトオフィス有）</span></div>
+      <div><label>募集人数</label><span>21〜25名</span></div>
+      <div><label>初任給</label><span>大卒・院卒 229,000〜244,000円／短大・専門卒 224,000〜239,000円（勤務地手当別途）</span></div>
+      <div><label>ページ最終更新</label><span>2026年6月11日（診断日当日）</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge g">条件タグ：10個以上</span>
+      <span class="badge o">写真：5枚（コンセプト系中心）</span>
+      <span class="badge g">WEB説明会：あり</span>
+      <span class="badge g">書類選考・GD：なし（ES提出あり）</span>
+      <span class="badge g">採用実績校：50校以上</span>
+      <span class="badge o">先輩インタビュー：未掲載（プランオプション）</span>
+      <span class="badge o">取材情報タブ：未掲載（プランオプション）</span>
+      <span class="badge o">定着率：未開示（採用者数3年分は開示）</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">条件タグ：</span>
+      <span class="tg">年間休日120日以上</span><span class="tg">育児休暇実績あり</span><span class="tg">資格取得支援制度あり</span><span class="tg">時短勤務制度あり</span><span class="tg">上場企業</span><span class="tg">正社員</span><span class="tg">専門店</span><span class="tg">商社</span><span class="tg">検査・整備・メンテナンス</span><span class="tg">損害保険</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 スコア -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸スコアはスクレイピングで確認できた事実の積み上げで算出。💡マークの項目は有料プランオプションのため採点対象外です（スコアへの影響なし）。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#2E7D32" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="108.57" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">68</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① 検索ヒット・クリック訴求力</span><span><strong>18</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:90%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 初任給・処遇の透明性</span><span><strong>9</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:45%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 採用プロセス・信頼情報</span><span><strong>19</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:95%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ 共感コンテンツ・Z世代訴求</span><span><strong>12</strong>/12<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 差別化・競争優位性</span><span><strong>10</strong>/20<span class="grade C">C</span></span></div><div class="bb"><div class="bf fC" style="width:50%"></div></div></div>
+        <p style="font-size:10px;color:var(--sub);margin-top:6px">※④軸は💡プランオプション項目（先輩インタビュー・取材情報）を除く12点満点で算出</p>
+      </div>
+    </div>
+    <div class="sb">採用フローの透明性・働き方データ6項目・採用実績校50校超・Z世代に寄り添うフラットな採用文（③④軸）は業界トップクラスで、クリック前訴求（①軸）も完成度が高い。一方で<strong>「実力主義」の評価ロジックが未開示（②軸）、社員のリアルな声と感情で締める訴求がページ内に存在しない（⑤軸）</strong>点が68点にとどまる主因。いずれも費用0円・現プランで改善可能な伸びしろ。</div>
+  </div>
+</div>
+
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>マイナビ新卒 就活生ファネル診断</h2><span class="sub-title">STEP1〜3の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">検索結果でクリックされるか</div><span class="ss">企業カードの訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">条件タグの数（10個以上）</div><div class="cd">業種・福利厚生・雇用形態など10個以上設定。「年間休日120日以上」「育児休暇実績あり」「時短勤務制度あり」等、就活生の検索フィルターに広く対応している。</div></div>
+        <div class="cr"><div class="ci tr">△</div><div class="cl">企業写真のリアル感</div><div class="cd">写真5枚を確認。事業紹介・企業ビジョン・「年間取扱台数10万台」などコンセプト/バナー系の画像が中心で、社員が実際に査定・接客・受付している"リアルな瞬間"の臨場感は弱い。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">キャッチに世界観・数値</div><div class="cd">「バイクだけではなく、人生の中にたくさんの感動を」という世界観表現と「年間取扱台数10万台以上」の数値が併存し、第一印象で目を引く。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">冒頭リードの共感</div><div class="cd">採用担当メッセージが「バイクの知識がなければ働けないと思っていませんか？」という就活生の思い込み・不安への問いかけから入っている。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">積極受付ステータス</div><div class="cd">2026年6月11日更新（診断日当日）。ステータスの鮮度が高く、検索結果での露出・信頼性が保たれている。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">詳細ページで応募意向が高まるか</div><span class="ss">コンテンツ充実度</span></div>
+      <div class="sb2">
+        <p style="font-size:11px;color:var(--sub);margin-bottom:10px">評価基準：○＝充実・✕＝未掲載・△＝あるが内容が薄い・💡＝プランオプション（有料追加）</p>
+        <table class="t">
+          <thead><tr><th>コンテンツ</th><th style="width:40px;text-align:center">評価</th><th>確認内容</th></tr></thead>
+          <tbody>
+            <tr><td>採用フロー図</td><td style="text-align:center" class="ok">○</td><td>説明会→ES→1次面接(30分/採用担当)→2次面接(45分/採用リーダー)→職場見学(任意)→適性検査(WEB)→最終面接(45分/人事部長)→内々定。内々定まで3週間以内・書類選考なし・GDなしを明示。</td></tr>
+            <tr><td>初任給（学歴別）</td><td style="text-align:center" class="ok">○</td><td>大卒/院卒229,000〜244,000円・短大/専門224,000〜239,000円。基本給・固定残業・勤務地手当の内訳まで明示されている。</td></tr>
+            <tr><td>仕事内容</td><td style="text-align:center" class="ok">○</td><td>3職種（買取販売・受付・コーポレート）の役割と「誠実で信頼に値する対応」という仕事の本質まで具体的に記述されている。</td></tr>
+            <tr><td>求める人物像</td><td style="text-align:center" class="ok">○</td><td>「チャレンジ精神・主体性」「相手の意図を汲み取る傾聴姿勢」「自分で考えて実行できる人」など価値観・姿勢条件が明記され、就活生が適合度を判断できる。</td></tr>
+            <tr><td>先輩インタビュー</td><td style="text-align:center" class="pl">💡</td><td>先輩情報タブ未掲載 → 現プランで未対応（プランオプション）。</td></tr>
+            <tr><td>取材情報（編集部記事）</td><td style="text-align:center" class="pl">💡</td><td>取材情報タブ未掲載 → 現プランで未対応（プランオプション）。</td></tr>
+            <tr><td>説明会情報</td><td style="text-align:center" class="ok">○</td><td>「【WEB会社説明会】スピード選考！最短2週間で内定」を掲載。形式（WEB/対面）が明示されている。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">最終決断できるか</div><span class="ss">信頼情報の充実度</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">月平均所定外労働</div><div class="cd">26.5時間（2024年度実績）—数値明示で信頼性あり。固定残業25時間分の範囲とほぼ整合している点も透明。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">平均有給取得日数</div><div class="cd">13.5日（2024年度実績）—業界平均を上回る水準を数値で開示。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">育休取得率（男女別）</div><div class="cd">男性38.9% / 女性85.7%（2024年度）—男性の取得率の高さは差別化要素になる。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">女性管理職比率</div><div class="cd">16.7%（6名中1名・2024年度）—数値で開示。平均勤続8.9年・平均年齢35.8歳も明示。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">定着率</div><div class="cd">未開示。採用者数は3年分（2023年60名→2024年56名→2025年36名・男女別）開示されているが、離職率・定着率が見えず採用数の減少傾向の文脈が補えていない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">採用実績校</div><div class="cd">50校以上掲載（早稲田・慶應・明治・立命館・同志社・関西・近畿・法政等）。全国・多様な学歴からの採用実績を確認できる。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">採用担当メッセージ</div><div class="cd">「社員の約半分がバイク免許未所持」「前向きな方・チャレンジが好きな方を募集」と、業界未経験者の不安に寄り添う前向きな内容。</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 3 媒体機能 -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>マイナビ新卒 媒体機能 活用チェック</h2></div>
+  <div class="card-body">
+    <table class="t">
+      <thead><tr><th>機能</th><th style="width:60px;text-align:center">評価</th><th>確認内容</th></tr></thead>
+      <tbody>
+        <tr><td>先輩情報タブ</td><td style="text-align:center" class="pl">💡</td><td>未掲載（現プランで対応不可・プランオプション）</td></tr>
+        <tr><td>取材情報タブ</td><td style="text-align:center" class="pl">💡</td><td>未掲載（現プランで対応不可・プランオプション）</td></tr>
+        <tr><td>説明会情報</td><td style="text-align:center" class="ok">○</td><td>WEB会社説明会あり（スピード選考・形式明示）</td></tr>
+        <tr><td>条件タグ数</td><td style="text-align:center" class="ok">○</td><td>10個以上設定（基準5個以上を達成）</td></tr>
+        <tr><td>月平均所定外労働（数値）</td><td style="text-align:center" class="ok">○</td><td>26.5時間（2024年度）</td></tr>
+        <tr><td>有給取得日数</td><td style="text-align:center" class="ok">○</td><td>13.5日（2024年度）</td></tr>
+        <tr><td>育休取得率</td><td style="text-align:center" class="ok">○</td><td>男性38.9% / 女性85.7%（2024年度）</td></tr>
+        <tr><td>定着率</td><td style="text-align:center" class="ng">✕</td><td>未開示—自社で登録・更新可能な項目</td></tr>
+        <tr><td>採用実績校</td><td style="text-align:center" class="ok">○</td><td>50校以上掲載</td></tr>
+        <tr><td>積極受付ステータス</td><td style="text-align:center" class="ok">○</td><td>2026/6/11更新（診断日当日・鮮度良好）</td></tr>
+        <tr><td>My CareerBox対応</td><td style="text-align:center" class="tr">△</td><td>詳細確認不可</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--sub);margin-top:10px">💡マーク：有料プランオプションのため現プランでは対応不可。✕マーク：現プランで対応可能だが未設定・未開示の項目。</p>
+  </div>
+</div>
+
+<!-- 4 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸①</span><span class="at">検索ヒット・クリック訴求力</span><span class="as A">18 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> キャッチ・コース名に「世界観・未来像・数値」：「人生の中にたくさんの感動を」＋「年間取扱台数10万台以上」（5/5点）</div>
+            <div><span class="tr">△</span> 企業写真がリアルな職場の瞬間：5枚掲載・事業紹介/ビジョン系のコンセプト画像が中心（2/4点）</div>
+            <div><span class="ok">○</span> 条件タグが5個以上：10個以上設定・実態と一致（5/5点）</div>
+            <div><span class="ok">○</span> 冒頭リードが就活生の「悩み・共感」から入る：「バイクの知識がなければ働けないと思っていませんか？」（3/3点）</div>
+            <div><span class="ok">○</span> 「積極受付中」ステータスが有効：2026/6/11更新（診断日当日）（3/3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>クリック前訴求は完成度が高い。唯一の改善余地は写真で、5枚が事業紹介・企業ビジョン・実績数値などのコンセプト/バナー系に寄っており、社員が実際に働く"リアルな瞬間"の写真が薄い。Z世代は「カメラ目線の集合写真」や「演出されたビジュアル」より「リアルな瞬間」を好むため、第一印象の温度感で他社に差をつけきれていない。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>査定・店頭接客・電話受付など実際の業務カットや、若手社員の自然な表情・チームの日常風景の写真を追加する方向。コンセプト画像と実写を併用し、就活生が「自分がここで働く姿」を想像できる構成にする。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸②</span><span class="at">初任給・処遇の透明性</span><span class="as C">9 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 学歴別初任給の明示：大卒/院卒・短大/専門で金額・基本給・勤務地手当まで明示（4/4点）</div>
+            <div><span class="ok">○</span> 固定残業代の内訳開示：月25時間分36,800円(大卒)/36,000円(短大専門)・超過別途・25h未満減額なしを明記（3/3点）</div>
+            <div><span class="ng">✕</span> モデル月収例（手当込み）：初任給の内訳はあるが、入社数年後を含む代表的なモデル月収例の記載なし（0/3点）</div>
+            <div><span class="ng">✕</span> 評価・昇給の「努力がどう可視化されるか」が具体的：「昇給年1回（人事考課）」「実力主義」のみ（0/5点）</div>
+            <div><span class="ng">✕</span> 福利厚生を"体験"で語っている：社員持株会・共助会・資格取得制度・ビジネススクール等、制度名の羅列にとどまる（0/3点）</div>
+            <div><span class="ok">○</span> 制限ワード（「SNS禁止」等）を使っていない：むしろ「自分で考えて実行できる環境」と前向き（2/2点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>初任給・固定残業の透明性は非常に高い一方、「実力主義の給与体系・評価制度」を打ち出しながら、その評価ロジック・昇給の道筋が「年1回（人事考課による）」の一言のみで、「どんな実績を出せばどう上がるか」が就活生にまったく伝わらない。福利厚生も社員持株会・ビジネススクール通学・委託出品制度など独自性のある制度を持つが、制度名の列挙で終わっており就活生が日常をイメージできない。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>評価軸・昇給のステップ（例：等級ごとの目安・1年目→3年目の到達イメージ）を1〜2行でも可視化し、「実力主義」タグの裏付けを示す方向。委託出品制度・社員割引・ビジネススクール通学などは「実際にどう使えるか」を体験的な語りに変換すると訴求力が上がる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸③</span><span class="at">採用プロセス・信頼情報の充実</span><span class="as A">19 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 採用フロー図：8ステップ＋各面接の所要時間/担当者＋内々定まで3週間以内＋書類選考/GDなし＋適性検査WEBを明示（5/5点）</div>
+            <div><span class="ok">○</span> 説明会情報（LIVE/録画）：WEB会社説明会「最短2週間で内定」を掲載（3/3点）</div>
+            <div><span class="tr">△</span> 定着率または採用数推移：採用者数3年分（60→56→36名・男女別）開示・定着率は未開示（3/4点）</div>
+            <div><span class="ok">○</span> 働き方データ3項目以上数値で開示：所定外26.5h・有給13.5日・育休男38.9%/女85.7%・女性管理職16.7%・勤続8.9年（5/5点）</div>
+            <div><span class="ok">○</span> 採用実績校：50校以上掲載（3/3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>信頼情報はほぼ満点。採用フローは所要時間・担当者・WEB適性検査まで明示され、就活生がスケジュールを具体的にイメージできる。残された改善点は定着率（離職率）の未開示。採用者数が3年で60→56→36名と減少して見えるため、定着率や背景の補足がないと「採用を絞っているのか／辞める人が多いのか」と誤読されるリスクがある。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>定着率を開示できる場合は数値化して掲載する方向。採用者数推移には「エリア別採用へ移行」等の背景を添え、減少が意図的なものであれば文脈で補強すると就活生の安心感に繋がる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸④</span><span class="at">共感コンテンツ・Z世代訴求</span><span class="as A">12 / 12 <span style="font-size:11px;font-weight:normal;color:var(--sub)">※プランオプション除く</span></span></div>
+      <div class="ab">
+        <div class="ar">
+          <div class="plan-box">💡 <strong>先輩インタビュー</strong>と<strong>取材情報タブ</strong>は現プランで対応不可の有料オプション機能のため採点対象外です。</div>
+        </div>
+        <div class="ar"><label>ルーブリック評価（現プランで対応可能な項目）</label>
+          <div class="rm">
+            <div><span class="pl">💡</span> 先輩インタビュー（リアルな声）：先輩情報タブ オプション（採点対象外）</div>
+            <div><span class="ok">○</span> 「こんな人に来てほしい」が価値観条件で書かれている：「チャレンジ精神・主体性」「相手の意図を汲み取る傾聴姿勢」「自分で考えて実行できる人」（5/5点）</div>
+            <div><span class="ok">○</span> 採用文のトーンがフラット：「バイク知識がなくても大丈夫・社員の半分が免許未所持」と就活生の不安に寄り添う対等な表現（4/4点）</div>
+            <div><span class="ok">○</span> 応募動機のハードルを下げる記述：書類選考なし・全員面接・GDなし・全学部全学科・既卒積極採用・最短2週間で内定（3/3点）</div>
+            <div><span class="pl">💡</span> 取材情報タブ（編集部コンテンツ）：取材画面掲載オプション（採点対象外）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>現プランで対応可能なZ世代訴求項目は満点。価値観条件・フラットなトーン・応募ハードルの低減がいずれも整っており、就活生を「選ぶ側」ではなく「迎え入れる仲間」として扱う設計になっている。さらに伸ばすには、就活生が最も信頼する「同世代のリアルな声」をページ上に届けられるかが鍵。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>自社採用HP（8190job.jp）に「内定者の本音」コンテンツが既に存在するため、その抜粋をマイナビ側にも転記する方向。プランオプションの先輩情報タブを契約できれば、共感コンテンツはさらに強化される。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸⑤</span><span class="at">差別化・競争優位性</span><span class="as C">10 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 数値化された実績：「年間取扱台数10万台以上」「出張買取アポイント率約70%」「採用実績校50校以上」（3/3点）</div>
+            <div><span class="tr">△</span> 「なぜここか」が共感・価値観軸で伝わる：「人生に感動を」「社員同士の成長応援」等の価値観はあるが、休日120日・10万台等の条件・実績訴求が前面（3/5点）</div>
+            <div><span class="ng">✕</span> 求人末尾が感情・空気感で締めくくられている：「冷静に物事を判断できる人」等の人材要件で終わっている（0/4点）</div>
+            <div><span class="ok">○</span> 企業のポイント3点に自社固有の訴求：「年間取扱台数10万台・全国規模のブランド認知度」はバイク買取最大手ならではの固有要素（4/4点）</div>
+            <div><span class="ng">✕</span> 社員のリアルボイスが短文×複数で掲載：マイナビページ内に社員の本音の一言がなく、自社HPへの誘導のみ（0/4点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>「年間取扱台数10万台・全国最大手」という強力な固有資産と、未経験者を受け入れる文化を持っているにもかかわらず、それを語る社員の生の声がマイナビページ内に一切ない。求人の締めも「冷静に物事を判断できる人」という人材要件で終わっており、感情・空気感で記憶に残す訴求になっていない。差別化が「実績・条件」止まりで、就活生の心が動く「人」の要素が見えない状態。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>自社HPの「内定者の本音」や社員の一言（「免許も持っていなかった自分が、今はお客様に頼られている」等）を短文×複数でマイナビにも掲載する方向。求人末尾を人材要件ではなく「バイクの先に、人の人生に感動を届けられる人と働きたい」等の感情・空気感で締めると、固有実績と人の魅力が両立する。</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5 TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <h4>社員のリアルボイスをマイナビに掲載し、求人末尾を感情で締める</h4>
+        <span class="ft">確認事実：マイナビページ内に社員の声が0件（自社HP「内定者の本音」へ誘導のみ）。求人末尾が「冷静に物事を判断できる人」という人材要件で終わっている。</span>
+        <p>就活生が最も信頼するのは同世代・先輩のリアルな言葉。既に自社採用HPに「内定者の本音」が存在するため、その抜粋を「1人5秒で読める本音の一言」形式でマイナビに転記すれば、既存コンテンツ転用で費用0円で対応できる。あわせて求人末尾を「人の人生に感動を届けられる人と働きたい」等の感情・空気感で締めることで、⑤軸の複数項目が一気に改善する。</p>
+        <div class="wy">▶ ⑤軸10→18点の可能性。既存コンテンツ転用で費用0円。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <h4>「実力主義」の評価・昇給ロジックを可視化する</h4>
+        <span class="ft">確認事実：「実力主義の給与体系・評価制度」を打ち出すが、昇給は「年1回（人事考課による）」の一言のみ。何を達成すればどう上がるかが不明で、タグと実態に乖離がある。</span>
+        <p>「実力主義」を条件タグに設定しているのに評価ロジックが不明では、就活生が「本当に実力で上がれるのか」を判断できない。等級ごとの目安や「1年目→3年目の到達イメージ」「どんな実績が評価されるか」を1〜2行で可視化するだけで②軸が大幅に改善し、タグへの信頼性も高まる。費用0円で即日対応可能。</p>
+        <div class="wy">▶ ②軸9→14点の可能性。費用0円で実施可能。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <h4>福利厚生を「体験」で語り、モデル月収例を追加する</h4>
+        <span class="ft">確認事実：社員持株会・共助会・資格取得制度・ビジネススクール通学・委託出品制度など独自制度を持つが、制度名の羅列にとどまる。入社数年後を含むモデル月収例の記載なし。</span>
+        <p>委託出品制度・社員割引・ビジネススクール通学などはバイク王ならではの福利厚生だが、制度名だけでは就活生が日常をイメージできない。「実際にどう使えるか」を体験的に語り、初任給に加えて手当込みのモデル月収例（例：入社3年目の月収イメージ）を追記することで、処遇の透明性（②軸）が底上げされる。</p>
+        <div class="wy">▶ ②軸でさらに+6点の可能性。費用0円で実施可能。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div style="text-align:center;margin-top:16px;font-size:11px;color:var(--sub)">
+  本レポートはマイナビ新卒（job.mynavi.jp/27/pc/corpinfo/corpId=220721）をスクレイピングして取得した情報に基づきルーブリックの○×積み上げで算出。診断日：2026年6月11日
+</div>
+
+</div>
+</body>
+</html>
