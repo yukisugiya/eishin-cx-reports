@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>株式会社エム・イー｜マイナビ新卒 求人診断レポート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:#F5F5F5;color:#212121;font-size:14px;line-height:1.6}
+:root{--red:#AE1C3B;--orange:#E65100;--green:#2E7D32;--blue:#1565C0;--bg:#F5F5F5;--card:#fff;--text:#212121;--sub:#757575;--border:#E0E0E0}
+.wrap{max-width:780px;margin:0 auto;padding:24px 16px}
+.hd{background:var(--red);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:24px}
+.hd h1{font-size:18px;font-weight:700;margin-bottom:4px}
+.hd .sub{font-size:12px;opacity:.85}
+.card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+.card-head{background:var(--red);color:#fff;padding:10px 16px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card-head .num{background:rgba(255,255,255,.25);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.card-body{padding:16px}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:12px}
+.pg-item{background:#fff;padding:8px 10px}
+.pg-item .label{font-size:10px;color:var(--sub);margin-bottom:2px}
+.pg-item .val{font-size:12px;font-weight:600;color:var(--text)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:600;background:#F5F5F5;border:1px solid var(--border)}
+.badge.ok{background:#E8F5E9;border-color:#A5D6A7;color:var(--green)}
+.badge.ng{background:#FFEBEE;border-color:#FFCDD2;color:var(--red)}
+.badge.pl{background:#E3F2FD;border-color:#90CAF9;color:var(--blue)}
+.tg-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.tg{background:#F5F5F5;border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:11px;color:#555}
+.score-box{display:flex;align-items:center;gap:24px;padding:8px 0 16px}
+.ring-wrap{position:relative;flex-shrink:0}
+.ring-wrap svg{display:block}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring-center .pts{font-size:26px;font-weight:800;color:var(--text)}
+.ring-center .pts-sub{font-size:10px;color:var(--sub)}
+.ring-center .grd{font-size:13px;font-weight:700;color:var(--orange)}
+.axis-bars{flex:1;min-width:0}
+.ab-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ab-label{font-size:11px;color:var(--sub);width:32px;flex-shrink:0;text-align:right}
+.ab-bar-wrap{flex:1;background:#EEEEEE;border-radius:99px;height:8px;overflow:hidden}
+.ab-bar{height:8px;border-radius:99px}
+.ab-score{font-size:11px;color:var(--text);width:60px;flex-shrink:0}
+.grade{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.grade.a{background:var(--green)}.grade.b{background:var(--orange)}.grade.c{background:var(--red)}
+.score-comment{background:#FFF8F0;border-left:3px solid var(--orange);padding:10px 14px;border-radius:0 4px 4px 0;font-size:12px;margin-top:8px}
+.note-sm{font-size:11px;color:var(--sub);margin-top:8px}
+.step{margin-bottom:16px}
+.step-head{font-size:12px;font-weight:700;background:#EEEEEE;padding:6px 10px;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.step-badge{background:var(--red);color:#fff;border-radius:4px;padding:1px 6px;font-size:10px}
+.step-badge.ok{background:var(--green)}.step-badge.warn{background:var(--orange)}
+.cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+.cr:last-child{border-bottom:none}
+.ci{font-size:16px;flex-shrink:0;margin-top:1px}
+.ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}.ci.pl{color:var(--blue)}
+.cl{font-size:12px;font-weight:600;color:var(--text);flex:1}
+.cd{font-size:11px;color:var(--sub);margin-top:2px}
+.ac{margin-bottom:16px}
+.ah{background:#FAFAFA;border-left:3px solid var(--red);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:10px}
+.ah h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ah .sc{font-size:12px;color:var(--sub);font-weight:400}
+.ab-box{background:#F5F5F5;border-radius:4px;padding:10px 12px;font-size:12px;margin-top:8px}
+.ab-title{font-size:11px;color:var(--sub);font-weight:700;margin-bottom:4px}
+.plan-box{background:#E3F2FD;border-left:3px solid var(--blue);padding:10px 14px;border-radius:0 4px 4px 0;font-size:12px;margin-bottom:12px;color:#1565C0}
+.ti{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid #F5F5F5}
+.ti:last-child{border-bottom:none}
+.tn{font-size:14px;font-weight:700;color:var(--red);flex-shrink:0;min-width:28px}
+.tc{flex:1}
+.tc h3{font-size:13px;font-weight:700;margin-bottom:4px}
+.ft{display:inline-block;background:#FFEBEE;color:var(--red);border-radius:3px;padding:1px 5px;font-size:10px;font-weight:600;margin-bottom:6px}
+.wy{background:#E8F5E9;border-radius:4px;padding:6px 10px;font-size:11px;color:var(--green);margin-top:6px;font-weight:600}
+.ftbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.ftbl th{background:#F5F5F5;padding:6px 8px;border:1px solid var(--border);font-weight:700;font-size:11px;text-align:left}
+.ftbl td{padding:6px 8px;border:1px solid var(--border);vertical-align:top}
+.ok-c{color:var(--green);font-weight:700}.ng-c{color:var(--red);font-weight:700}.tr-c{color:var(--orange);font-weight:700}.pl-c{color:var(--blue);font-weight:700}
+.legend{font-size:10px;color:var(--sub);margin-top:6px;display:flex;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hd">
+  <div class="sub">マイナビ新卒 求人診断レポート｜2026年6月17日</div>
+  <h1>株式会社エム・イー</h1>
+  <div class="sub">診断対象：営業総合職コース｜商社（医療機器）</div>
+</div>
+
+<!-- プロフィール -->
+<div class="card">
+  <div class="card-head">― 診断対象プロフィール</div>
+  <div class="card-body">
+    <div class="pg">
+      <div class="pg-item"><div class="label">企業名</div><div class="val">株式会社エム・イー</div></div>
+      <div class="pg-item"><div class="label">診断コース</div><div class="val">営業総合職コース</div></div>
+      <div class="pg-item"><div class="label">業種</div><div class="val">商社（医療機器）他</div></div>
+      <div class="pg-item"><div class="label">上場区分</div><div class="val">非上場</div></div>
+      <div class="pg-item"><div class="label">本社</div><div class="val">長野県長野市</div></div>
+      <div class="pg-item"><div class="label">従業員数</div><div class="val">110名</div></div>
+      <div class="pg-item"><div class="label">売上高</div><div class="val">118億円</div></div>
+      <div class="pg-item"><div class="label">初任給（大卒）</div><div class="val">250,000円</div></div>
+      <div class="pg-item"><div class="label">最終更新日</div><div class="val">2026/05/26</div></div>
+      <div class="pg-item"><div class="label">募集人数</div><div class="val">1〜5名</div></div>
+      <div class="pg-item"><div class="label">年間休日</div><div class="val">120日以上</div></div>
+      <div class="pg-item"><div class="label">月平均残業</div><div class="val">9.9時間（実績）</div></div>
+    </div>
+    <div class="badges">
+      <span class="badge ok">📸 写真5枚以上</span>
+      <span class="badge ok">🏫 採用実績校あり</span>
+      <span class="badge ok">📅 WEB説明会あり</span>
+      <span class="badge ok">📊 定着率100%（2025年）</span>
+      <span class="badge ok">🔖 条件タグ7個以上</span>
+      <span class="badge ng">📝 ES・筆記あり</span>
+      <span class="badge pl">💡 先輩インタビュー（プランオプション）</span>
+      <span class="badge pl">💡 取材情報タブ（プランオプション）</span>
+    </div>
+    <div style="font-size:11px;color:var(--sub);margin-bottom:6px;font-weight:700">確認できた条件タグ</div>
+    <div class="tg-wrap">
+      <span class="tg">年間休日120日以上</span>
+      <span class="tg">完全週休2日制</span>
+      <span class="tg">実力主義の給与体系・評価制度</span>
+      <span class="tg">資格取得支援制度あり</span>
+      <span class="tg">産休・育児休暇取得実績あり</span>
+      <span class="tg">平均残業時間が月20時間以内</span>
+      <span class="tg">社宅・家賃補助制度あり</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1. スコアサマリー -->
+<div class="card">
+  <div class="card-head"><span class="num">1</span>診断スコアサマリー</div>
+  <div class="card-body">
+    <div class="score-box">
+      <div class="ring-wrap">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#EEEEEE" stroke-width="12"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#E65100" stroke-width="12"
+            stroke-dasharray="222 314"
+            stroke-dashoffset="78.5"
+            stroke-linecap="round"/>
+        </svg>
+        <div class="ring-center">
+          <div class="pts">65</div>
+          <div class="pts-sub">/ 92点</div>
+          <div class="grd">B ランク</div>
+        </div>
+      </div>
+      <div class="axis-bars">
+        <div class="ab-row">
+          <div class="ab-label">①</div>
+          <div class="ab-bar-wrap"><div class="ab-bar" style="width:90%;background:var(--green)"></div></div>
+          <div class="ab-score">18 / 20点</div>
+          <span class="grade a">A</span>
+        </div>
+        <div class="ab-row">
+          <div class="ab-label">②</div>
+          <div class="ab-bar-wrap"><div class="ab-bar" style="width:25%;background:var(--red)"></div></div>
+          <div class="ab-score">5 / 20点</div>
+          <span class="grade c">C</span>
+        </div>
+        <div class="ab-row">
+          <div class="ab-label">③</div>
+          <div class="ab-bar-wrap"><div class="ab-bar" style="width:100%;background:var(--green)"></div></div>
+          <div class="ab-score">20 / 20点</div>
+          <span class="grade a">A</span>
+        </div>
+        <div class="ab-row">
+          <div class="ab-label">④</div>
+          <div class="ab-bar-wrap"><div class="ab-bar" style="width:100%;background:var(--green)"></div></div>
+          <div class="ab-score">12 / 12点</div>
+          <span class="grade a">A</span>
+        </div>
+        <div class="ab-row">
+          <div class="ab-label">⑤</div>
+          <div class="ab-bar-wrap"><div class="ab-bar" style="width:50%;background:var(--red)"></div></div>
+          <div class="ab-score">10 / 20点</div>
+          <span class="grade c">C</span>
+        </div>
+      </div>
+    </div>
+    <div class="note-sm">💡 ④軸の満点は12点（先輩インタビュー・取材情報タブは現プランで非対応のため除外）｜💡マークの項目はスコア対象外</div>
+    <div class="score-comment">
+      採用フロー・信頼情報（③20点満点）と共感コンテンツ（④12点満点）は完璧で、就活生への情報開示姿勢は同規模企業の中でも優れています。<br>
+      一方、<strong>「処遇の透明性」（②5点）と「差別化訴求」（⑤10点）</strong>が大きく足を引っ張っており、評価・昇給の基準が見えないことと感情訴求の弱さが課題。改善インパクトの大きい2軸を集中強化することで、80点超えが見込めます。
+    </div>
+  </div>
+</div>
+
+<!-- 2. ファネル診断 -->
+<div class="card">
+  <div class="card-head"><span class="num">2</span>就活生ファネル診断</div>
+  <div class="card-body">
+    <div class="step">
+      <div class="step-head"><span class="step-badge ok">STEP 1</span> 検索結果でクリックされるか</div>
+      <table class="ftbl">
+        <tr><th>確認項目</th><th>評価</th><th>コメント</th></tr>
+        <tr><td>見出し・コース名の訴求力</td><td class="ok-c">○</td><td>「人の命を救える仕事をしてみませんか？」問いかけ形式・数値（年間休日120日以上）を含む訴求</td></tr>
+        <tr><td>企業写真のリアル感</td><td class="tr-c">△</td><td>5枚以上の写真は確認できるが、業務の瞬間シーンか集合写真かは判断不可</td></tr>
+        <tr><td>条件タグ数（5個以上）</td><td class="ok-c">○</td><td>7個確認（年間休日・完全週休2日・産育休実績・社宅補助・実力主義・残業時間・資格支援）</td></tr>
+        <tr><td>冒頭リードの共感訴求</td><td class="ok-c">○</td><td>「人と関わる仕事がしたい」「社会に役立つ仕事に携わりたい」と就活生の言葉で共感を先出し</td></tr>
+        <tr><td>積極受付ステータス</td><td class="ok-c">○</td><td>最終更新日2026/5/26（診断日から22日以内）・WEB説明会予約リンクも有効</td></tr>
+      </table>
+    </div>
+    <div class="step">
+      <div class="step-head"><span class="step-badge warn">STEP 2</span> 詳細ページで応募意向が高まるか</div>
+      <table class="ftbl">
+        <tr><th>確認項目</th><th>評価</th><th>コメント</th></tr>
+        <tr><td>採用フロー・所要日数</td><td class="ok-c">○</td><td>8ステップ全明示・内々定まで1カ月半（説明会から）を明記</td></tr>
+        <tr><td>初任給・処遇の透明性</td><td class="tr-c">△</td><td>大卒25万円・30時間みなし残業46,525円は明示。院卒/短大区分・モデル月収は未記載</td></tr>
+        <tr><td>仕事内容の具体性</td><td class="ok-c">○</td><td>医師との打合せ・製品提案・手術現場サポートなどルート営業の業務が具体的に記載</td></tr>
+        <tr><td>求める人物像の共感訴求</td><td class="ok-c">○</td><td>「人をサポートすることが好き」「新しい知識を吸収することが好き」と姿勢・価値観ベース</td></tr>
+        <tr><td>先輩インタビュー</td><td class="pl-c">💡</td><td>プランオプション（現プランで対応不可）</td></tr>
+        <tr><td>取材情報タブ</td><td class="pl-c">💡</td><td>プランオプション（現プランで対応不可）</td></tr>
+        <tr><td>説明会情報</td><td class="ok-c">○</td><td>WEB開催・予約リンクあり</td></tr>
+      </table>
+    </div>
+    <div class="step">
+      <div class="step-head"><span class="step-badge ok">STEP 3</span> 最終決断できるか</div>
+      <table class="ftbl">
+        <tr><th>確認項目</th><th>評価</th><th>コメント</th></tr>
+        <tr><td>残業時間（実績値）</td><td class="ok-c">○</td><td>月平均9.9時間（2024年度）を数値で明示</td></tr>
+        <tr><td>有給取得日数</td><td class="ok-c">○</td><td>平均10.7日/年（2024年度）</td></tr>
+        <tr><td>育休取得率</td><td class="ok-c">○</td><td>女性100%・男性0%（2024年度・対象4名中1名取得）</td></tr>
+        <tr><td>定着率</td><td class="ok-c">○</td><td>2024・2025年ともに離職者0名・定着率100%</td></tr>
+        <tr><td>採用実績校</td><td class="ok-c">○</td><td>40大学以上・短大・専門学校の実績校一覧あり</td></tr>
+        <tr><td>採用担当者メッセージ</td><td class="ok-c">○</td><td>業界未経験大歓迎・「まずは業界研究から」と応募ハードルを下げる記述あり</td></tr>
+      </table>
+    </div>
+    <div class="legend">
+      <span>○＝充実</span><span>✕＝未掲載</span><span>△＝あるが内容が薄い</span><span class="pl-c">💡＝プランオプション（有料追加）</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 媒体機能チェック -->
+<div class="card">
+  <div class="card-head"><span class="num">3</span>媒体機能 活用チェック</div>
+  <div class="card-body">
+    <div class="cr"><span class="ci pl">💡</span><div><div class="cl">先輩情報タブ</div><div class="cd">プランオプション（現プランで非対応）</div></div></div>
+    <div class="cr"><span class="ci pl">💡</span><div><div class="cl">取材情報タブ</div><div class="cd">プランオプション（現プランで非対応）</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">説明会情報</div><div class="cd">WEB説明会・予約リンク掲載あり</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">条件タグ数</div><div class="cd">7個確認（年間休日・完全週休2日・産育休実績・残業時間・社宅補助・実力主義・資格支援）</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">残業時間（数値）</div><div class="cd">月平均9.9時間（2024年度実績）を明示</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">有給取得日数</div><div class="cd">平均10.7日/年（2024年度実績）を明示</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">育休取得率</div><div class="cd">女性100%・男性0%（2024年度）を数値で開示</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">定着率</div><div class="cd">2023〜2025年の定着率・採用者数（男女別）を3年分掲載</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">採用実績校</div><div class="cd">40大学以上・短大・専門学校の一覧あり</div></div></div>
+    <div class="cr"><span class="ci ok">○</span><div><div class="cl">積極受付ステータス</div><div class="cd">最終更新日2026/5/26（1カ月以内）</div></div></div>
+    <div class="cr"><span class="ci ng">✕</span><div><div class="cl">My CareerBox対応</div><div class="cd">確認できず</div></div></div>
+    <div style="margin-top:10px;font-size:10px;color:var(--sub)">💡マーク＝現プランで対応不可　✕マーク＝現プランで対応可能だが未設定の項目</div>
+  </div>
+</div>
+
+<!-- 4. 軸別診断 -->
+<div class="card">
+  <div class="card-head"><span class="num">4</span>軸別診断</div>
+  <div class="card-body">
+
+    <!-- ①軸 -->
+    <div class="ac">
+      <div class="ah" style="border-left-color:var(--green)">
+        <h3>① 検索ヒット・クリック訴求力 <span class="sc">18 / 20点（A）</span></h3>
+      </div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜コース名・見出しに「未来像・問いかけ」あり</div><div class="cd">「人の命を救える仕事をしてみませんか？」問いかけ形式・「年間休日120日以上」の数値を含む訴求</div></div></div>
+      <div class="cr"><span class="ci tr">△</span><div><div class="cl">2点｜企業写真（リアルな瞬間かは確認不可）</div><div class="cd">5枚以上の写真は確認できるが、業務の瞬間シーンか演出写真かURLからは判断不可</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜条件タグ7個以上確認</div><div class="cd">年間休日・完全週休2日・産休育休実績・社宅補助・実力主義・残業時間・資格取得支援</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜冒頭リードが就活生の共感から入っている</div><div class="cd">採用担当メッセージで「人と関わる仕事がしたい」「社会に役立つ仕事に携わりたい」と就活生の言葉で共感を先出し</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜積極受付ステータス有効</div><div class="cd">最終更新日2026/5/26（診断日から22日以内）・WEB説明会予約リンクも有効</div></div></div>
+      <div class="ab-box"><div class="ab-title">改善の方向性</div>写真のリアル感向上が唯一の改善ポイント。医師との打合せ・手術補助の準備シーンなど業務の「瞬間」を切り取った写真に差し替えることで2点→4点満点が狙える。</div>
+    </div>
+
+    <!-- ②軸 -->
+    <div class="ac">
+      <div class="ah" style="border-left-color:var(--red)">
+        <h3>② 初任給・処遇の透明性 <span class="sc">5 / 20点（C）</span></h3>
+      </div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜学歴別初任給の明示なし</div><div class="cd">大卒250,000円のみ記載。過去採用実績に短大・専門卒があるが、学歴別給与区分が未設定</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜固定残業代の内訳明示</div><div class="cd">30時間・46,525円（大卒）を明記。30時間超の別途支給も記載あり</div></div></div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜モデル月収例の記載なし</div><div class="cd">交通費・CDR手当・EP手当等を含む総月収のモデル例が未記載</div></div></div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜評価・昇給の可視化なし</div><div class="cd">「実力主義」「年1回昇給（7月）」の記載のみ。どの実績でどう給与が上がるかの基準が不明</div></div></div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜福利厚生の体験記述なし</div><div class="cd">「職場積立NISA」「結婚祝い金3万円」「出産祝い金」等の制度名羅列のみ。体験・エピソードベースの記述なし</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">2点｜制限ワードなし</div><div class="cd">「SNS禁止」「私語厳禁」等の制限ワードは確認されず</div></div></div>
+      <div class="ab-box"><div class="ab-title">改善の方向性</div>①評価・昇給をグレード制・数値目標で可視化（5点）②モデル月収例（基本給＋各種手当合計）の記載（3点）③学歴別給与区分の追加（4点）④「リフレッシュ休暇を使って〇〇した」等、体験エピソードで福利厚生を語る記述（3点）の優先度で改善するとスコアが大幅改善できる。</div>
+    </div>
+
+    <!-- ③軸 -->
+    <div class="ac">
+      <div class="ah" style="border-left-color:var(--green)">
+        <h3>③ 採用プロセス・信頼情報の充実 <span class="sc">20 / 20点（A）</span></h3>
+      </div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜採用フロー図（ステップ・所要日数）</div><div class="cd">8ステップ全明示・内々定まで1カ月半（説明会から）・ES/適性検査/筆記/GDの有無も明記</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜説明会情報</div><div class="cd">WEB開催・予約リンクあり</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">4点｜定着率・採用者数推移</div><div class="cd">2023〜2025年の定着率（50%→100%→100%）・採用者数（男女別）を3年分掲載</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜働き方データ（5項目を数値で開示）</div><div class="cd">残業9.9h・有給10.7日・育休取得率（男0%/女100%）・女性管理職29.4%・平均勤続7.4年</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜採用実績校</div><div class="cd">40大学以上・短大・専門学校を一覧で掲載</div></div></div>
+      <div class="ab-box"><div class="ab-title">改善の方向性</div>満点達成。現状の信頼情報の開示水準を維持してください。</div>
+    </div>
+
+    <!-- ④軸 -->
+    <div class="ac">
+      <div class="ah" style="border-left-color:var(--green)">
+        <h3>④ 共感コンテンツ・Z世代訴求 <span class="sc">12 / 12点（A）</span></h3>
+      </div>
+      <div class="plan-box">💡 先輩インタビューと取材情報タブは現プランで対応不可の有料オプション機能のため採点対象外です。</div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜「こんな人に来てほしい」が価値観条件で書かれている</div><div class="cd">「人をサポートすることが好きな方」「新しい知識を吸収することが好きな方」「チームワークを大切に働きたい方」と姿勢・価値観ベースで記述</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">4点｜採用文のトーンがフラット</div><div class="cd">「まずは業界研究から始めたい方も大歓迎」「少しでもご興味をお持ちいただけましたらお気軽に」など就活生を対等に扱う表現あり</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜応募動機のハードルを下げる記述あり</div><div class="cd">「医療業界に少し興味がある、そんな方に知っていただきたい仕事」「活躍中の社員の多くも就活当初から医療業界を志望していたわけではありません」を明示</div></div></div>
+      <div class="ab-box"><div class="ab-title">改善の方向性</div>現プランで対応可能な項目は満点達成。先輩インタビュー・取材情報タブの追加を検討する場合はプランのアップグレードが必要です。</div>
+    </div>
+
+    <!-- ⑤軸 -->
+    <div class="ac">
+      <div class="ah" style="border-left-color:var(--red)">
+        <h3>⑤ 差別化・競争優位性 <span class="sc">10 / 20点（C）</span></h3>
+      </div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">3点｜数値化された実績あり</div><div class="cd">売上高118億円・定着率100%（2024・2025年）・女性管理職29.4%・平均勤続7.4年</div></div></div>
+      <div class="cr"><span class="ci ok">○</span><div><div class="cl">5点｜「なぜここか」が価値観軸で伝わる</div><div class="cd">「人の命を救える仕事」「社会貢献性の高い仕事」「最強のパートナーとしての地位確立」「お互いを気にかける精神」の訴求あり</div></div></div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜求人末尾が感情で締まっていない</div><div class="cd">選考情報の末尾「よろしくお願いいたします。」で終わる。感情ワード・空気感での締めくくりが見当たらない</div></div></div>
+      <div class="cr"><span class="ci tr">△</span><div><div class="cl">2点｜企業のポイントに固有訴求が1つのみ</div><div class="cd">「人の命を救える仕事」は固有訴求。「年間休日120日以上」「安心して働ける環境」は競合他社でも言える汎用表現</div></div></div>
+      <div class="cr"><span class="ci ng">✕</span><div><div class="cl">0点｜社員リアルボイスの掲載なし</div><div class="cd">「1人5秒で読める本音の一言」形式の短文社員コメントは確認できず。先輩インタビューはプランオプション未使用</div></div></div>
+      <div class="ab-box"><div class="ab-title">改善の方向性</div>①求人の末尾を感情ワードで締める（例：「医療現場で誰かの命を救う仕事が好きな人と、一緒に働けることを楽しみにしています」）（4点）②企業のポイント2〜3点目を汎用表現から自社固有の表現に書き換える（2点）③現プランで追加可能な「社員の一言コメント」を複数部署分掲載する（4点）。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 5. TOP3 -->
+<div class="card">
+  <div class="card-head"><span class="num">5</span>優先改善テーマ TOP3（現プランで対応可能な項目のみ）</div>
+  <div class="card-body">
+    <div class="ti">
+      <div class="tn">🥇</div>
+      <div class="tc">
+        <h3>評価・昇給の「見える化」で処遇への安心感を高める</h3>
+        <span class="ft">確認事実</span>
+        <p style="font-size:12px;color:var(--sub);margin-top:4px">「実力主義」「年1回昇給」の記載のみ。「入社3年でどのくらいの給与になるか」「どんな実績でグレードが上がるか」という道筋が見えない。Z世代は入社後の成長イメージを具体的に持てない企業を避ける傾向がある。グレード制や目標設定の例示などで評価軸を明示することが有効。</p>
+        <div class="wy">💡 改善後の点数見込み：＋5点（②軸 評価・昇給可視化項目）</div>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">🥈</div>
+      <div class="tc">
+        <h3>社員の「一言リアルボイス」を複数掲載する</h3>
+        <span class="ft">確認事実</span>
+        <p style="font-size:12px;color:var(--sub);margin-top:4px">社員の短文コメントが現プランで確認できず、採用担当メッセージのみ。Z世代は公式文より同世代のリアルな声を重視する。「手術室で先生が笑顔になった瞬間がいちばんやりがいを感じる」等の一行コメントを複数部署から掲載することで信頼感と共感が向上する。</p>
+        <div class="wy">💡 改善後の点数見込み：＋4点（⑤軸 リアルボイス項目）</div>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tn">🥉</div>
+      <div class="tc">
+        <h3>求人末尾を「感情で締める」文章に変える</h3>
+        <span class="ft">確認事実</span>
+        <p style="font-size:12px;color:var(--sub);margin-top:4px">選考フローの末尾が「よろしくお願いいたします。」で終わっており、最後の印象が事務的。「医療現場で誰かのために動くことが好きな人と、一緒に働ける日を心から楽しみにしています」のように感情ワードで締めることで、ページを閉じた後の余韻が変わる。テキスト一行の変更で対応可能。</p>
+        <div class="wy">💡 改善後の点数見込み：＋4点（⑤軸 感情締め項目）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:11px;color:#BDBDBD;padding:16px 0">
+  診断日：2026年6月17日｜マイナビ新卒2027（job.mynavi.jp/27/pc/search/corp112890/）
+</div>
+
+</div>
+</body>
+</html>
