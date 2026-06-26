@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>採用ピッチ資料構成案｜三慧経営顧問株式会社</title>
+<style>
+  :root {
+    --red: #AE1C3B;
+    --red-deep: #9C0B2D;
+    --red-pale: #FBEBEE;
+    --gray-bg: #F5F5F5;
+    --gray-line: #E0E0E0;
+    --gray-text: #666;
+    --text: #1A1A1A;
+    --white: #ffffff;
+    --green: #1A7F4B;
+    --blue: #2E6DB4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif; background: #F7F7F7; color: var(--text); font-size: 14px; line-height: 1.75; }
+
+  .meta-bar { background: var(--red-deep); color: #fff; padding: 10px 32px; font-size: 12px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .meta-bar span { opacity: 0.9; }
+  .meta-bar strong { font-weight: 600; opacity: 1; }
+  .meta-bar .tool { margin-left: auto; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 10px; font-size: 11px; }
+
+  .report-header { background: var(--white); border-bottom: 3px solid var(--red); padding: 28px 40px 22px; }
+  .report-header .label { font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .report-header h1 { font-size: 23px; font-weight: 700; color: var(--text); }
+  .report-header .sub { font-size: 13px; color: var(--gray-text); margin-top: 6px; }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+  .section { background: var(--white); border-radius: 6px; border: 1px solid var(--gray-line); margin-bottom: 24px; overflow: hidden; }
+  .section-header { background: var(--red); color: #fff; padding: 12px 24px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+  .section-body { padding: 24px; }
+
+  .intro-box { background: #F9F3F5; border-left: 3px solid var(--red); padding: 16px 20px; border-radius: 0 4px 4px 0; font-size: 13px; line-height: 1.85; }
+  .intro-box strong { color: var(--red); }
+  .notice { background: #FFF8E1; border: 1px solid #FFE082; border-radius: 6px; padding: 12px 16px; font-size: 12.5px; color: #6b5200; margin-top: 16px; line-height: 1.7; }
+  .notice b { color: #b07700; }
+
+  .concept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .concept-card { border: 1px solid var(--gray-line); border-radius: 6px; padding: 16px; background: #FAFAFA; }
+  .concept-card .k { font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .concept-card .v { font-size: 14px; font-weight: 700; color: var(--text); }
+  .concept-card .d { font-size: 12px; color: var(--gray-text); margin-top: 4px; }
+
+  /* slide cards */
+  .slide { border: 1px solid var(--gray-line); border-radius: 8px; margin-bottom: 18px; overflow: hidden; }
+  .slide-head { display: flex; align-items: center; gap: 14px; padding: 14px 20px; background: #FAFAFA; border-bottom: 1px solid var(--gray-line); }
+  .slide-num { width: 30px; height: 30px; flex-shrink: 0; border-radius: 50%; background: var(--red); color: #fff; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .slide-title { font-size: 16px; font-weight: 700; color: var(--text); flex: 1; }
+  .slide-tag { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--red-pale); color: var(--red); white-space: nowrap; }
+  .slide-body { padding: 18px 22px 22px; }
+  .slide-purpose { font-size: 12.5px; color: var(--gray-text); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed #ececec; }
+  .slide-purpose b { color: var(--text); }
+
+  .blk-label { font-size: 11px; font-weight: 700; color: var(--red); letter-spacing: 0.05em; margin: 14px 0 7px; }
+  .blk-label:first-child { margin-top: 0; }
+  ul.elements { list-style: none; }
+  ul.elements li { font-size: 13px; padding: 3px 0 3px 16px; position: relative; }
+  ul.elements li::before { content: "▪"; color: var(--red); position: absolute; left: 0; font-size: 10px; top: 5px; }
+
+  .draft { background: #F4F6F9; border: 1px solid #E2E8F0; border-radius: 6px; padding: 14px 16px; font-size: 13px; line-height: 1.85; color: #2c3540; }
+  .draft .h { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+  .draft .h .accent { color: var(--red); }
+  .draft .small { font-size: 12px; color: var(--gray-text); }
+
+  .hear { display: inline-block; font-size: 10.5px; font-weight: 700; color: #b07700; background: #FFF8E1; border: 1px solid #FFE082; border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .stat { text-align: center; border: 1px solid var(--gray-line); border-radius: 6px; padding: 14px 8px; background: #fff; }
+  .stat .n { font-size: 24px; font-weight: 800; color: var(--red); line-height: 1.1; }
+  .stat .u { font-size: 11px; color: var(--gray-text); margin-top: 4px; }
+
+  .flow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .flow-step { flex: 1; min-width: 110px; border: 1px solid var(--gray-line); border-radius: 6px; padding: 12px; text-align: center; background: #FAFAFA; }
+  .flow-step .s { font-size: 10px; color: var(--red); font-weight: 700; }
+  .flow-step .t { font-size: 13px; font-weight: 700; margin-top: 4px; }
+
+  .footer-note { text-align: center; font-size: 11.5px; color: var(--gray-text); margin-top: 28px; line-height: 1.7; }
+  .footer-note a { color: var(--blue); text-decoration: none; }
+
+  @media (max-width: 700px) {
+    .concept-grid, .stat-grid { grid-template-columns: 1fr 1fr; }
+    .report-header, .meta-bar { padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="meta-bar">
+  <span>対象企業：<strong>三慧経営顧問株式会社（SKMA Inc.）</strong></span>
+  <span>生成日：<strong>2026年6月26日</strong></span>
+  <span>参照：<strong>https://skma.asia/</strong></span>
+  <span class="tool">EISHIN Optia｜採用ピッチ資料構成案</span>
+</div>
+
+<div class="report-header">
+  <div class="label">RECRUITMENT PITCH DECK — STRUCTURE PROPOSAL</div>
+  <h1>採用ピッチ資料 構成案｜三慧経営顧問株式会社</h1>
+  <div class="sub">候補者に「この会社で働きたい」と思わせる会社紹介資料（採用ピッチ資料）の全体構成と、各ページの目的・掲載要素・文案ドラフトをまとめた設計図です。</div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 概要 ===== -->
+  <div class="section">
+    <div class="section-header">この資料の使い方</div>
+    <div class="section-body">
+      <div class="intro-box">
+        本資料は、採用候補者（応募検討者・カジュアル面談相手・選考中の応募者）に提示する<strong>「採用ピッチ資料＝会社紹介スライド」</strong>の構成案です。全14ページの流れに沿って、各ページの<strong>①目的（候補者に与える理解）／②掲載要素／③文案ドラフト</strong>を提示しています。文案はそのまま、または微修正で使える状態の叩き台です。
+      </div>
+      <div class="notice">
+        <b>⚠ 突貫生成版につき要確認：</b>本構成案は公開サイト（skma.asia）の情報のみを元に自動生成しています。<b>社内情報が必要な項目には <span class="hear" style="margin:0;">要ヒアリング</span> を付与</b>しています（メンバー紹介・給与/制度・選考フロー・募集要項など）。ここを埋めるとそのまま採用ピッチ資料として完成します。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 設計コンセプト ===== -->
+  <div class="section">
+    <div class="section-header">構成の設計コンセプト</div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="k">WHY を最初に</div>
+          <div class="v">「何の会社か」より「なぜやるか」</div>
+          <div class="d">スローガン「社会を変えるあなたと共に」を冒頭に据え、共感で惹きつける。</div>
+        </div>
+        <div class="concept-card">
+          <div class="k">合理性＝差別化軸</div>
+          <div class="v">「日本一合理的なコンサル」</div>
+          <div class="d">他社にない一言を全体の背骨に。仕事観・カルチャーまで一貫させる。</div>
+        </div>
+        <div class="concept-card">
+          <div class="k">実績で信頼</div>
+          <div class="v">200事業者超の支援実績</div>
+          <div class="d">創業4年の若い会社の不安を、数字と実践力で打ち消す。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== スライド構成 ===== -->
+  <div class="section">
+    <div class="section-header">採用ピッチ資料 全14ページ構成</div>
+    <div class="section-body">
+
+      <!-- 1 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">1</div><div class="slide-title">表紙｜キャッチコピー</div><div class="slide-tag">つかみ</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>1枚目で「自分に向けられた言葉だ」と感じさせ、続きを読む姿勢をつくる。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>会社ロゴ・社名（三慧経営顧問株式会社 / SKMA Inc.）</li>
+            <li>採用キャッチコピー（候補者に向けた一言）</li>
+            <li>「We are hiring / 採用候補者の皆さまへ」の一文</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            <div class="h">社会を変えるあなたと、<span class="accent">合理的に。</span></div>
+            <div class="small">三慧経営顧問株式会社｜採用候補者の皆さまへ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">2</div><div class="slide-title">なぜ私たちは存在するのか（Why / 課題提起）</div><div class="slide-tag">共感</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>事業の前に「世の中のどんな課題を解いているのか」を語り、ミッションへの共感を生む。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>中小企業・事業者が直面する課題（人手不足・資金繰り・WEB集客の遅れ・場当たり経営）</li>
+            <li>その課題を放置するとどうなるか</li>
+            <li>「だから私たちがいる」への接続</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            日本の事業者の多くは、優れた商品や技術を持ちながら「経営の打ち手」で取りこぼしています。<br>
+            資金、WEB、組織——どれも"なんとなく"で進み、合理的な判断ができないまま消耗していく。<br>
+            <b>私たちは、その「もったいない」をなくすために存在します。</b>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">3</div><div class="slide-title">ミッション・スローガン</div><div class="slide-tag">理念</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>会社が掲げる旗を明確に示し、価値観の合う人を引き寄せる。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>スローガン「社会を変えるあなたと共に」</li>
+            <li>その言葉に込めた意味（事業者の持続的発展を共に支える）</li>
+            <li>"あなた"＝顧客であり、共に働く仲間でもある、という二重の意味づけ</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            <div class="h">社会を変える<span class="accent">あなた</span>と共に</div>
+            私たちが支えるのは、地域や社会を動かそうとする事業者の挑戦。<br>
+            そしてその挑戦を支える"あなた"こそ、三慧経営顧問の主役です。
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">4</div><div class="slide-title">事業内容（What we do）</div><div class="slide-tag">理解</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>「で、何をしている会社なの？」に最短で答える。3サービスを一目で。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>経営コンサルティング（社外顧問〜業務委託まで、ハンズオン支援）</li>
+            <li>WEBコンサルティング（戦略立案〜実行、デジタルマーケ）</li>
+            <li>財務コンサルティング（資金調達・財務戦略・補助金/助成金活用）</li>
+            <li>「一社で経営の3領域を伴走できる」点を強調</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            私たちは<b>「経営・WEB・財務」の3領域</b>を一気通貫で支援するコンサルティングファームです。<br>
+            個人事業主から法人まで、規模を問わず、机上の理論ではなく<b>現場に入り込むハンズオン支援</b>を行います。
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">5</div><div class="slide-title">私たちの強み｜「日本一合理的なコンサル」</div><div class="slide-tag">差別化</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>数あるコンサルの中での独自性を明確化。候補者に「ここで働く理由」を与える。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>「日本一合理的なコンサル会社」というスタンス</li>
+            <li>予算を使わせるのではなく、補助金など制度を最大活用する姿勢</li>
+            <li>自社でも複数事業を運営（ダンススクール・メディア事業譲渡・予約管理システム導入など）＝机上論ではない実践力</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            <div class="h">私たちは、<span class="accent">日本一合理的な</span>コンサル会社を目指す。</div>
+            「とりあえず広告を増やしましょう」とは言いません。補助金・制度を使い倒し、<b>最小のコストで最大の成果</b>を設計する。<br>
+            しかも私たち自身が事業を立ち上げ、売却し、システムを導入してきた<b>"やったことがある"集団</b>です。
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">6</div><div class="slide-title">数字で見る三慧経営顧問</div><div class="slide-tag">信頼</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>若い会社への不安を、客観的な数字で払拭する。</div>
+          <div class="blk-label">掲載要素</div>
+          <div class="stat-grid" style="margin:6px 0 4px;">
+            <div class="stat"><div class="n">200<span style="font-size:13px;">+</span></div><div class="u">支援事業者数</div></div>
+            <div class="stat"><div class="n">3</div><div class="u">事業領域（経営・WEB・財務）</div></div>
+            <div class="stat"><div class="n">3</div><div class="u">拠点（大阪・枚方・尼崎）</div></div>
+            <div class="stat"><div class="n">2021</div><div class="u">設立年（令和3年）</div></div>
+          </div>
+          <div class="notice" style="margin-top:14px;">残りの数字 <span class="hear" style="margin:0;">要ヒアリング</span>：従業員数・平均年齢・男女比・顧問継続率・補助金採択額/件数 などがあれば説得力が大幅UP。</div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">7</div><div class="slide-title">代表メッセージ</div><div class="slide-tag">想い</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>創業の想い・人柄を通じて「この人の下で働きたい」を醸成。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>代表取締役 吉川英治 氏の顔写真・プロフィール</li>
+            <li>なぜこの会社を創ったのか／どんな未来を目指すのか</li>
+            <li>働く仲間に何を期待し、何を約束するか</li>
+          </ul>
+          <div class="notice">本文 <span class="hear" style="margin:0;">要ヒアリング</span>：創業ストーリー・代表の経歴・候補者へのメッセージを30分ヒアリングで取得 → ドラフト化します。</div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">8</div><div class="slide-title">仕事内容｜入社後に任せる役割</div><div class="slide-tag">具体</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>「自分は何をするのか」を具体化し、入社後をイメージさせる。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>募集ポジションごとの一日の流れ・担当業務</li>
+            <li>クライアント支援の進め方（ハンズオンの具体例）</li>
+            <li>未経験/若手がどう成長していくか</li>
+          </ul>
+          <div class="notice">内容 <span class="hear" style="margin:0;">要ヒアリング</span>：募集職種（コンサルタント／WEBマーケ／財務担当 等）と業務内容の確定が必要。</div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">9</div><div class="slide-title">一緒に働く仲間（メンバー紹介）</div><div class="slide-tag">人</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>候補者の最大の関心「どんな人と働くか」に応える。採用で最も効くページ。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>各業界経験を持つマネージャー陣の紹介（経歴・担当領域）</li>
+            <li>社員インタビュー（入社理由・やりがい・1日）</li>
+            <li>顔が見える写真</li>
+          </ul>
+          <div class="notice">内容 <span class="hear" style="margin:0;">要ヒアリング</span>：2〜3名分のプロフィール・写真・一言コメントを用意。Optiaの「社員インタビュー生成」機能と連携可能。</div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">10</div><div class="slide-title">カルチャー・大切にしている価値観</div><div class="slide-tag">文化</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>スキルより前にカルチャーフィットを確認させ、ミスマッチを防ぐ。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>行動指針／バリュー（3〜5個）</li>
+            <li>「合理性」を体現する具体的な働き方・社内文化</li>
+            <li>意思決定のスタイル・チームの雰囲気</li>
+          </ul>
+          <div class="blk-label">文案ドラフト（バリュー案・叩き台）</div>
+          <div class="draft">
+            <b>① 合理を貫く</b> — 前例より、根拠。常に「本当にそれが最適か」を問う。<br>
+            <b>② 現場に入る</b> — 評論しない。クライアントの隣で手を動かす。<br>
+            <b>③ 自ら事業をやる</b> — 支援する側も、挑戦する当事者であり続ける。<br>
+            <span class="small">※確定前にバリューの方向性を <span class="hear" style="margin:0;">要ヒアリング</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">11</div><div class="slide-title">働く環境・制度</div><div class="slide-tag">条件</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>働き方の不安（場所・時間・成長機会）を解消する。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>勤務地（大阪本社・枚方・尼崎）／オンライン・オフライン併用</li>
+            <li>働き方・評価制度・教育/研修</li>
+            <li>福利厚生・キャリアパス</li>
+          </ul>
+          <div class="notice">内容 <span class="hear" style="margin:0;">要ヒアリング</span>：勤務時間・休日・リモート可否・研修制度・評価制度などの実態を確認。</div>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">12</div><div class="slide-title">募集要項・求める人物像</div><div class="slide-tag">要件</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>応募条件を明確にし、合う人だけを前に進める。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>募集ポジション／雇用形態／給与レンジ／勤務地</li>
+            <li>必須要件・歓迎要件</li>
+            <li>求める人物像（合理的思考・当事者意識・成長意欲 など）</li>
+          </ul>
+          <div class="blk-label">文案ドラフト（求める人物像）</div>
+          <div class="draft">
+            ・「なぜ？」を突き詰められる、合理的な思考の人<br>
+            ・評論より実行。自ら手を動かせる当事者<br>
+            ・経営・WEB・財務のどれかに強い関心がある人<br>
+            <span class="small">※給与・要件など条件部分は <span class="hear" style="margin:0;">要ヒアリング</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">13</div><div class="slide-title">選考フロー</div><div class="slide-tag">流れ</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>次のアクションのハードルを下げ、応募・面談へ進ませる。</div>
+          <div class="blk-label">掲載要素（標準フロー・叩き台）</div>
+          <div class="flow" style="margin:6px 0 4px;">
+            <div class="flow-step"><div class="s">STEP 1</div><div class="t">カジュアル面談</div></div>
+            <div class="flow-step"><div class="s">STEP 2</div><div class="t">書類選考</div></div>
+            <div class="flow-step"><div class="s">STEP 3</div><div class="t">面接（1〜2回）</div></div>
+            <div class="flow-step"><div class="s">STEP 4</div><div class="t">内定・入社</div></div>
+          </div>
+          <div class="notice" style="margin-top:14px;">実際のフロー <span class="hear" style="margin:0;">要ヒアリング</span>：面接回数・面接官・適性検査の有無などを確認。</div>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="slide">
+        <div class="slide-head"><div class="slide-num">14</div><div class="slide-title">候補者へのメッセージ／応募導線（CTA）</div><div class="slide-tag">締め</div></div>
+        <div class="slide-body">
+          <div class="slide-purpose"><b>目的：</b>最後に背中を押し、具体的な応募・問い合わせアクションへつなぐ。</div>
+          <div class="blk-label">掲載要素</div>
+          <ul class="elements">
+            <li>候補者への最後のメッセージ（共に社会を変える仲間募集）</li>
+            <li>応募/カジュアル面談の連絡先（info@skma.asia）・応募フォームQR</li>
+            <li>SNS・コーポレートサイトへの導線</li>
+          </ul>
+          <div class="blk-label">文案ドラフト</div>
+          <div class="draft">
+            <div class="h">社会を変える挑戦に、<span class="accent">あなたの席</span>があります。</div>
+            少しでも興味を持っていただけたら、まずは話を聞きに来てください。<br>
+            <span class="small">お問い合わせ：info@skma.asia ／ https://skma.asia/</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== 次アクション ===== -->
+  <div class="section">
+    <div class="section-header">この構成案を「完成資料」にするには</div>
+    <div class="section-body">
+      <div class="intro-box" style="background:#F0FAF4;border-color:var(--green);border-left-color:var(--green);">
+        本構成案の <span class="hear" style="margin:0;">要ヒアリング</span> 箇所（代表メッセージ・メンバー・募集要項・制度・選考フロー）を<strong style="color:var(--green);">30〜45分のヒアリング1回</strong>で埋めれば、デザイン入りの採用ピッチ資料（PowerPoint / PDF）として完成します。EISHIN Optia の「社員インタビュー生成」「採用サイトコピー生成」機能と連携すると、文案作成も自動化できます。
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    本資料は EISHIN Optia「採用ピッチ資料構成案生成」によって、公開情報（<a href="https://skma.asia/">skma.asia</a>）をもとに自動生成されたドラフトです。<br>
+    候補者体験を、AIで磨き抜く。 — EISHIN Optia Cloud
+  </div>
+
+</div>
+</body>
+</html>
