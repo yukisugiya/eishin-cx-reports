@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed求人原稿診断｜株式会社ファイブニーズ「お酒のバイヤー」</title>
+<style>
+  :root {
+    --red: #AE1C3B;
+    --orange: #E65100;
+    --green: #2E7D32;
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #212121;
+    --muted: #757575;
+    --border: #e0e0e0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+  header {
+    background: var(--red);
+    color: #fff;
+    padding: 28px 32px 24px;
+  }
+  header .label { font-size: 11px; letter-spacing: 0.08em; opacity: 0.85; margin-bottom: 6px; }
+  header h1 { font-size: 22px; font-weight: 700; line-height: 1.3; }
+  header .meta { font-size: 12px; opacity: 0.8; margin-top: 8px; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  .section { background: var(--card); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .cn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cn.dash { font-size: 18px; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text); }
+
+  /* Profile Section */
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .profile-item { background: #fafafa; border-radius: 8px; padding: 12px 14px; }
+  .profile-item .pl { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .profile-item .pv { font-size: 14px; font-weight: 600; }
+
+  /* Score Ring */
+  .score-center { display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; }
+  .ring-wrap { position: relative; width: 140px; height: 140px; margin-bottom: 8px; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+  .ring-label .score-num { font-size: 36px; font-weight: 800; color: var(--red); }
+  .ring-label .score-denom { font-size: 13px; color: var(--muted); }
+  .score-grade { font-size: 14px; font-weight: 600; color: var(--muted); }
+
+  /* Axis bars */
+  .axis-list { display: flex; flex-direction: column; gap: 12px; }
+  .axis-row { display: flex; align-items: center; gap: 10px; }
+  .axis-name { font-size: 12px; color: var(--muted); width: 160px; flex-shrink: 0; }
+  .axis-bar-wrap { flex: 1; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; }
+  .axis-bar { height: 100%; border-radius: 5px; }
+  .axis-bar.a { background: var(--green); }
+  .axis-bar.b { background: var(--orange); }
+  .axis-bar.c { background: var(--red); }
+  .axis-score { font-size: 13px; font-weight: 700; width: 32px; text-align: right; }
+  .badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; color: #fff; }
+  .badge.a { background: var(--green); }
+  .badge.b { background: var(--orange); }
+  .badge.c { background: var(--red); }
+
+  .summary-text { background: #fafafa; border-radius: 8px; padding: 14px 16px; font-size: 13px; line-height: 1.8; color: var(--text); margin-top: 16px; }
+
+  /* Competitor table */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #f5f5f5; padding: 8px 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+  td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .highlight-row td { background: #fff8f9; font-weight: 600; }
+  .tag-good { color: var(--green); }
+  .tag-warn { color: var(--orange); }
+  .tag-bad { color: var(--red); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .strength-card { background: #f1f8f1; border-left: 3px solid var(--green); padding: 12px 14px; border-radius: 6px; }
+  .weakness-card { background: #fff3f0; border-left: 3px solid var(--orange); padding: 12px 14px; border-radius: 6px; }
+  .col-title { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+  .col-title.g { color: var(--green); }
+  .col-title.o { color: var(--orange); }
+  ul.item-list { padding-left: 16px; }
+  ul.item-list li { font-size: 12px; line-height: 1.8; }
+
+  /* Algorithm check */
+  .algo-table th:first-child, .algo-table td:first-child { width: 40%; }
+  .mark { font-size: 16px; font-weight: 700; }
+  .mark.ok { color: var(--green); }
+  .mark.warn { color: var(--orange); }
+  .mark.ng { color: var(--red); }
+  .algo-summary { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .algo-badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .algo-badge.ok { background: #e8f5e9; color: var(--green); }
+  .algo-badge.warn { background: #fff3e0; color: var(--orange); }
+  .algo-badge.ng { background: #ffebee; color: var(--red); }
+
+  /* Keywords */
+  .kw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kw-block { background: #fafafa; border-radius: 8px; padding: 14px; }
+  .kw-block-title { font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .kw-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .kw-tag { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+  .kw-tag.high { background: #ffebee; color: var(--red); }
+  .kw-tag.mid { background: #fff3e0; color: var(--orange); }
+  .kw-tag.own { background: #e8f5e9; color: var(--green); }
+
+  /* Axis detail */
+  .axis-detail { border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .axis-detail-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .axis-num { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .axis-detail-title { font-size: 14px; font-weight: 700; }
+  .axis-score-badge { margin-left: auto; font-size: 13px; font-weight: 700; }
+  .detail-label { font-size: 10px; font-weight: 700; color: var(--muted); margin-top: 10px; margin-bottom: 4px; letter-spacing: 0.05em; }
+  .detail-text { font-size: 12px; line-height: 1.8; }
+  .detail-text.issue { color: var(--orange); }
+  .detail-text.action { color: var(--green); }
+
+  /* TOP3 */
+  .top3-list { display: flex; flex-direction: column; gap: 12px; }
+  .top3-item { display: flex; gap: 14px; align-items: flex-start; background: #fafafa; border-radius: 8px; padding: 14px 16px; }
+  .top3-num { width: 32px; height: 32px; border-radius: 50%; background: var(--red); color: #fff; font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .top3-num.two { background: var(--orange); }
+  .top3-num.three { background: #9e9e9e; }
+  .top3-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .top3-why { font-size: 12px; color: var(--muted); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">EISHIN｜Indeed求人原稿診断レポート</div>
+  <h1>株式会社ファイブニーズ<br>「お酒のバイヤー」</h1>
+  <div class="meta">診断日：2026年6月30日　／　診断担当：EISHIN CXコンサルティング</div>
+</header>
+
+<div class="container">
+
+  <!-- ― 診断対象プロフィール -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn dash">―</div>
+      <div class="section-title">診断対象　求人票プロフィール</div>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <div class="pl">求人タイトル</div>
+        <div class="pv">お酒のバイヤー</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">会社名</div>
+        <div class="pv">株式会社ファイブニーズ</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">勤務地</div>
+        <div class="pv">大阪府大阪市中央区南本町（本町駅 徒歩2分）</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">雇用形態</div>
+        <div class="pv">正社員</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">給与</div>
+        <div class="pv">月給 258,667〜400,000円<br><span style="font-size:11px;color:var(--muted)">（固定残業45h含む・基本給192,000〜300,552円）</span></div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">掲載鮮度</div>
+        <div class="pv">5日前（新着）</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">求人タグ数</div>
+        <div class="pv">19個</div>
+      </div>
+      <div class="profile-item">
+        <div class="pl">職場写真</div>
+        <div class="pv">1枚のみ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1 診断スコアサマリー -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">1</div>
+      <div class="section-title">診断スコアサマリー</div>
+    </div>
+    <div class="score-center">
+      <div class="ring-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#eee" stroke-width="14"/>
+          <!-- 65/100 → circumference=364.4 → dashoffset=364.4*(1-0.65)=127.5 -->
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#AE1C3B" stroke-width="14"
+            stroke-dasharray="364.4" stroke-dashoffset="127.5" stroke-linecap="round"/>
+        </svg>
+        <div class="ring-label">
+          <div class="score-num">65</div>
+          <div class="score-denom">/ 100</div>
+        </div>
+      </div>
+      <div class="score-grade">総合評価：B（改善余地あり）</div>
+    </div>
+
+    <div class="axis-list">
+      <div class="axis-row">
+        <div class="axis-name">① タイトル最適化</div>
+        <div class="axis-bar-wrap"><div class="axis-bar b" style="width:55%"></div></div>
+        <div class="axis-score">11</div>
+        <span class="badge b">B</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-name">② 給与・条件の透明性</div>
+        <div class="axis-bar-wrap"><div class="axis-bar b" style="width:60%"></div></div>
+        <div class="axis-score">12</div>
+        <span class="badge b">B</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-name">③ 求職者目線の訴求</div>
+        <div class="axis-bar-wrap"><div class="axis-bar a" style="width:75%"></div></div>
+        <div class="axis-score">15</div>
+        <span class="badge a">A</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-name">④ 情報の充足度</div>
+        <div class="axis-bar-wrap"><div class="axis-bar a" style="width:75%"></div></div>
+        <div class="axis-score">15</div>
+        <span class="badge a">A</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-name">⑤ 差別化・独自性</div>
+        <div class="axis-bar-wrap"><div class="axis-bar b" style="width:60%"></div></div>
+        <div class="axis-score">12</div>
+        <span class="badge b">B</span>
+      </div>
+    </div>
+
+    <div class="summary-text">
+      求職者目線の訴求（③）と情報充足度（④）は競合と比較して高水準。3つのPOINT形式・研修ステップ・年収例など、「入社後のイメージ」を伝える構成は明確な強みです。一方で、タイトル（①）は検索カバレッジが狭く、給与（②）は固定残業45時間込みで基本給が低く見えやすい点が課題。競合（ウィズワン）が「月給35万〜＋入社祝い金60万・残業なし・転勤なし」で強い差別化を打ち出しており、⑤の差別化強化が優先テーマとなります。
+    </div>
+  </div>
+
+  <!-- 2 競合比較サマリー -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">2</div>
+      <div class="section-title">競合比較サマリー</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>比較項目</th>
+          <th>ファイブニーズ（対象）</th>
+          <th>ARTE（買取・販売）</th>
+          <th>ファイブニーズ別店舗（HW）</th>
+          <th>ウィズワン（買取・査定）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>タイトル</td>
+          <td>お酒のバイヤー</td>
+          <td>買取(査定)・販売スタッフ</td>
+          <td>総合職（お酒のバイヤー）</td>
+          <td>買取店舗の査定スタッフ</td>
+        </tr>
+        <tr>
+          <td>給与表記</td>
+          <td class="tag-warn">月給258,667〜400,000円<br>（固定残業45h含む）</td>
+          <td>月給30万円以上</td>
+          <td>月給197,795〜296,500円</td>
+          <td class="tag-good">月給35万円〜<br>＋入社祝い金60万円</td>
+        </tr>
+        <tr>
+          <td>求人タグ数</td>
+          <td class="tag-good">19個</td>
+          <td>8個</td>
+          <td>3個</td>
+          <td>11個</td>
+        </tr>
+        <tr>
+          <td>職場写真</td>
+          <td class="tag-warn">1枚</td>
+          <td>不明</td>
+          <td>なし（HW）</td>
+          <td class="tag-good">複数枚</td>
+        </tr>
+        <tr>
+          <td>差別化訴求</td>
+          <td>3つのPOINT・研修制度</td>
+          <td>転勤なし・残業ほぼなし</td>
+          <td>なし（HW原稿）</td>
+          <td class="tag-good">入社祝い金・残業なし・転勤なし</td>
+        </tr>
+        <tr>
+          <td>必須条件</td>
+          <td class="tag-good">運転免許のみ</td>
+          <td>学歴不問（詳細不明）</td>
+          <td>不明</td>
+          <td class="tag-good">職種・業種未経験OK</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="two-col">
+      <div class="strength-card">
+        <div class="col-title g">▲ 対象求人の強み</div>
+        <ul class="item-list">
+          <li>タグ19個と競合最多。検索フィルタリング優位</li>
+          <li>3つのPOINT・研修ステップで入社後イメージが具体的</li>
+          <li>年収例（410〜700万円）と昇給データを明示</li>
+          <li>掲載鮮度5日前・本町駅徒歩2分という立地訴求</li>
+          <li>ソムリエ資格手当・住宅手当など手当の充実</li>
+        </ul>
+      </div>
+      <div class="weakness-card">
+        <div class="col-title o">▼ 対象求人の弱み</div>
+        <ul class="item-list">
+          <li>写真1枚のみ（ウィズワン等は複数・訴求力で劣る）</li>
+          <li>固定残業45h込みで基本給192,000円〜が低く見える</li>
+          <li>タイトルが「お酒のバイヤー」のみで検索範囲が狭い</li>
+          <li>競合（ウィズワン）が「入社祝い金60万・残業なし・転勤なし」で強烈な差別化</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 アルゴリズムチェック -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">3</div>
+      <div class="section-title">Indeedアルゴリズム観点チェック</div>
+    </div>
+    <table class="algo-table">
+      <thead>
+        <tr>
+          <th>チェック項目</th>
+          <th>判定</th>
+          <th>現状</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>給与の明示</td>
+          <td><span class="mark ok">○</span></td>
+          <td>月給258,667〜400,000円を明示</td>
+        </tr>
+        <tr>
+          <td>給与表示形式</td>
+          <td><span class="mark warn">△</span></td>
+          <td>固定残業45h込み。基本給192,000〜が低く見えやすい。固定残業代の内訳を別行で表示済みだが、求職者の受け取り方に注意が必要</td>
+        </tr>
+        <tr>
+          <td>求人タグ数</td>
+          <td><span class="mark ok">○</span></td>
+          <td>19個（推奨5〜8個を大きく上回る）。検索フィルタのカバレッジ高</td>
+        </tr>
+        <tr>
+          <td>写真・画像</td>
+          <td><span class="mark ng">✕</span></td>
+          <td>1枚のみ掲載。Indeedは5枚以上を推奨。競合比較でも視覚訴求が最弱</td>
+        </tr>
+        <tr>
+          <td>掲載鮮度</td>
+          <td><span class="mark ok">○</span></td>
+          <td>5日前（新着）。アルゴリズム上の不利なし</td>
+        </tr>
+        <tr>
+          <td>選考フロー記載</td>
+          <td><span class="mark ok">○</span></td>
+          <td>書類選考→一次面接→最終面接（代表）→内定まで明記</td>
+        </tr>
+        <tr>
+          <td>必須条件の絞り込み</td>
+          <td><span class="mark ok">○</span></td>
+          <td>必須は運転免許のみ。母集団を広く取れる設定</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="algo-summary">
+      <span class="algo-badge ok">○ 5項目</span>
+      <span class="algo-badge warn">△ 1項目</span>
+      <span class="algo-badge ng">✕ 1項目（写真枚数）</span>
+    </div>
+  </div>
+
+  <!-- 4 キーワードギャップ分析 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">4</div>
+      <div class="section-title">キーワードギャップ分析</div>
+    </div>
+    <div class="kw-grid">
+      <div class="kw-block">
+        <div class="kw-block-title">待遇訴求キーワード（競合に多く対象に少ない）</div>
+        <div class="kw-tags">
+          <span class="kw-tag high">入社祝い金</span>
+          <span class="kw-tag high">転勤なし</span>
+          <span class="kw-tag high">残業なし・月20h以内</span>
+          <span class="kw-tag mid">引越し補助</span>
+          <span class="kw-tag mid">社員寮</span>
+        </div>
+      </div>
+      <div class="kw-block">
+        <div class="kw-block-title">成長訴求キーワード（競合に多く対象に少ない）</div>
+        <div class="kw-tags">
+          <span class="kw-tag high">市場価値</span>
+          <span class="kw-tag mid">海外展開</span>
+          <span class="kw-tag mid">副業OK</span>
+          <span class="kw-tag mid">在宅・テレワーク</span>
+        </div>
+      </div>
+      <div class="kw-block">
+        <div class="kw-block-title">職種定義キーワード（検索で入りやすいが未使用）</div>
+        <div class="kw-tags">
+          <span class="kw-tag high">買取</span>
+          <span class="kw-tag high">査定</span>
+          <span class="kw-tag mid">バイイング</span>
+          <span class="kw-tag mid">法人営業</span>
+          <span class="kw-tag mid">リユース</span>
+        </div>
+      </div>
+      <div class="kw-block">
+        <div class="kw-block-title">対象求人の独自キーワード（強みとして伸ばすべき）</div>
+        <div class="kw-tags">
+          <span class="kw-tag own">お酒専門店</span>
+          <span class="kw-tag own">ソムリエ資格手当</span>
+          <span class="kw-tag own">数千万円のレアなお酒</span>
+          <span class="kw-tag own">100%反響対応</span>
+          <span class="kw-tag own">部長（年収700万）</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:12px;">
+      <strong>凡例：</strong>
+      <span class="kw-tag high" style="display:inline-block">高影響</span>
+      競合求人に頻出かつ対象求人にない語（欠落による機会損失大）
+      <span class="kw-tag mid" style="display:inline-block">中影響</span>
+      あると強化になる補足的な語
+      <span class="kw-tag own" style="display:inline-block">独自</span>
+      対象求人固有の差別化語（積極訴求を推奨）
+    </p>
+  </div>
+
+  <!-- 5 軸別診断 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">5</div>
+      <div class="section-title">軸別診断</div>
+    </div>
+
+    <div class="axis-detail">
+      <div class="axis-detail-header">
+        <span class="axis-num">軸①</span>
+        <span class="axis-detail-title">タイトル最適化</span>
+        <span class="axis-score-badge"><span class="badge b">B</span> 11 / 20</span>
+      </div>
+      <div class="detail-label">現状</div>
+      <div class="detail-text">タイトルは「お酒のバイヤー」のみ。職種の独自性は伝わるが、「買取」「査定」「リユース」といった求職者が実際に検索する一般的な職種ワードが含まれていない。競合（ARTE）の「買取(査定)・販売スタッフ」やウィズワンの「買取店舗の査定スタッフ」は職種名として機能しており、検索カバレッジで劣る状況。</div>
+      <div class="detail-label">課題</div>
+      <div class="detail-text issue">「お酒のバイヤー」は業界内では通じても、求職者が「買取 大阪 正社員」で検索した際に表示されにくい。タイトルの文字数上限内で差別化要素と検索ワードを両立できていない。</div>
+      <div class="detail-label">改善の方向性</div>
+      <div class="detail-text action">「買取」「査定」など一般検索ワードとの組み合わせに近づける方向で、タイトル構成の見直しを検討する。独自性（お酒専門・ソムリエ資格・高年収実績）をサブタイトルや本文冒頭で補う構成も有効。</div>
+    </div>
+
+    <div class="axis-detail">
+      <div class="axis-detail-header">
+        <span class="axis-num">軸②</span>
+        <span class="axis-detail-title">給与・条件の透明性</span>
+        <span class="axis-score-badge"><span class="badge b">B</span> 12 / 20</span>
+      </div>
+      <div class="detail-label">現状</div>
+      <div class="detail-text">月給・基本給・固定残業代を分けて明示しており、透明性の基本は満たしている。ただし固定残業45h（月66,667〜99,448円）が含まれており、基本給192,000〜300,552円という数字が目立つ形になりやすい。一方で年収例（入社2年目で年収560万等）や昇給年2回、賞与実績は積極的に記載されている。</div>
+      <div class="detail-label">課題</div>
+      <div class="detail-text issue">固定残業45h込みは求職者が「みなし残業が多い」と受け取りやすく、離脱要因になり得る。また競合（ウィズワン）が「月給35万〜・入社祝い金60万・残業なし」と打ち出しており、相対的に給与の見た目が弱い。</div>
+      <div class="detail-label">改善の方向性</div>
+      <div class="detail-text action">固定残業45hの実態（平均残業月20hなので実際には超過分が発生しにくい構造）を本文内で補足説明する方向が有効。年収実績を入口のタイトル付近に配置するなど、「稼げる」印象を前出しする構成を検討する。</div>
+    </div>
+
+    <div class="axis-detail">
+      <div class="axis-detail-header">
+        <span class="axis-num">軸③</span>
+        <span class="axis-detail-title">求職者目線の訴求</span>
+        <span class="axis-score-badge"><span class="badge a">A</span> 15 / 20</span>
+      </div>
+      <div class="detail-label">現状</div>
+      <div class="detail-text">「3つのPOINT」形式で「未経験から交渉力が身につく」「実力主義で早期昇格」「年間休日123日×残業月平均20h」と求職者が得られる価値を明示。研修STEP①②③の詳細、全拠点オンライン連携による孤立防止体制、年収例など、入社後のイメージが具体的に描ける構成。</div>
+      <div class="detail-label">課題</div>
+      <div class="detail-text issue">「圧倒的な実力主義」「ベンチャー環境」という表現は向き不向きが出やすく、安定志向の求職者には響きにくい。入社後のネガティブ面（転勤の可能性・固定残業45h）の補足説明が不足。</div>
+      <div class="detail-label">改善の方向性</div>
+      <div class="detail-text action">現状の訴求は高水準を維持しつつ、働き方の実態（残業20h程度の根拠）を補強する。実際の社員の声や1日の仕事の流れなどを追記することでさらに具体性が増す。</div>
+    </div>
+
+    <div class="axis-detail">
+      <div class="axis-detail-header">
+        <span class="axis-num">軸④</span>
+        <span class="axis-detail-title">情報の充足度</span>
+        <span class="axis-score-badge"><span class="badge a">A</span> 15 / 20</span>
+      </div>
+      <div class="detail-label">現状</div>
+      <div class="detail-text">仕事内容の流れ（問い合わせ→商品確認→査定・交渉）、研修制度、休日休暇（年123日・誕生日休暇・産休育休実績あり）、各種手当（交通費4万・住宅手当2万・資格手当2万・家族手当）、選考フロー（書類→一次→最終→内定）が揃っており、応募判断に必要な情報は概ね記載済み。必須条件と歓迎条件の区別も明確。</div>
+      <div class="detail-label">課題</div>
+      <div class="detail-text issue">勤務地が「大阪」一拠点のみの記載で、転勤の可能性（「マネジメント経験者・全国転勤可能な方を優遇」）の詳細が曖昧。また産休・育休が「取得実績あり」とあるが、実績数や復帰率などがあると信頼性が上がる。</div>
+      <div class="detail-label">改善の方向性</div>
+      <div class="detail-text action">転勤範囲・タイミングの補足説明を追加する。育休復帰率などの数値データがあれば加えることで信頼性訴求が強化される。</div>
+    </div>
+
+    <div class="axis-detail">
+      <div class="axis-detail-header">
+        <span class="axis-num">軸⑤</span>
+        <span class="axis-detail-title">差別化・独自性</span>
+        <span class="axis-score-badge"><span class="badge b">B</span> 12 / 20</span>
+      </div>
+      <div class="detail-label">現状</div>
+      <div class="detail-text">「お酒専門店」という明確なニッチポジションがあり、ソムリエ資格手当や数千万円のレアなお酒に立ち会えるといった独自性は記載されている。しかし、写真が1枚のみのため視覚的なブランド訴求が弱く、ページ全体の印象が競合と差別化されていない。競合（ウィズワン）は「月給35万〜・入社祝い金60万・残業なし・転勤なし・海外展開中」と待遇面の独自性で強烈に差別化されている。</div>
+      <div class="detail-label">課題</div>
+      <div class="detail-text issue">写真1枚は視覚的訴求が著しく不足（Indeedは5枚以上推奨）。「日本一のお酒専門店」「実際のレアなお酒の写真」「職場環境の雰囲気」など、写真で差別化できる余地が大きい。また「圧倒的な実力主義」と表現する一方で、具体的なエビデンス（昇格者数・平均年収実績）の補強が必要。</div>
+      <div class="detail-label">改善の方向性</div>
+      <div class="detail-text action">写真を5枚以上に増やすことが最優先。職場・商品（お酒）・研修風景・社員の表情など多角的な視覚情報を提供する。「他社では経験できないお酒との出会い」という体験的差別化のストーリーを本文で強化する方向を検討する。</div>
+    </div>
+  </div>
+
+  <!-- 6 優先改善テーマ TOP3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="cn">6</div>
+      <div class="section-title">優先改善テーマ TOP3</div>
+    </div>
+    <div class="top3-list">
+      <div class="top3-item">
+        <div class="top3-num">1</div>
+        <div>
+          <div class="top3-title">職場写真を5枚以上に増やす（アルゴリズム・差別化の両面で即効性大）</div>
+          <div class="top3-why">現在1枚のみで、Indeedアルゴリズム上の✕要因かつ競合に対する視覚訴求の最大の弱点。お酒専門店という独自性（レアなお酒・職場・研修風景）を写真で伝えることで、クリック率・応募率の向上が期待できる。費用対効果の高い改善策。</div>
+        </div>
+      </div>
+      <div class="top3-item">
+        <div class="top3-num two">2</div>
+        <div>
+          <div class="top3-title">タイトルに「買取」「査定」などの検索ワードを組み込む</div>
+          <div class="top3-why">「お酒のバイヤー」は独自性があるが、実際の求職者が検索する「買取 大阪」「査定スタッフ 正社員」などのキーワードとのマッチが弱い。タイトルを変えることで表示機会自体を増やすことができる。競合が全員「買取」「査定」をタイトルに使っている点からも、ここがボトルネックである可能性が高い。</div>
+        </div>
+      </div>
+      <div class="top3-item">
+        <div class="top3-num three">3</div>
+        <div>
+          <div class="top3-title">固定残業45hの実態を補足し、給与の見た目を改善する</div>
+          <div class="top3-why">固定残業45h込みは求職者の離脱要因になりやすい。実際の平均残業時間が月20h程度であれば、「固定残業代45h分を設定しているが、実際の平均残業は月20h以内」と明示することで不安を払拭できる。競合（ウィズワン）との給与訴求の差を縮める効果も期待できる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
