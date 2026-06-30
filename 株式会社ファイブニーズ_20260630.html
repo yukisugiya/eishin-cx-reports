@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>doda求人診断レポート｜株式会社ファイブニーズ</title>
+<style>
+  :root { --red:#AE1C3B; --orange:#E65100; --green:#2E7D32; --blue:#1565C0; --bg:#F5F5F5; --card:#fff; --text:#212121; --sub:#757575; --border:#E0E0E0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.65}
+  .header{background:var(--red);color:#fff;padding:24px 32px}
+  .header h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .header p{font-size:13px;opacity:.85}
+  .container{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .sub-title{font-size:12px;color:var(--sub);margin-left:4px}
+  .card-body{padding:20px}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.g{border-color:var(--green);color:var(--green)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  /* score */
+  .sa{display:flex;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:16px}
+  .rw{flex-shrink:0;text-align:center}
+  .rl{font-size:11px;color:var(--sub);margin-top:4px}
+  .bw{flex:1;min-width:240px}
+  .br{margin-bottom:11px}
+  .bl{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;font-size:12px}
+  .grade{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}
+  .grade.B{background:#FFF3E0;color:var(--orange)}
+  .grade.C{background:#FFEBEE;color:var(--red)}
+  .bb{height:9px;background:#EEE;border-radius:5px;overflow:hidden}
+  .bf{height:100%;border-radius:5px}
+  .fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .note{font-size:11px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:8px 12px;border-radius:0 4px 4px 0;margin-bottom:12px}
+  .sb{background:#FAFAFA;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 4px 4px 0;font-size:13px;line-height:1.75;margin-top:4px}
+  /* funnel */
+  .fs{margin-bottom:20px}.fs:last-child{margin-bottom:0}
+  .sh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#F5F5F5;border-radius:6px 6px 0 0;border:1px solid var(--border);border-bottom:none}
+  .sn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .st{font-size:14px;font-weight:700}
+  .ss{font-size:12px;color:var(--sub);margin-left:4px}
+  .sb2{border:1px solid var(--border);border-radius:0 0 6px 6px;padding:14px}
+  .cr{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+  .cr:last-child{border-bottom:none}
+  .ci{font-size:16px;width:22px;flex-shrink:0}
+  .ci.ok{color:var(--green)}.ci.ng{color:var(--red)}.ci.tr{color:var(--orange)}
+  .cl{font-size:13px;font-weight:600;width:170px;flex-shrink:0;line-height:1.4}
+  .cd{font-size:12px;color:var(--sub);flex:1;line-height:1.65}
+  .tl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .tg{font-size:11px;padding:2px 7px;border-radius:10px;background:#F5F5F5}
+  /* tables */
+  .t{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+  .t th{background:#F5F5F5;font-size:11px;font-weight:600;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border)}
+  .t td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .t tr:last-child td{border-bottom:none}
+  .ok{color:var(--green);font-weight:700}.ng{color:var(--red);font-weight:700}.tr{color:var(--orange);font-weight:700}
+  /* axis */
+  .ac{border:1px solid var(--border);border-radius:6px;margin-bottom:12px;overflow:hidden}
+  .ah{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#FAFAFA}
+  .an{font-size:11px;color:var(--sub);font-weight:700}
+  .at{font-size:14px;font-weight:700;flex:1}
+  .as{font-size:18px;font-weight:700}
+  .as.A{color:var(--green)}.as.B{color:var(--orange)}.as.C{color:var(--red)}
+  .ab{padding:13px 14px}
+  .ar{margin-bottom:10px}.ar:last-child{margin-bottom:0}
+  .ar label{font-size:11px;font-weight:700;color:var(--sub);display:block;margin-bottom:3px;letter-spacing:.3px}
+  .ar p{font-size:13px;line-height:1.7}
+  .rm{font-size:12px;line-height:1.9}
+  .rm div{margin-bottom:1px}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:10px 14px;font-size:12px;color:#0D47A1;margin-top:10px}
+  .li{background:#E3F2FD;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.75;margin-bottom:16px}
+  .li strong{color:var(--blue)}
+  /* top3 */
+  .ti{display:flex;gap:14px;padding:14px;border:1px solid var(--border);border-radius:6px;margin-bottom:10px}
+  .ti:last-child{margin-bottom:0}
+  .tn{font-size:30px;font-weight:700;color:var(--red);width:32px;flex-shrink:0;line-height:1}
+  .tc h4{font-size:14px;font-weight:700;margin-bottom:4px}
+  .ft{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:#E3F2FD;color:var(--blue);font-weight:600;margin-bottom:6px}
+  .tc p{font-size:13px;line-height:1.7;color:var(--sub)}
+  .wy{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px}
+  @media(max-width:600px){.pg,.sa{grid-template-columns:1fr;flex-direction:column}.cl{width:120px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>doda 求人診断レポート</h1>
+  <p>診断日：2026年6月30日｜対象：株式会社ファイブニーズ</p>
+</div>
+
+<div class="container">
+
+<!-- ― プロフィール -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>診断対象プロフィール</h2></div>
+  <div class="card-body">
+    <div class="pg">
+      <div><label>会社名</label><span>株式会社ファイブニーズ</span></div>
+      <div><label>求人タイトル</label><span>お酒のバイヤー／未経験歓迎／年休123日／早期昇格／業界大手</span></div>
+      <div><label>職種カテゴリ</label><span>食品・飲料営業（国内）／小売業界</span></div>
+      <div><label>雇用形態</label><span>正社員</span></div>
+      <div><label>給与</label><span>月給25万5000円〜40万円（みなし残業45時間分含む）＋賞与年2回<br><small style="color:var(--sub);font-size:11px">※東京・神奈川勤務は月給26万8000円〜40万円。超過分は別途全額支給。</small></span></div>
+      <div><label>勤務地</label><span>全国16拠点（北海道・宮城・東京・埼玉・神奈川・名古屋・大阪・兵庫・京都・広島・福岡・熊本）<br><small style="color:var(--sub);font-size:11px">※転勤あり・なしの働き方を選択可</small></span></div>
+      <div><label>掲載期間</label><span>2026年6月18日〜9月16日</span></div>
+      <div><label>最終更新日</label><span>2026年6月19日（診断日より11日前）</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge">正社員</span>
+      <span class="badge s">転勤なし（選択可）</span>
+      <span class="badge g">職種未経験歓迎</span>
+      <span class="badge g">業種未経験歓迎</span>
+      <span class="badge s">5名以上採用</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">タイトル文字数：</span>
+      <span class="badge g">30文字（推奨範囲内）</span>
+      <span style="font-size:12px;color:var(--sub);margin-left:8px">企業情報：</span>
+      <span class="badge g">社員インタビューあり（顔写真3名）</span>
+      <span class="badge g">写真6枚以上（社員・職場シーン）</span>
+      <span class="badge g">取材レポートあり</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 スコアサマリー -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>診断スコアサマリー</h2></div>
+  <div class="card-body">
+    <p class="note">各軸のスコアは求人票・企業情報から確認できる事実の積み上げで算出。確認できた内容のみを根拠とします。</p>
+    <div class="sa">
+      <div class="rw">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#EEE" stroke-width="14"/>
+          <!-- 81/100 → 339.292 × 0.19 = 64.47 -->
+          <circle cx="65" cy="65" r="54" fill="none" stroke="#AE1C3B" stroke-width="14" stroke-dasharray="339.292" stroke-dashoffset="64.47" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+          <text x="65" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="#212121">81</text>
+          <text x="65" y="78" text-anchor="middle" font-size="12" fill="#757575">/ 100</text>
+        </svg>
+        <div class="rl">総合スコア</div>
+      </div>
+      <div class="bw">
+        <div class="br"><div class="bl"><span>① 検索ヒット・一覧クリック訴求</span><span><strong>11</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:55%"></div></div></div>
+        <div class="br"><div class="bl"><span>② 応募要件の間口設計</span><span><strong>15</strong>/20<span class="grade B">B</span></span></div><div class="bb"><div class="bf fB" style="width:75%"></div></div></div>
+        <div class="br"><div class="bl"><span>③ 仕事内容・ミッションの具体性</span><span><strong>18</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:90%"></div></div></div>
+        <div class="br"><div class="bl"><span>④ 待遇・条件の透明性と競争力</span><span><strong>17</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:85%"></div></div></div>
+        <div class="br"><div class="bl"><span>⑤ 企業・ポジションの独自性</span><span><strong>20</strong>/20<span class="grade A">A</span></span></div><div class="bb"><div class="bf fA" style="width:100%"></div></div></div>
+      </div>
+    </div>
+    <div class="sb">「企業・ポジションの独自性（⑤満点）」「仕事内容の具体性（③18点）」「待遇の透明性（④17点）」は高水準で、コンテンツの質は全体的に優れている。一方、<strong>①一覧訴求が弱い</strong>（タイトルが条件列挙・未来像なし・共感リードなし）と<strong>②応募要件の必須/歓迎が分離されていない</strong>の2点が改善の核心。この2軸に注力するだけで90点台が視野に入る。</div>
+  </div>
+</div>
+
+<!-- 2 ファネル診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>doda ファネル診断</h2><span class="sub-title">STEP1〜4の行動フローで評価</span></div>
+  <div class="card-body">
+
+    <div class="fs">
+      <div class="sh"><div class="sn">1</div><div class="st">検索にヒットするか</div><span class="ss">キーワード・職種名・絞り込み条件への対応</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">職種名の語彙</div><div class="cd">「バイヤー」は転職市場で流通している語彙で検索にヒットしやすい。「お酒の」という修飾もニッチな差別化として機能する。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">タイトル文字数</div><div class="cd">30文字。doda推奨30〜40文字の下限ちょうど。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">未経験歓迎バッジ</div><div class="cd"><div class="tl"><span class="tg">職種未経験歓迎</span><span class="tg">業種未経験歓迎</span><span class="tg">転勤なし（選択可）</span></div>人気絞り込み条件（未経験・転勤なし）に対応済み。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルへの給与記載</div><div class="cd">タイトルに給与数値なし。「年休123日・早期昇格」は条件訴求だが、一覧で給与を比較する求職者に対して判断材料が欠ける。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">在宅可否のバッジ/明示</div><div class="cd">リモートワーク関連のバッジも本文の記載も一切なし。店舗勤務のため在宅不可と推定されるが、候補者が確認できない状態になっている。「完全出社（店舗勤務）」と明示するだけで透明性が担保できる。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">2</div><div class="st">一覧でクリックされるか</div><span class="ss">タイトル・給与・バッジの訴求力</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">タイトルの未来像表現</div><div class="cd">「お酒のバイヤー／未経験歓迎／年休123日／早期昇格／業界大手」は条件の列挙。「20代で部長昇格」「売上49倍の急成長市場」等、候補者が「ここで働く自分の姿」を想像できる未来像・世界観の訴求がない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">給与情報の表示</div><div class="cd">月給25万5000円〜40万円と下限・上限の両方を一覧で表示。東京・神奈川の別給与レンジも明示されており比較しやすい。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">未経験歓迎の可視化</div><div class="cd">職種・業種の2種類の未経験歓迎バッジが一覧上で表示され、間口の広さが伝わる。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">3</div><div class="st">詳細ページで離脱されないか</div><span class="ss">コンテンツ充実度・要件設計・表現の質で評価</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">冒頭の共感表現</div><div class="cd">「Check!」セクションのキャッチコピーが「＼急成長ベンチャー／ニッチ市場で世界の流れを変える」「＼早期キャリアアップ／20代で部長昇格実績あり！」「＼好待遇の環境／年休123日・資格取得支援」という会社側の訴求。候補者の悩み（「今の仕事、成長実感がない…」「どこでも通用するスキルが欲しい…」）から入る共感型の表現になっていない。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">人物像の価値観表現</div><div class="cd">【歓迎する人物像】が「スピード感があり変化の多い環境を楽しめる方」「成長意欲が高く積極的に学ぶ努力ができる方」「お酒が好きな方」。「お酒が好き」はユニークだが、全体的には汎用スキル・特性条件の列挙で、ファイブニーズならではの価値観・信念に訴える表現になっていない。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">仕事内容の具体性</div><div class="cd">①問い合わせ対応（電話・メール・LINE）→②商品確認（来店・配送・訪問）→③査定・買取（専用ツール使用）の3ステップで具体的に記述。入社後の動き方が想像できる。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">両面開示</div><div class="cd">「きびしさ」セクションに「キラキラしたおしゃれなベンチャーではない」「泥臭い努力が必要」「常に変化しつづける会社で同じことだけをやりつづけたい方には厳しいかも」と正直に記載。doda公式推奨の両面開示ができている。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">キャリアパス</div><div class="cd">「入社半年で店長（月給40万/30代）」「入社2年目で部長（月給60万/30代）」「入社3年目でSV（月給45万/20代）」等の具体的な実績複数あり。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">チーム情報</div><div class="cd">従業員平均年齢30歳・20代の店長やエリアマネージャーが多数在籍との記載。チームの年齢感・文化が伝わる。</div></div>
+        <div class="cr"><div class="ci ng">✕</div><div class="cl">在宅可否の明示</div><div class="cd">在宅可否に関する記載が一切なし。店舗勤務が主体のため在宅不可と推測されるが、明示がないと候補者が入社後まで確認できない。「完全出社・在宅不可（店舗での接客業務）」と一言書くだけで透明性として○になる。</div></div>
+      </div>
+    </div>
+
+    <div class="fs">
+      <div class="sh"><div class="sn">4</div><div class="st">企業情報・社員の声で応募を決断できるか</div><span class="ss">社員インタビュー・企業情報・写真で評価</span></div>
+      <div class="sb2">
+        <div class="cr"><div class="ci ok">○</div><div class="cl">社員インタビュー</div><div class="cd">3名（Mさん：2022年4月入社/前職：酒小売、Nさん：2018年3月入社/前職：ドライバー、Mさん：2019年11月入社/前職：事務職）が実際の顔写真付きで掲載。入社理由・現在の状況を具体的に記述。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">取材レポート</div><div class="cd">「お酒の流れが変われば、社会の流れも変わる」というビジョンを具体的なエピソード（飲食店閉店時の買取による再生支援）で説明。会社の存在意義が伝わる。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">企業の信頼性</div><div class="cd">売上高48億円（2025年6月）・ヤフオク！ベストストアアワード8年連続1位・楽天ジャンル賞複数受賞・設立2011年以来の連続成長実績。</div></div>
+        <div class="cr"><div class="ci ok">○</div><div class="cl">写真の充実度</div><div class="cd">社員インタビュー顔写真3名＋取材レポート写真（業務シーン・メンバー）計6枚以上。リアルな職場の様子が伝わる。</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 3 媒体最適化チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>doda 媒体最適化チェック</h2></div>
+  <div class="card-body">
+    <div class="li"><strong>dodaの求人票は「検索ヒット」と「スカウト提示資料」の二役を担う。</strong><br>同一求人票がアクティブ求職者の検索応募とスカウト候補者への提示（開封率64.8%）の両方に使われる。媒体機能を最大限に活用することで両チャネルの成果を高められる。</div>
+    <table class="t">
+      <thead><tr><th>チェック項目</th><th>評価</th><th>確認内容</th></tr></thead>
+      <tbody>
+        <tr><td>タイトル文字数 30〜40文字（doda推奨）</td><td class="ok">○</td><td>30文字（推奨範囲の下限ちょうど）</td></tr>
+        <tr><td>給与上限・下限の両方明示</td><td class="ok">○</td><td>月給25万5000円〜40万円（東京・神奈川は26万8000円〜40万円）。上限・下限ともに明示。</td></tr>
+        <tr><td>必須要件と歓迎要件の分離（2段階設計）</td><td class="ng">✕</td><td>「対象となる方」セクション内に「★普通自動車運転免許必須」と「【歓迎する人物像】」が混在。doda推奨の「必須要件欄」と「歓迎要件欄」の2段階形式になっていない。</td></tr>
+        <tr><td>キャッチコピーの掲載</td><td class="ok">○</td><td>「Check!」形式で3要素（急成長ベンチャー・早期キャリアアップ・好待遇）を掲載。ただし情報告知型で共感型ではない。</td></tr>
+        <tr><td>仕事の大変な面の記載（両面開示）</td><td class="ok">○</td><td>「きびしさ」セクションあり（泥臭い努力・変化への対応）。</td></tr>
+        <tr><td>写真の掲載（職場の雰囲気が伝わるもの）</td><td class="ok">○</td><td>6枚以上（社員インタビュー顔写真3名＋取材レポート写真・業務シーン）。</td></tr>
+        <tr><td>社員の声（実名または顔写真付き）の掲載</td><td class="ok">○</td><td>社員インタビュー3件（Mさん・Nさん・Mさん・実際の顔写真付き）。入社理由・現在の業務を具体的に記載。</td></tr>
+        <tr><td>選考フローの明示</td><td class="ok">○</td><td>4ステップ（書類選考→一次面接→最終面接→内定）。オンライン面接可・1〜2週間での内定を明記。</td></tr>
+        <tr><td>更新鮮度（30日以内）</td><td class="ok">○</td><td>更新日：2026年6月19日（診断日の11日前）。</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:var(--sub);margin-top:10px">充足：7項目　✕：1項目（必須/歓迎の分離）　未対応：1項目（在宅可否）</p>
+  </div>
+</div>
+
+<!-- 4 応募要件チェック -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>応募要件チェック</h2><span class="sub-title">doda公式「応募が来ない最大原因＝要件の絞り込みすぎ」への対応を評価</span></div>
+  <div class="card-body">
+    <div class="info">💡 この求人の間口評価：<strong>広い（○）— ただし設計の可視化が不十分</strong>　実質的な必須要件は「普通自動車運転免許」のみで間口は非常に広い。一方、必須要件と歓迎要件が1つのセクションに混在しており、候補者が「自分は応募できるのか」を判断するのに一手間かかる構造になっている。</div>
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>要件区分</th><th>内容</th><th>評価</th></tr></thead>
+      <tbody>
+        <tr><td>必須</td><td>普通自動車運転免許（★印で明記）</td><td class="ok">○ 現実的な1要件のみ</td></tr>
+        <tr><td>歓迎（人物像）</td><td>スピード感ある変化を楽しめる方・成長意欲が高い方・飲食店/営業経験者・接客スキルを伸ばしたい方・お酒が好きな方</td><td class="ok">○ 多様な経験・志向を歓迎</td></tr>
+        <tr><td>制約条件</td><td>年齢制限：記載なし（マネジメント経験者は優遇と付記）　資格：不問　業種：職種・業種未経験歓迎　学歴：不問　第二新卒：歓迎</td><td class="ok">○ 制約はほぼなし</td></tr>
+        <tr><td>設計上の課題</td><td>必須（運転免許）と歓迎要件が「対象となる方」1セクションに混在。doda公式推奨の「必須要件欄」「歓迎要件欄」の明確な2段階形式になっていない。</td><td class="ng">✕ 2段階設計が未実装</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 5 軸別診断 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>軸別診断</h2></div>
+  <div class="card-body">
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸①</span><span class="at">検索ヒット・一覧クリック訴求</span><span class="as B">11 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 職種名に一般語彙「バイヤー」を含む（+3点）</div>
+            <div><span class="ok">○</span> タイトル30文字（推奨範囲内）（+2点）</div>
+            <div><span class="ng">✕</span> タイトルのベネフィット表現が「未来像・世界観」を伝えていない（0点）――「未経験歓迎・年休123日・早期昇格・業界大手」は条件列挙で、候補者が「ここで働く自分の姿」を想像できる訴求がない</div>
+            <div><span class="ng">✕</span> タイトルに給与数値なし（0点）</div>
+            <div><span class="ok">○</span> 人気絞り込み条件（転勤なし・未経験歓迎）にバッジ対応済み（+3点）</div>
+            <div><span class="ok">○</span> 「職種未経験歓迎」「業種未経験歓迎」の2種バッジあり（+3点）</div>
+            <div><span class="ng">✕</span> 冒頭キャッチコピーが候補者の「悩み・共感ポイント」から入っていない（0点）――「急成長ベンチャー・早期キャリアアップ・好待遇」は会社側の訴求で共感型でない</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>この軸の失点は3箇所。①タイトルが「条件リスト（未経験歓迎・年休・昇格・大手）」で「20代で部長になれる自分」という未来像が伝わらない。②冒頭リードが会社の成長性・待遇の訴求で、候補者の悩みや共感から入っていない。③タイトルに給与数値がない。コンテンツの中身（両面開示・キャリア実例・社員の声）は優れているため、入口の表現を変えるだけで大きく改善できる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>タイトルを「条件列挙」から「未来像訴求」に切り替える（例：「お酒業界を変えるバイヤーへ／20代で部長・年収700万の実績あり」）。Check!セクションの冒頭を候補者の悩み（「今の仕事、本当に力がついている実感がありますか？」等）から始める共感型に変える。給与数値（月給25万5000円〜）をタイトルに盛り込むことで一覧クリック率が改善できる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸②</span><span class="at">応募要件の間口設計</span><span class="as B">15 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ng">✕</span> 必須要件と歓迎要件が明確に分離されていない（0点）――「対象となる方」1セクション内に「★普通自動車運転免許必須」と「【歓迎する人物像】」が混在し、doda推奨の2段階設計になっていない</div>
+            <div><span class="ok">○</span> 必須要件が現実的：「普通自動車運転免許」のみで極めて低いハードル（+5点）</div>
+            <div><span class="ok">○</span> 異業種・未経験・ポテンシャル枠の開口：職種・業種未経験歓迎、第二新卒歓迎、学歴不問を明示（+5点）</div>
+            <div><span class="ok">○</span> 過度な年齢・資格・業種の制約なし（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>間口の広さは申し分ないが、必須要件と歓迎要件が同一セクション内に混在している。求職者が「この仕事に応募できるのか？」を瞬時に判断できる設計になっておらず、doda公式推奨の2段階設計（必須要件欄 / 歓迎要件欄）の利点を活かせていない。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>「対象となる方」セクションを「必須要件（MUST）」と「歓迎要件（WANT）」に明確に分割する。必須は「普通自動車運転免許のみ」と明示し、それ以外をすべて歓迎欄に移す。この変更により候補者の応募障壁を下げ、潜在層からの応募が増える可能性が高い。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸③</span><span class="at">仕事内容・ミッションの具体性</span><span class="as A">18 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 仕事内容が具体的：問い合わせ対応→商品確認→査定・買取の3ステップ、専用ツール使用も詳細記述（+4点）</div>
+            <div><span class="ok">○</span> ポジションのミッション・役割が明記：バイヤーとして法人・個人からの買取担当という役割と「お酒業界の課題解決」という社会的意義が明確（+3点）</div>
+            <div><span class="ok">○</span> キャリアパスが具体的：入社半年で店長・入社2年で部長の月給実例複数あり。マーケ・EC・人事・経営企画へのキャリアチェンジ例も記載（+4点）</div>
+            <div><span class="ok">○</span> 両面開示あり：「キラキラしたおしゃれなベンチャーではない」「泥臭い努力が必要」「変化に対応できない人は厳しい」と正直に記載（+4点）</div>
+            <div><span class="ok">○</span> 配属チーム情報あり：従業員平均年齢30歳、20代の店長・エリアマネージャーが多数在籍（+3点）</div>
+            <div><span class="ng">✕</span> 人物像（【歓迎する人物像】）が「価値観条件」でなく汎用的な表現が中心：「成長意欲が高く積極的に学ぶ努力ができる方」は多くの求人票に書ける内容で、ファイブニーズならではの価値観訴求になっていない（0点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>「【歓迎する人物像】」の記述が汎用的な条件（成長意欲・スピード感・接客経験等）にとどまっている。「お酒業界の課題を世界で一番解決する」「行き場を失ったお酒に価値を見出す」というビジョンを体現できる人物像として、価値観・マインドの言葉に書き換えると独自性が増す。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>「【歓迎する人物像】」を価値観・信念ベースの表現に変える。例：「世界中の人がもっとおいしいお酒を飲める未来を信じられる人」「誰もやっていないことを面白がれる人」「お客様の『困った』を自分のことのように考えられる人」。現在の成長意欲・スピード感系の表現と組み合わせることで、カルチャーマッチが深まる。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸④</span><span class="at">待遇・条件の透明性と競争力</span><span class="as A">17 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 月給下限・上限の両方明示：月給25万5000円〜40万円（東京は26万8000円〜40万円）（+4点）</div>
+            <div><span class="ok">○</span> 年収例が4パターンあり：入社2年目で部長700万・3年目SV580万・半年で店長560万・2年目で店長410万（+3点）</div>
+            <div><span class="ok">○</span> 賞与の支給回数あり：年2回（6月・12月）（+2点）</div>
+            <div><span class="ok">○</span> 年間休日の実数値あり：年間休日123日（+2点）</div>
+            <div><span class="ng">✕</span> 勤務形態・在宅可否の記載なし：店舗勤務が主体とわかるが、在宅可否について一切記載がなく候補者が入社後まで確認できない（0点）</div>
+            <div><span class="ok">○</span> 残業代の透明性あり：みなし残業45時間分含む・超過全額支給・月平均残業時間20時間の実数値記載（+3点）</div>
+            <div><span class="ok">○</span> 福利厚生が自社固有：住宅手当（上限月2万円）・資格手当（ソムリエ月2万円・WSET Level3月2万円等）・家族手当（配偶者月5000円・子1人月3000円）・誕生日休暇など具体的（+3点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>課題</label><p>在宅可否の記載が一切ない。店舗でのバイヤー業務であるため在宅不可と推測できるが、候補者が確認できない状態は透明性の観点で減点対象。「完全出社（各店舗での接客・査定業務）」と一文添えるだけで即○になる。</p></div>
+        <div class="ar"><label>改善の方向性</label><p>「勤務形態：完全出社（店舗での接客・査定業務のため在宅不可）」を待遇・条件欄に追記する。在宅不可であることを正直に書いてもこの求人のターゲット層（対面で力をつけたい人）には響くため、透明性を高める側に倒した方が良い。</p></div>
+      </div>
+    </div>
+
+    <div class="ac">
+      <div class="ah"><span class="an">軸⑤</span><span class="at">企業・ポジションの独自性</span><span class="as A">20 / 20</span></div>
+      <div class="ab">
+        <div class="ar"><label>ルーブリック評価</label>
+          <div class="rm">
+            <div><span class="ok">○</span> 社員インタビュー（顔写真付き）：Mさん・Nさん・Mさんの3名が実際の顔写真付きで入社年・前職・入社理由・現在の状況を具体的に記載（+4点）</div>
+            <div><span class="ok">○</span> 数値化された実績：売上49倍成長・年平均32%成長・ヤフオク8年連続1位・売上高48億円・従業員平均年齢31歳（+3点）</div>
+            <div><span class="ok">○</span> 「なぜここか」が価値観・文化軸で伝わる：「お酒の流れが変われば社会の流れも変わる」という取材レポートが具体的エピソード（飲食店閉店時の再生支援）で語られ、社員のビジョン発言（「行き場を失ったお酒をつなぐ仕事」「SDGsに貢献したい」）も豊富（+5点）</div>
+            <div><span class="ok">○</span> 採用文のトーンがフラット：「まずは〜そんな思いのある方を歓迎いたします」「選考時にはあなたのことをお聞きしたい」等、候補者を対等に扱う語り口（+3点）</div>
+            <div><span class="ok">○</span> 写真でリアルな雰囲気が伝わる：社員インタビュー顔写真3名＋業務シーン・職場写真計6枚以上。実際の業務・メンバーの様子が伝わる（+5点）</div>
+          </div>
+        </div>
+        <div class="ar"><label>評価</label><p>満点。社員の声・数値実績・なぜここか・写真・トーンの全項目が充実。特に「なぜファイブニーズか」の訴求は取材レポート＋社員のビジョン発言という二重構造で、競合との差別化が明確に伝わる。この軸は現状維持を推奨する。</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 6 TOP3 -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>優先改善テーマ TOP3</h2></div>
+  <div class="card-body">
+
+    <div class="ti">
+      <div class="tn">1</div>
+      <div class="tc">
+        <h4>タイトル・冒頭リードを「未来像・共感型」に切り替える</h4>
+        <span class="ft">確認事実：タイトルは「未経験歓迎・年休123日・早期昇格・業界大手」の条件列挙。Check!セクションは「急成長ベンチャー・早期キャリアアップ・好待遇」という会社側の訴求で、候補者の悩みから入る共感型でない。給与数値もタイトルに不在。</span>
+        <p>コンテンツの中身（両面開示・具体的なキャリア実例・社員の声）は業界トップクラスの質。しかし一覧で目に触れるタイトルが「条件リスト」にとどまり、「20代で部長・年収700万」「お酒業界を変える仕事」という独自の訴求力が一覧上で伝わっていない。タイトルを未来像訴求に、冒頭を候補者の共感ポイントから始める構成に変えるだけで①軸は11点→17点程度に改善できる。掲載内容の変更のみで実行できる最優先施策。</p>
+        <div class="wy">▶ ①軸11→17点程度。「条件の説明」から「候補者の未来」への主語の切り替えだけで即実行可能。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">2</div>
+      <div class="tc">
+        <h4>応募要件を「必須（MUST）」と「歓迎（WANT）」の2段階設計に再編する</h4>
+        <span class="ft">確認事実：「対象となる方」セクション内に「★普通自動車運転免許必須」と「【歓迎する人物像】」が混在。doda推奨の2段階設計（必須要件欄・歓迎要件欄）になっていない。</span>
+        <p>実質的な必須要件は「普通自動車運転免許のみ」という極めて低いハードルは大きな強み。しかしこれが「対象となる方」という曖昧なセクションに埋まっており、「自分は応募できるのか」を候補者が瞬時に判断できない。「必須要件：普通自動車運転免許のみ（それ以外は一切不問）」と明示し、歓迎要件を別セクションで展開することで、②軸は15点→20点になる。doda公式推奨フォーマットへの変更で実行できる。</p>
+        <div class="wy">▶ ②軸15→20点。応募障壁を可視化して下げることで潜在層からの応募増加が期待できる。</div>
+      </div>
+    </div>
+
+    <div class="ti">
+      <div class="tn">3</div>
+      <div class="tc">
+        <h4>在宅可否の明示 ＋ 人物像を価値観条件に書き換える</h4>
+        <span class="ft">確認事実：在宅可否に関する記載が一切なし（店舗勤務のため実態は完全出社と推定）。【歓迎する人物像】が「成長意欲・スピード感・接客スキルを身につけたい」等の汎用条件の列挙で、ファイブニーズならではの価値観訴求になっていない。</span>
+        <p>在宅可否の明示（「完全出社・在宅不可」と一文添えるだけ）で④軸が17点→20点になる。在宅不可であっても「対面で力をつけたい候補者」には響くポイントに転換できる。合わせて人物像を「世界中の人がお酒を楽しめる未来を信じられる人」「誰もやっていないことを面白がれる人」等の価値観条件に書き換えると③軸が18点→20点になる。2施策合計で現在の81点から84点への改善が見込める。</p>
+        <div class="wy">▶ ④軸17→20点（+3点）＋③軸18→20点（+2点）。文言追記・変更のみで即実行可能。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<p style="font-size:11px;color:var(--sub);text-align:center;margin-top:8px">本レポートはスクレイピングにより取得したデータをもとに生成しています。診断日：2026年6月30日｜作成：EISHIN</p>
+</div>
+</body>
+</html>
