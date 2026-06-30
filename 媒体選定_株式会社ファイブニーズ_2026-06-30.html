@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>求人媒体選定レポート｜株式会社ファイブニーズ</title>
+<style>
+  :root{--red:#AE1C3B;--deep:#9C0B2D;--pink:#FBEBEE;--orange:#E65100;--green:#2E7D32;--blue:#1565C0;--bg:#F5F5F5;--card:#fff;--text:#212121;--sub:#757575;--border:#E0E0E0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.7}
+  .header{background:linear-gradient(135deg,#B44D66,#9A1132);color:#fff;padding:28px 32px}
+  .header h1{font-size:21px;font-weight:700;margin-bottom:6px;letter-spacing:.5px}
+  .header p{font-size:13px;opacity:.9}
+  .header .tag{display:inline-block;font-size:11px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:3px 10px;border-radius:12px;margin-top:10px}
+  .container{max-width:920px;margin:0 auto;padding:24px 16px 64px}
+  .card{background:var(--card);border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.09);margin-bottom:24px;overflow:hidden}
+  .card-head{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--border)}
+  .cn{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .card-head h2{font-size:16px;font-weight:700}
+  .card-body{padding:20px}
+  .note{font-size:12px;color:var(--sub);background:#FAFAFA;border-left:3px solid var(--border);padding:9px 13px;border-radius:0 4px 4px 0;margin-bottom:14px}
+  /* profile grid */
+  .pg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pg label{font-size:11px;color:var(--sub);display:block;margin-bottom:2px}
+  .pg span{font-size:14px;font-weight:600}
+  .badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .badge{font-size:11px;padding:3px 9px;border-radius:12px;border:1px solid var(--red);color:var(--red)}
+  .badge.s{border-color:var(--sub);color:var(--sub)}
+  .badge.o{border-color:var(--orange);color:var(--orange)}
+  /* verdict */
+  .verdict{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,#FBEBEE,#fff);border:1px solid #F1C6CF;border-radius:8px;padding:18px 20px;flex-wrap:wrap}
+  .vrank{width:64px;height:64px;border-radius:50%;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+  .vrank b{font-size:22px;line-height:1}.vrank span{font-size:9px;margin-top:2px}
+  .vmain h3{font-size:20px;font-weight:700;color:var(--red);margin-bottom:4px}
+  .vmain p{font-size:13px;color:var(--text)}
+  /* weight bars */
+  .wgt{margin-top:6px}
+  .wgt .wr{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+  .wgt .wl{font-size:12px;width:200px;flex-shrink:0}
+  .wgt .wb{flex:1;height:8px;background:#EEE;border-radius:5px;overflow:hidden}
+  .wgt .wf{height:100%;background:var(--red);border-radius:5px}
+  .wgt .wv{font-size:11px;color:var(--sub);width:34px;text-align:right;flex-shrink:0}
+  /* media score cards */
+  .ms{border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+  .ms.win{border:2px solid var(--red)}
+  .ms.drop{opacity:.96}
+  .msh{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#FAFAFA}
+  .ms.win .msh{background:var(--pink)}
+  .msrank{font-size:12px;font-weight:700;color:#fff;background:var(--sub);border-radius:5px;padding:3px 8px;flex-shrink:0}
+  .ms.win .msrank{background:var(--red)}
+  .msname{font-size:15px;font-weight:700;flex:1}
+  .mstag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+  .mstag.rec{background:#E8F5E9;color:var(--green)}
+  .mstag.hold{background:#FFF3E0;color:var(--orange)}
+  .mstag.out{background:#FFEBEE;color:var(--red)}
+  .mstag.sub{background:#E3F2FD;color:var(--blue)}
+  .msscore{font-size:22px;font-weight:700;margin-left:4px}
+  .msscore small{font-size:11px;color:var(--sub);font-weight:600}
+  .msb{padding:14px 16px}
+  /* axis mini bars */
+  .ax{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;margin-bottom:10px}
+  .axr .axl{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+  .grade{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px}
+  .grade.A{background:#E8F5E9;color:var(--green)}.grade.B{background:#FFF3E0;color:var(--orange)}.grade.C{background:#FFEBEE;color:var(--red)}
+  .axb{height:7px;background:#EEE;border-radius:4px;overflow:hidden}
+  .axf{height:100%;border-radius:4px}.fA{background:var(--green)}.fB{background:var(--orange)}.fC{background:var(--red)}
+  .reason{font-size:13px;line-height:1.75;background:#FAFAFA;border-left:3px solid var(--red);padding:10px 13px;border-radius:0 4px 4px 0}
+  .ms.win .reason{border-left-color:var(--green);background:#F4FBF4}
+  /* comparison table */
+  .t{width:100%;border-collapse:collapse;font-size:12.5px}
+  .t th{background:var(--deep);color:#fff;font-size:11px;font-weight:600;text-align:center;padding:9px 8px}
+  .t th:first-child{text-align:left}
+  .t td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:center;vertical-align:middle}
+  .t td:first-child{text-align:left;font-weight:600}
+  .t tr:nth-child(even) td{background:#FAFAFA}
+  .t .win{background:var(--pink)!important;font-weight:700}
+  .gA{color:var(--green);font-weight:700}.gB{color:var(--orange);font-weight:700}.gC{color:var(--red);font-weight:700}
+  /* funnel / logic chain */
+  .step{display:flex;gap:12px;margin-bottom:14px}
+  .step:last-child{margin-bottom:0}
+  .sicon{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .scon h4{font-size:14px;font-weight:700;margin-bottom:3px}
+  .scon p{font-size:13px;color:var(--text);line-height:1.7}
+  /* plan box */
+  .plan{background:#F4FBF4;border:1px solid #C8E6C9;border-radius:8px;padding:16px 18px;margin-top:4px}
+  .plan h4{font-size:14px;color:var(--green);font-weight:700;margin-bottom:8px}
+  .plan ul{list-style:none}
+  .plan li{font-size:13px;line-height:1.8;padding-left:18px;position:relative}
+  .plan li:before{content:"▶";color:var(--green);font-size:9px;position:absolute;left:0;top:5px}
+  .info{background:#E3F2FD;border:1px solid #90CAF9;border-radius:6px;padding:11px 14px;font-size:12.5px;color:#0D47A1;margin-top:12px;line-height:1.7}
+  .warn{background:#FFF3E0;border:1px solid #FFCC80;border-radius:6px;padding:11px 14px;font-size:12.5px;color:#7a3b00;margin-top:12px;line-height:1.7}
+  .foot{text-align:center;font-size:11px;color:var(--sub);margin-top:8px}
+  @media(max-width:600px){.pg,.ax{grid-template-columns:1fr}.wgt .wl{width:130px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>求人媒体選定レポート</h1>
+  <p>株式会社ファイブニーズ 御中｜作成日：2026年6月30日</p>
+  <span class="tag">採用CXクラウド｜媒体選定エンジン（中途・横断比較）</span>
+</div>
+<div class="container">
+
+<!-- 0 入力情報 -->
+<div class="card">
+  <div class="card-head"><div class="cn" style="font-size:16px">―</div><h2>選定インプット（前提情報）</h2></div>
+  <div class="card-body">
+    <p class="note">本レポートは、御社の採用要件・ターゲット・予算・課題を入力として、各媒体の「会員特性 × 職種送客力 × 母集団形成力 × エリア網 × 費用対効果」を突き合わせ、最適媒体をロジックで導出するものです。下記は今回の入力値です。</p>
+    <div class="pg">
+      <div><label>会社名 / 事業</label><span>株式会社ファイブニーズ（リユース・買取店舗の運営）</span></div>
+      <div><label>募集職種</label><span>買取・販売スタッフ／店長候補（店舗運営）</span></div>
+      <div><label>雇用形態</label><span>正社員</span></div>
+      <div><label>ターゲット層</label><span>20代〜30代前半中心・若手ポテンシャル</span></div>
+      <div><label>要件</label><span>学歴・営業経験は不問（人柄・素直さ重視）</span></div>
+      <div><label>採用予定数</label><span>来期 真水12名／離職込み 15〜20名（現状約55名→70〜75名体制）</span></div>
+      <div><label>勤務地</label><span>複数エリア・店舗拡大（来期4店舗出店：大阪・仙台 ほか）</span></div>
+      <div><label>予算・単価目標</label><span>採用単価 30万円以下／媒体1本あたり〜150万円規模</span></div>
+    </div>
+    <div class="badge-row">
+      <span class="badge o">最重要課題：応募者数の減少（面接母数の最大化が肝）</span>
+    </div>
+    <div class="badge-row" style="margin-top:8px">
+      <span style="font-size:12px;color:var(--sub)">過去・現在の媒体：</span>
+      <span class="badge s">エン転職：過去不発・「全く取れない／二度と出さない」</span>
+      <span class="badge s">Indeed（トーコン・エアワーク経由）：運用開始直後</span>
+      <span class="badge s">マイナビ転職：直販で検討中</span>
+      <span class="badge s">doda：過去出稿あり</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1 結論 -->
+<div class="card">
+  <div class="card-head"><div class="cn">1</div><h2>選定結論</h2></div>
+  <div class="card-body">
+    <div class="verdict">
+      <div class="vrank"><b>No.1</b><span>掲載型媒体</span></div>
+      <div class="vmain">
+        <h3>マイナビ転職</h3>
+        <p>掲載型（ブランド）媒体の中での最適解。<strong style="color:var(--red)">エン転職は不採用</strong>。運用型（Indeed・求人ボックス）と組み合わせ、母集団形成の主軸に据えるのが御社の現状にもっとも合致します。</p>
+      </div>
+    </div>
+    <div class="info">
+      <strong>媒体は2レイヤーで考えます。</strong>　①<strong>運用型（検索連動）</strong>＝Indeed・求人ボックス：単価が最も安く、応募の「量」を作る主軸（現在進行中のため継続）。②<strong>掲載型（ブランド）</strong>＝マイナビ転職・エン転職・doda・リクナビNEXT：認知と質の母集団を作る枠。<br>今回の論点である②の掲載型で比較した結果、<strong>マイナビ転職が最適</strong>。①の運用型と②マイナビ転職の二本柱が、御社の「単価30万円以下で15〜20名」という目標にもっとも現実的に届く構成です。
+    </div>
+  </div>
+</div>
+
+<!-- 2 評価ロジック -->
+<div class="card">
+  <div class="card-head"><div class="cn">2</div><h2>選定ロジック（評価軸と重み付け）</h2></div>
+  <div class="card-body">
+    <p class="note">御社の最重要課題「応募者数（母集団）の減少」を最大重みに設定。学歴・経験不問の若手量採用という採用スタイルに沿って、ターゲット層の一致と母集団形成力を重視しています。</p>
+    <div class="wgt">
+      <div class="wr"><div class="wl">③ 母集団形成力（応募の量）</div><div class="wb"><div class="wf" style="width:100%"></div></div><div class="wv">25%</div></div>
+      <div class="wr"><div class="wl">① ターゲット層の一致</div><div class="wb"><div class="wf" style="width:100%"></div></div><div class="wv">25%</div></div>
+      <div class="wr"><div class="wl">② 職種・業界の送客力</div><div class="wb"><div class="wf" style="width:80%"></div></div><div class="wv">20%</div></div>
+      <div class="wr"><div class="wl">⑤ 費用対効果（単価30万以下）</div><div class="wb"><div class="wf" style="width:60%"></div></div><div class="wv">15%</div></div>
+      <div class="wr"><div class="wl">④ エリアカバー（複数拠点）</div><div class="wb"><div class="wf" style="width:40%"></div></div><div class="wv">10%</div></div>
+      <div class="wr"><div class="wl">⑥ 自社の過去相性・実績</div><div class="wb"><div class="wf" style="width:20%"></div></div><div class="wv">5%</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3 媒体別スコア -->
+<div class="card">
+  <div class="card-head"><div class="cn">3</div><h2>掲載型媒体 マッチ度スコア</h2></div>
+  <div class="card-body">
+    <p class="note">各媒体を6軸でA/B/C評価し、上記の重みで総合マッチ度（/100）を算出。スコアは媒体の公表会員特性・職種別送客傾向・料金体系と、御社の入力要件の突き合わせによります。</p>
+
+    <!-- マイナビ -->
+    <div class="ms win">
+      <div class="msh">
+        <span class="msrank">1位</span><span class="msname">マイナビ転職</span>
+        <span class="mstag rec">推奨・第一候補</span>
+        <span class="msscore">86<small>/100</small></span>
+      </div>
+      <div class="msb">
+        <div class="ax">
+          <div class="axr"><div class="axl"><span>① ターゲット層の一致</span><span class="grade A">A</span></div><div class="axb"><div class="axf fA" style="width:92%"></div></div></div>
+          <div class="axr"><div class="axl"><span>② 職種・業界送客力</span><span class="grade A">A</span></div><div class="axb"><div class="axf fA" style="width:88%"></div></div></div>
+          <div class="axr"><div class="axl"><span>③ 母集団形成力</span><span class="grade B">B+</span></div><div class="axb"><div class="axf fB" style="width:78%"></div></div></div>
+          <div class="axr"><div class="axl"><span>④ エリアカバー</span><span class="grade A">A</span></div><div class="axb"><div class="axf fA" style="width:90%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑤ 費用対効果</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:70%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑥ 過去相性</span><span class="grade B">B（適合期待）</span></div><div class="axb"><div class="axf fB" style="width:75%"></div></div></div>
+        </div>
+        <div class="reason"><strong>会員約756万人・35歳以下が約7割</strong>と、御社の20〜30代前半・ポテンシャル採用ターゲットとほぼ重なる。「成長できるか・職場の雰囲気が合うか」を重視する若手層が中心で、<strong>学歴・経験不問の店舗系求人と相性が良い</strong>。店舗・販売・サービス職の掲載量が厚く全国エリア網も強いため、大阪・仙台ほかの複数拠点・新店4店舗の同時募集にも対応。プランの幅が広く（MT-S〜MT-D）、出稿規模を予算に合わせて設計しやすい。</div>
+      </div>
+    </div>
+
+    <!-- リクナビNEXT -->
+    <div class="ms">
+      <div class="msh">
+        <span class="msrank">2位</span><span class="msname">リクナビNEXT</span>
+        <span class="mstag hold">条件付き候補</span>
+        <span class="msscore">66<small>/100</small></span>
+      </div>
+      <div class="msb">
+        <div class="ax">
+          <div class="axr"><div class="axl"><span>① ターゲット層の一致</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:70%"></div></div></div>
+          <div class="axr"><div class="axl"><span>② 職種・業界送客力</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:68%"></div></div></div>
+          <div class="axr"><div class="axl"><span>③ 母集団形成力</span><span class="grade A">A</span></div><div class="axb"><div class="axf fA" style="width:85%"></div></div></div>
+          <div class="axr"><div class="axl"><span>④ エリアカバー</span><span class="grade A">A</span></div><div class="axb"><div class="axf fA" style="width:88%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑤ 費用対効果</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:60%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑥ 過去相性</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:40%"></div></div></div>
+        </div>
+        <div class="reason">会員母数は国内最大級で量は作れるが、登録者の層が広く<strong>スカウト運用前提</strong>での工数が必要。御社は応募の「量」をIndeed・求人ボックスで先に確保するため、掲載型としての優先度はマイナビに劣る。また実態としてIndeed経由で露出が一部重なるため、単独投資の費用対効果は読みにくい。</div>
+      </div>
+    </div>
+
+    <!-- doda -->
+    <div class="ms">
+      <div class="msh">
+        <span class="msrank">3位</span><span class="msname">doda</span>
+        <span class="mstag hold">非推奨（今回は不適）</span>
+        <span class="msscore">58<small>/100</small></span>
+      </div>
+      <div class="msb">
+        <div class="ax">
+          <div class="axr"><div class="axl"><span>① ターゲット層の一致</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:48%"></div></div></div>
+          <div class="axr"><div class="axl"><span>② 職種・業界送客力</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:62%"></div></div></div>
+          <div class="axr"><div class="axl"><span>③ 母集団形成力</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:65%"></div></div></div>
+          <div class="axr"><div class="axl"><span>④ エリアカバー</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:65%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑤ 費用対効果</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:42%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑥ 過去相性</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:45%"></div></div></div>
+        </div>
+        <div class="reason">経験者・専門職寄りの会員構成で、エージェント併用を前提とした設計。<strong>学歴・経験不問の若手量採用にはスペック過剰</strong>で単価も上振れしやすい。過去出稿でも明確な成果に結びついておらず、今回の要件には不適。</div>
+      </div>
+    </div>
+
+    <!-- エン転職 -->
+    <div class="ms drop">
+      <div class="msh">
+        <span class="msrank">4位</span><span class="msname">エン転職</span>
+        <span class="mstag out">不採用</span>
+        <span class="msscore">46<small>/100</small></span>
+      </div>
+      <div class="msb">
+        <div class="ax">
+          <div class="axr"><div class="axl"><span>① ターゲット層の一致</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:42%"></div></div></div>
+          <div class="axr"><div class="axl"><span>② 職種・業界送客力</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:40%"></div></div></div>
+          <div class="axr"><div class="axl"><span>③ 母集団形成力</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:38%"></div></div></div>
+          <div class="axr"><div class="axl"><span>④ エリアカバー</span><span class="grade B">B</span></div><div class="axb"><div class="axf fB" style="width:62%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑤ 費用対効果</span><span class="grade C">C</span></div><div class="axb"><div class="axf fC" style="width:38%"></div></div></div>
+          <div class="axr"><div class="axl"><span>⑥ 過去相性</span><span class="grade C">C（実績で不発）</span></div><div class="axb"><div class="axf fC" style="width:20%"></div></div></div>
+        </div>
+        <div class="reason">理由はセクション4で詳述。<strong>「入社後活躍・定着」「じっくり比較検討する層」「クチコミで企業を吟味する文化」</strong>がエン転職の強みであり、これは御社の「応募の量を一気に作る・無名業態の店舗系・即戦力でない若手」という今回の要件と構造的にミスマッチ。実際に御社では過去複数回出稿しても成果が出ず、「二度と出さない」との判断に至っている。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 4 なぜエン転職を外すか -->
+<div class="card">
+  <div class="card-head"><div class="cn">4</div><h2>なぜ「マイナビ転職 ＞ エン転職」なのか</h2></div>
+  <div class="card-body">
+    <p class="note">最大の論点であるマイナビ転職とエン転職の差を、媒体特性 × 御社要件で構造的に説明します。「過去はまらなかった」は感覚ではなく、媒体構造で説明がつきます。</p>
+
+    <div class="step">
+      <div class="sicon">①</div>
+      <div class="scon"><h4>会員層が御社ターゲットと合うのはマイナビ</h4>
+      <p>マイナビ転職は<strong>35歳以下が約7割</strong>の若手中心。一方エン転職は「入社後の活躍・定着」を掲げ、<strong>キャリアや条件をじっくり比較検討する20代後半〜30代</strong>に強い。御社は学歴・経験不問でポテンシャル重視の若手を“数”採りたい採用であり、母集団のボリュームゾーンが厚いマイナビが合致する。</p></div>
+    </div>
+    <div class="step">
+      <div class="sicon">②</div>
+      <div class="scon"><h4>エン転職の「クチコミ・口コミ吟味」文化が逆風になる</h4>
+      <p>エン転職は社員クチコミや取材記事で<strong>候補者が企業を念入りに吟味してから応募する</strong>媒体。知名度の高い大手や、定着・働きやすさを訴求できる企業に有利に働く。買取・店舗系のように知名度が高くない業態では、この“吟味される”構造がそのまま応募ブレーキになりやすい。マイナビは「成長できそう・雰囲気が合いそう」という前向きな動機で応募が進みやすい。</p></div>
+    </div>
+    <div class="step">
+      <div class="sicon">③</div>
+      <div class="scon"><h4>「量」を作る設計はマイナビ＋運用型。エンは質特化で母数が小さい</h4>
+      <p>御社の最重要課題は<strong>応募者数の減少</strong>。エン転職は「質の高いマッチング」を志向するため、そもそも母集団の数では不利。応募の量を確保するには、運用型（Indeed・求人ボックス）＋若手母数の厚いマイナビの組み合わせが正解で、エンを足しても“量”の課題は解けない。</p></div>
+    </div>
+    <div class="step">
+      <div class="sicon">④</div>
+      <div class="scon"><h4>過去実績がロジックを裏づけている</h4>
+      <p>御社ではエン転職に過去複数回出稿しても応募・採用に結びつかず「二度と出さない」と判断済み。これは①〜③の媒体構造から見て<strong>必然の結果</strong>であり、再投資の合理性は低い。同じ予算はマイナビ転職と運用型に振り向けるべき。</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- 5 横断比較表 -->
+<div class="card">
+  <div class="card-head"><div class="cn">5</div><h2>媒体横断 比較表</h2></div>
+  <div class="card-body">
+    <div style="overflow-x:auto">
+    <table class="t">
+      <thead>
+        <tr><th>評価軸</th><th class="win">マイナビ転職</th><th>リクナビNEXT</th><th>doda</th><th>エン転職</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>会員層の中心</td><td class="win">20〜30代前半・若手</td><td>全年代・最大母数</td><td>20後半〜30代・経験者</td><td>20後半〜30代・吟味層</td></tr>
+        <tr><td>① ターゲット一致</td><td class="win"><span class="gA">A</span></td><td><span class="gB">B</span></td><td><span class="gC">C</span></td><td><span class="gC">C</span></td></tr>
+        <tr><td>② 職種送客（店舗・販売）</td><td class="win"><span class="gA">A</span></td><td><span class="gB">B</span></td><td><span class="gB">B</span></td><td><span class="gC">C</span></td></tr>
+        <tr><td>③ 母集団形成力（量）</td><td class="win"><span class="gB">B+</span></td><td><span class="gA">A</span></td><td><span class="gB">B</span></td><td><span class="gC">C</span></td></tr>
+        <tr><td>④ エリアカバー（複数拠点）</td><td class="win"><span class="gA">A</span></td><td><span class="gA">A</span></td><td><span class="gB">B</span></td><td><span class="gB">B</span></td></tr>
+        <tr><td>⑤ 費用対効果（単価30万以下）</td><td class="win"><span class="gB">B</span></td><td><span class="gB">B</span></td><td><span class="gC">C</span></td><td><span class="gC">C</span></td></tr>
+        <tr><td>⑥ 過去相性・実績</td><td class="win"><span class="gB">B</span></td><td><span class="gC">C</span></td><td><span class="gC">C</span></td><td><span class="gC">C</span></td></tr>
+        <tr><td><strong>総合マッチ度</strong></td><td class="win"><strong>86</strong></td><td>66</td><td>58</td><td>46</td></tr>
+        <tr><td><strong>判定</strong></td><td class="win"><span class="gA">推奨</span></td><td><span class="gB">条件付</span></td><td><span class="gC">非推奨</span></td><td><span class="gC">不採用</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="info">運用型（Indeed・求人ボックス）は掲載型と評価軸が異なるため本表とは別レイヤー。両者は<strong>単価最安帯で応募の量を作る主軸</strong>として継続し、掲載型マイナビ転職と組み合わせる前提です。</div>
+  </div>
+</div>
+
+<!-- 6 推奨運用プラン -->
+<div class="card">
+  <div class="card-head"><div class="cn">6</div><h2>推奨メディアミックスと運用方針</h2></div>
+  <div class="card-body">
+    <p class="note">「単価30万円以下で来期15〜20名」を満たすための、二本柱＋補完の構成です。</p>
+    <div class="plan">
+      <h4>主軸A｜運用型（Indeed＋求人ボックス）— 応募の“量”</h4>
+      <ul>
+        <li>採用しやすいエリアに絞って配信（検索エンジン同様、競合の少ないエリアほど単価が下がる）。大阪・仙台のように単価が安く出るエリアから集中投下。</li>
+        <li>エアワーク経由ではなく<strong>直接投稿運用</strong>に切り替え、無駄なクリック単価を抑制（EISHIN運用）。求人ボックスを合わせ技で母集団を拡張。</li>
+      </ul>
+    </div>
+    <div class="plan" style="margin-top:12px">
+      <h4>主軸B｜掲載型（マイナビ転職）— 若手の“質と母数”</h4>
+      <ul>
+        <li>若手ターゲットに刺さる原稿（成長・雰囲気・未経験歓迎）で、運用型では届きにくい層を獲得。</li>
+        <li>複数拠点・新店4店舗を1求人1職種で整理し、検索ヒットとクリック訴求を最適化。プランは予算に合わせMT-S〜MT-Dから設計。</li>
+      </ul>
+    </div>
+    <div class="warn"><strong>応募の“次”の課題への手当て：</strong>御社は応募数だけでなく<strong>面接参加率・内定承諾も悪化</strong>している。応募直後に送る「採用ピッチ資料（PDFリンク）」を用意し、日程調整メールに添付することで、面接設定率の改善が見込める（同業支援での実績あり）。媒体選定と同時に採用体験(CX)の整備を推奨。</div>
+    <div class="info">エン転職・dodaへの再投資は今回見送り、その予算を主軸A・Bに集約することを推奨します。</div>
+  </div>
+</div>
+
+<p class="foot">本レポートは採用CXクラウドの媒体選定エンジンにより、御社の入力要件と各媒体の公表特性・料金体系・職種別送客傾向の突き合わせで自動生成しています。<br>株式会社EISHIN｜採用CXクラウド</p>
+
+</div>
+</body>
+</html>
